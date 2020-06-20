@@ -1,0 +1,4 @@
+/* STILIZANDO PAGINAÇÃO */
+.dataTables_paginate .paginate_button{
+	padding: 3px !important;
+}
