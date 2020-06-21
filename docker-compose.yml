@@ -9,7 +9,8 @@ services:
       container_name: vistoria-mysql
       working_dir: /application
       volumes:
-        - .:/application
+        # - .:/application
+        - data:/var/lib/mysql
       environment:
         - MYSQL_ROOT_PASSWORD=livre
         - MYSQL_DATABASE=vistoria
@@ -35,4 +36,5 @@ services:
       volumes:
         - .:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
 

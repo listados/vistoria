@@ -136,7 +136,7 @@ $(function () {
 
   function getImageAmbience() {
     route = domain_complet + '/dist/img/upload/vistoria/';
-    $.get(domain_complet + "/files_ambience/show/" + $("#id_survey_ambience").val(), function (data) {
+    $.get(domain_complet + "files_ambience/show/" + $("#id_survey_ambience").val(), function (data) {
       /*optional stuff to do after success */
       $.each(data, function (index, val) {
         /* iterate through array or object */

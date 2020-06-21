@@ -473,7 +473,7 @@ class SurveyController extends Controller
                     }
                     return '<a href="'.url('vistoria/'.base64_encode($survey->survey_id).'/editar/Editar-Vistoria/acao').'" class="btn '.$class_enable.'" data-toggle="tooltip" data-placement="left" title="Editar Vistsoria '.$survey->survey_id.'"><i class="fa fa-edit" aria-hidden="true"></i></a>
                         <a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
-                        <a href="#" class="btn" onclick="print_survey('.$survey->survey_id.')" title="Imprmir Vistoria '.$survey->survey_id.'"><i class="fa fa-print" aria-hidden="true"></i></a>
+                        <a href="'.url('vistoria/imprimir/?id_survey='.$survey->survey_id.'&imprimir_com_foto=true').'" target="_blank" class="btn" title="Imprmir Vistoria '.$survey->survey_id.'"><i class="fa fa-print" aria-hidden="true"></i></a>
                         <a href="#" class="btn" onclick="repli('.$survey->survey_id.');" title="Replicar Vistoria '.$survey->survey_id.'"><i class="fa fa-files-o" aria-hidden="true"></i></a>
                         <a href="'.url('vistoria/'.base64_encode($survey->survey_id).'/download').'" class="btn '.$class_enable.'" title="Visualizar e Download da Vistoria '.$survey->survey_id.'"><span class="badge-noti">'.Survey::countImage($survey->survey_id).'</span><i class="fa fa-picture-o" aria-hidden="true"></i></a>
                         <a href="#" class="btn text-danger '.$class_enable.'" onclick="delete_survey('.$survey->survey_id.')" title="Excluir vistoria -'.$survey->survey_id.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -581,7 +581,7 @@ class SurveyController extends Controller
         if(empty($survey))
         {
             $survey = Survey::where('survey_id' , $id)->get();
-            $photo_ambience = false;           
+            $photo_ambience = false;
         }else{
             $photo_ambience = true;
         }        
@@ -592,8 +592,8 @@ class SurveyController extends Controller
                         
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
-        $data_extenso = FunctionAll::data_extenso();                
-        $settings = DB::table('settings')->get();   
+        $data_extenso = FunctionAll::data_extenso();
+        $settings = DB::table('settings')->get();
        
         //FILTRANDO O ARRAY COM TIPO 360
         $survey_type = FALSE;
@@ -643,7 +643,14 @@ class SurveyController extends Controller
         }
 
         // return view('survey.report.view_survey',['survey' => $survey , 'survey_update' => $survey_update , 'survey_update_360' => $survey_update_360 , 'settings' => $settings , 'users' => $users, 'data_extenso' => $data_extenso , 'photo_ambience' => $photo_ambience ]);
-        $pdf = PDF::loadView('survey.report.view_survey',['survey' => $survey , 'survey_update' => $survey_update , 'survey_update_360' => $survey_update_360 , 'settings' => $settings , 'users' => $users, 'data_extenso' => $data_extenso , 'photo_ambience' => $photo_ambience ]); 
+        $pdf = PDF::loadView('survey.report.view_survey',[
+            'survey' => $survey ,
+            'survey_update' => $survey_update ,
+            'survey_update_360' => $survey_update_360 ,
+            'settings' => $settings ,
+            'users' => $users,
+            'data_extenso' => $data_extenso ,
+            'photo_ambience' => $photo_ambience ]); 
       
         $pdf->setPaper('A4', 'report');  
         $pdf->output();
@@ -654,7 +661,7 @@ class SurveyController extends Controller
                
         $canvas->page_text(530, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
         
-        return $pdf->stream();     
+        return $pdf->stream();
     }
 
     public function download($id)
