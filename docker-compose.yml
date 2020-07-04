@@ -4,19 +4,19 @@
 version: "3.1"
 services:
 
-    mysql:
-      image: mysql:5.7
-      container_name: vistoria-mysql
-      working_dir: /application
-      volumes:
-        - .:/application
-      environment:
-        - MYSQL_ROOT_PASSWORD=livre
-        - MYSQL_DATABASE=vistoria
-        - MYSQL_USER=root
-        - MYSQL_PASSWORD=livre
-      ports:
-        - "4002:3306"
+    # mysql:
+    #   image: mysql:5.7
+    #   container_name: vistoria-mysql
+    #   working_dir: /application
+    #   volumes:
+    #     - ./dadosMysql:/var/lib/mysql
+    #   environment:
+    #     - MYSQL_ROOT_PASSWORD=livre
+    #     - MYSQL_DATABASE=vistoria
+    #     - MYSQL_USER=root
+    #     - MYSQL_PASSWORD=livre
+    #   ports:
+    #     - "4002:3306"
 
     webserver:
       image: nginx:alpine

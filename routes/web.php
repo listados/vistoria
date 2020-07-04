@@ -94,6 +94,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('download-proposal-pf/{id}/{type}'   , 'ProposalPFController@getFilesDonwloadProposalPF');
         //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');      
     });
+    // ROTA PARA EDIÇÃO DO SITE
+    Route::prefix('site')->group(function(){    
+        Route::get('equipe' , 'SiteController@team');
+        Route::post('createPersonTeam' , 'SiteController@createPersonTeam');
+        //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');      
+    });
 
     
     Route::prefix('admin')->group(function(){

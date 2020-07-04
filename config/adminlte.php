@@ -171,6 +171,20 @@ return [
                 ]
             ]
         ],
+        [
+            'text' => 'Site',
+            'icon' => 'internet-explorer',
+            'submenu' => [
+                [
+                    'text' => 'Equipe',
+                    'url'  => 'equipe'
+                ],
+                [
+                    'text' => 'Cadastro Pessoa Física',
+                    'url'  => 'escolha-azul/proposta-pessoa-jurídica'                   
+                ]
+            ]
+        ],
         'CONFIGURAÇÃO DA CONTA',
         [
             'text' => 'Profile',
