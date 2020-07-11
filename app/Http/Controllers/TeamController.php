@@ -91,9 +91,9 @@ class TeamController extends Controller
         }
     }
 
-    public function getOffice($office)
+    public function getOffice()
     {
-        $gestor = Team::where('teamSites_office', $office);
+        $gestor = Team::get();
         return Datatables::of($gestor)
                 ->editColumn('teamSites_photo', function ($gestor) {
                     return '<img src="'.$gestor->teamSites_photo.'" width="128" height="96" />';

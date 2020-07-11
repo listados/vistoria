@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     var _language;
-    console.log(domain_complet + 'site/office/Gestor');
+    console.log(domain_complet + 'site/office');
     PNotify.prototype.options.styling = "fontawesome";
     $("#tabelaComercial").DataTable({
         processing: true,
@@ -12,7 +12,7 @@ $(document).ready(function () {
             infoEmpty: "Sem registro para mostrar",
             infoFiltered: " - Filtrando para _MAX_ registros"
         }),
-        ajax: domain_complet + '/site/office/Gestor',
+        ajax: domain_complet + '/site/office',
         order: [[0, "desc"]],
         columns: [
             { data: 'teamSites_photo', name: 'teamSites_photo' },

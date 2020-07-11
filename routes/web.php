@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::prefix('site')->group(function(){    
         Route::get('equipe' , 'SiteController@team');
         Route::post('createPersonTeam' , 'SiteController@createPersonTeam');
-        Route::get('office/{office}' , 'TeamController@getOffice');
+        Route::get('office' , 'TeamController@getOffice');
         Route::delete('delete/{id}' ,'TeamController@destroy' );
     });
 
