@@ -13628,7 +13628,6 @@ var app = new Vue({
 
 
 window._ = __webpack_require__(15);
-window.Popper = __webpack_require__(3).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -13637,6 +13636,7 @@ window.Popper = __webpack_require__(3).default;
  */
 
 try {
+  window.Popper = __webpack_require__(3).default;
   window.$ = window.jQuery = __webpack_require__(4);
 
   __webpack_require__(17);

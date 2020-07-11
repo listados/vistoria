@@ -27,6 +27,11 @@ mix.styles([
 	'resources/assets/js/survey.js'],
 	'public/js/survey.js').extract(['vue']);
 
+//TEAM
+mix.scripts([
+    'resources/assets/js/teamSite.js'
+], 'public/js/teamSite.js');
+
 //DELIVERY
  mix.js([
 	'resources/assets/js/delivery.js'],
@@ -47,6 +52,7 @@ mix.styles([
   mix.js([
 	'resources/assets/js/proposal_pf.js'],
 	'public/js/proposal_pf.js');  
+
 // mix.scripts([
 //     'public/js/admin.js',
 //     'public/js/dashboard.js'
