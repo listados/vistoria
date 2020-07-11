@@ -12,7 +12,7 @@
 </ol>
 @stop
 @section('content')
-{{ Html::script('/js/all.js') }}
+
 <section class="content">
     @include('message.message_general')
     <div class="row">
@@ -51,16 +51,16 @@
                             </table>
                         </div>
                         <div class="table-responsive">
-                                <table class="table table-bordered box-footer">
-                                        <tr>
-                                            <th>Ambiente</th>
-                                            <th>Arquivo</th>
-                                            <th>
-                                                <a href="#" data-toggle="modal" data-target="#alter-ambience" id="alter-ambience-btn" class="btn btn-info pull-right">Alterar</a>
-                                            </th>
-                                            <th><a href="#" id="deleteAmbience" class="btn btn-danger pull-right">Excluir</a></th>
-                                        </tr>
-                                    </table>
+                            <table class="table table-bordered box-footer">
+                                <tr>
+                                    <th>Ambiente</th>
+                                    <th>Arquivo</th>
+                                    <th>
+                                        <a href="#" data-toggle="modal" data-target="#alter-ambience" id="alter-ambience-btn" class="btn btn-info pull-right">Alterar</a>
+                                    </th>
+                                    <th><a href="#" id="deleteAmbience" class="btn btn-danger pull-right">Excluir</a></th>
+                                </tr>
+                            </table>
                         </div>
                         {{--  @include('modal.survey_ambience_upload') --}}
                         @include('modal.modal_alter_ambience')
@@ -119,8 +119,9 @@
 {{ Html::script('/js/survey.js') }}
 {{ Html::script('/js/plugins/dropzone.js') }}
 {{ Html::script('/js/upload_ambience.js') }}
-{{Html::script('js/plugins/sortable.min.js')}}
-{{Html::script('js/plugins/jquery.binding.js')}}
+{{ Html::script('js/plugins/sortable.min.js')}}
+{{ Html::script('js/plugins/jquery.binding.js')}}
+{{ Html::script('/js/all.js') }}
 {{-- {{ Html::script('/js/upload_ambience.js') }} --}}
 <script type="text/javascript">
     //PÁGINA DE DOWNLOAD DE IMAGENS

@@ -95,28 +95,30 @@ class ProposalPFController extends Controller
     {
         # code...
         $proposal = ProposalPF::orderBy('proposal_id', 'desc');
-
-
         return Datatables::of($proposal)
-            
-                ->addColumn('action', function ($proposals) {
-                return '<a href="'.url('escolha-azul/pdf-pf/'.$proposals->proposal_id).'/proposta" class="btn btn-xs proposal_ancora_info title="visualizar Proposta" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                <a href="'.url('escolha-azul/pdf-pf/'.$proposals->proposal_id).'/analise" class="btn btn-xs" target="_blank" data-toggle="tooltip" title="Análise de Proposta"><i class="fa fa-pie-chart" aria-hidden="true"></i></a>
-                <a href="'.url('escolha-azul/download/'.$proposals->proposal_id.'/proposta-pf').'" class="btn" target="_blank" data-toggle="tooltip" title=""><i class="fa fa-download" aria-hidden="true"></i><span class="badge bg-green">3</span></a>';
-                })
-                ->editColumn('proposal_completed', function($proposals) {
-
-                    return date('d/m/Y' , strtotime($proposals->proposal_completed));
-                })
-                ->editColumn('proposal_id_user', function($proposals) {
-                    //CHAMANDO FUNÇÃO PARA NOME DO ATENDENTE
-                    $atend_converter = User::getNameAtendente($proposals->proposal_id_user);
-                    //PREENCHENDO VARIÁVEL SE FOR VAZIO
-                    if(empty($atend_converter)){ $atend_converter = "Não informado";}
-                    return $atend_converter.' <a href="#modal_alter_functionary" title="Alterar Atendente" data-toggle="modal" ><small class="label label-info btn-xs"> <i class="fa fa-edit"></i></small> </a> ';
-                })
-                ->rawColumns(['proposal_id_user', 'action'])
-                ->make(true);
+            ->addColumn('action', function ($proposals) {
+            $count_files = DB::table('files')->where('files_id_proposal' , $proposals->proposal_id)->count();
+            return '<a href="'.url('escolha-azul/pdf-pf/'.$proposals->proposal_id).'/proposta" class="btn btn-xs proposal_ancora_info title="visualizar Proposta" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+            <a href="'.url('escolha-azul/pdf-pf/'.$proposals->proposal_id).'/analise" class="btn btn-xs" target="_blank" data-toggle="tooltip" title="Análise de Proposta"><i class="fa fa-pie-chart" aria-hidden="true"></i></a>
+            <a href="'.url('escolha-azul/download/'.$proposals->proposal_id.'/proposta-pf').'" class="btn" target="_blank" data-toggle="tooltip" title="Enviado '.$count_files.' arquivos">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                <span class="badge bg-green">'.$count_files.'</span></a>';
+            })
+            ->editColumn('proposal_completed', function($proposals) {
+                if($proposals->proposal_status == 'Incompleta'){
+                    return "---";    
+                }
+                return date('d/m/Y' , strtotime($proposals->proposal_completed));
+            })
+            ->editColumn('proposal_id_user', function($proposals) {
+                //CHAMANDO FUNÇÃO PARA NOME DO ATENDENTE
+                $atend_converter = User::getNameAtendente($proposals->proposal_id_user);
+                //PREENCHENDO VARIÁVEL SE FOR VAZIO
+                if(empty($atend_converter)){ $atend_converter = "Não informado";}
+                return $atend_converter.' <a href="#modal_alter_functionary" title="Alterar Atendente" data-toggle="modal" ><small class="label label-info btn-xs"> <i class="fa fa-edit"></i></small> </a> ';
+            })
+            ->rawColumns(['proposal_id_user', 'action'])
+            ->make(true);
     }
 
     /*
@@ -198,19 +200,27 @@ class ProposalPFController extends Controller
             ]);
           
         if(empty($files)){
-            //return Datatables::of($files)->make(true);
             return dump('vazio');
         }else{
-             
-            //return dump('nao esta vazio');
+             //return dump('nao esta vazio');
             return Datatables::of($files)
                 ->editColumn('files_name', function($files ) {
-                    $document_root = dirname(dirname($_SERVER['DOCUMENT_ROOT'])); 
-                    //return '<span>'.$files->files_name.'</span>';
-                    return '<img  src="http://localhost/escolhaazulonline/public/img/upload/'.$files->files_name.'" height="20%" >';
+                    //$document_root = dirname(dirname($_SERVER['DOCUMENT_ROOT'])); 
+                    $extensao = '.pdf'; 
+                    $dominio_pdf_externo = "http://209.97.128.184/escolhaazul";                   
+                    if(strripos($files->files_name, $extensao) == true){
+                        return '<iframe src="'.$dominio_pdf_externo.'/public/img/upload/'.$files->files_name.'" 
+                        frameborder="0" width="128" height="128"></iframe>';
+                    }
+                    return  '<a href="'.$dominio_pdf_externo.'/public/img/upload/'.$files->files_name.'" data-toggle="lightbox" data-title="Imagem" data-footer="'.$files->files_name.'" > 
+                                <img  src="'.$dominio_pdf_externo.'/public/img/upload/'.$files->files_name.'" class="img-fluid" height="20%" >
+                            </a>';
                     })
                 ->addColumn('action', function ($files) {
-                    return '<a href="#edit-'.$files->files_id.'" class="btn" title="Fazer download desse arquivo" ><i class="fa fa-download"></i></a>';
+                    $dominio_pdf_externo = "http://209.97.128.184/escolhaazul";
+                    return '<a href="'.$dominio_pdf_externo.'/public/img/upload/'.$files->files_name.'" download="'.$files->files_name.'" class="btn" title="Fazer download desse arquivo" >
+                                <i class="fa fa-download"></i>
+                            </a>';
                 })
                 ->rawColumns(['files_name', 'action'])->make(true);		
             

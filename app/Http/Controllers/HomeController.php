@@ -93,7 +93,7 @@ class HomeController extends Controller
 
         
         //Survey::whereMonth('','')->get();    
-        return view('home', compact('array_month', 'dt'));
+        return view('home', compact('array_month'));
     }
 
     public function widget()

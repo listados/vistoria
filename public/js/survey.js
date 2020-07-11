@@ -126,8 +126,23 @@ $(function () {
         });
     });
 
+<<<<<<< HEAD
     $(".click_print_survey").click(function () {
         $("#load_print_survey").show();
+=======
+  $(".click_print_survey").click(function () {
+    $("#load_print_survey").show();
+  });
+
+  function getImageAmbience() {
+    route = domain_complet + '/dist/img/upload/vistoria/';
+    $.get(domain_complet + "files_ambience/show/" + $("#id_survey_ambience").val(), function (data) {
+      /*optional stuff to do after success */
+      $.each(data, function (index, val) {
+        /* iterate through array or object */
+        $('#table-ambience-survey').append('<tbody>' + '<tr>' + '<td>' + val.ambience_name + '</td>' + '<td style="width: 50%;"><a href="#" class="thumbnail">' + '<img src="' + route + val.files_ambience_description_file + '" alt="' + val.files_ambience_description_file + '" width="50%" height="50%">' + '</a></td>' + '<td> <input type="checkbox" name="surveyAlter[]" title="Alterar Ambiente" value="' + val.files_ambience_id + '"></td>' + '<td><input type="checkbox" name="surveyDelete[]" title="Excluir Ambiente" value="' + val.files_ambience_id + '"></td>' + '</tr>' + '</tbody>');
+      });
+>>>>>>> 99f3e36d69d11be44352fa86bd2e5697813bcd0b
     });
 
     function getImageAmbience() {

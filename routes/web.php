@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function() {
     });
     Route::resource('imovel' ,'ImmobileController');
     //ARQUIVOS DE AMBIENTE
-    Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@showImmobile');
+    Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
     //Route::resource('vistoria' , 'SurveyController');
     Route::prefix('usuario')->group(function(){
         Route::get('/editar/{id}' , 'UserController@edit');
