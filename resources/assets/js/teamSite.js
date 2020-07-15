@@ -3,6 +3,7 @@ $(document).ready(function () {
     var _language;
     console.log(domain_complet + 'site/office/Gestor');
     PNotify.prototype.options.styling = "fontawesome";
+    console.log('sdfas');
     $("#tabelaComercial").DataTable({
         processing: true,
         //serverSide: true,
@@ -12,7 +13,7 @@ $(document).ready(function () {
             infoEmpty: "Sem registro para mostrar",
             infoFiltered: " - Filtrando para _MAX_ registros"
         }),
-        ajax: domain_complet + '/site/office/Gestor',
+        ajax: domain_complet + '/site/office',
         order: [[0, "desc"]],
         columns: [
             { data: 'teamSites_photo', name: 'teamSites_photo' },
@@ -20,6 +21,7 @@ $(document).ready(function () {
             { data: 'teamSites_phoneOne', name: 'teamSites_phoneOne' },
             { data: 'teamSites_linkedin', name: 'teamSites_linkedin' },
             { data: 'teamSites_text', name: 'teamSites_text' },
+            { data: 'teamSites_office', name: 'teamSites_office' },
             { data: 'action', name: 'action', orderable: false, searchable: false }]
     });
 });

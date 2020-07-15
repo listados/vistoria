@@ -1,7 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
     "/js/vendor.js": "/js/vendor.js",
+    "/js/app.js": "/js/app.js",
     "/js/survey.js": "/js/survey.js",
     "/js/proposal_pf.js": "/js/proposal_pf.js",
     "/js/key.js": "/js/key.js",

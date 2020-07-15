@@ -1,30 +1,18 @@
 webpackJsonp([3],{
 
-/***/ 52:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(53);
+module.exports = __webpack_require__(13);
 
 
 /***/ }),
 
-/***/ 53:
+/***/ 13:
 /***/ (function(module, exports) {
 
-$(document).ready(function () {
-    $('[data-toggle="popover"]').popover();
-});
-
-$(function () {
-
-    $('#table-proposal-pf').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: domain_complet + '/escolha-azul/getProposalPF',
-        columns: [{ data: 'proposal_id', name: 'proposal_id' }, { data: 'proposal_completed', name: 'proposal_completed' }, { data: 'proposal_name', name: 'proposal_name' }, { data: 'proposal_id_user', name: 'proposal_id_user' }, { data: 'proposal_email', name: 'proposal_email' }, { data: 'proposal_status', name: 'proposal_status' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
-    });
-});
+throw new Error("Module build failed: Error: Cannot find module '@babel/core'\nRequire stack:\n- /home/junior/dev/vistoria/node_modules/babel-loader/lib/index.js\n- /home/junior/dev/vistoria/node_modules/loader-runner/lib/loadLoader.js\n- /home/junior/dev/vistoria/node_modules/loader-runner/lib/LoaderRunner.js\n- /home/junior/dev/vistoria/node_modules/webpack/lib/NormalModule.js\n- /home/junior/dev/vistoria/node_modules/webpack/lib/NormalModuleFactory.js\n- /home/junior/dev/vistoria/node_modules/webpack/lib/Compiler.js\n- /home/junior/dev/vistoria/node_modules/webpack/lib/webpack.js\n- /home/junior/dev/vistoria/node_modules/laravel-mix/src/Api.js\n- /home/junior/dev/vistoria/node_modules/laravel-mix/src/index.js\n- /home/junior/dev/vistoria/node_modules/laravel-mix/setup/webpack.config.js\n- /home/junior/dev/vistoria/node_modules/webpack/bin/convert-argv.js\n- /home/junior/dev/vistoria/node_modules/webpack/bin/webpack.js\n babel-loader@8 requires Babel 7.x (the package '@babel/core'). If you'd like to use Babel 6.x ('babel-core'), you should install 'babel-loader@7'.\n    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:794:15)\n    at Function.Module._load (internal/modules/cjs/loader.js:687:27)\n    at Module.require (internal/modules/cjs/loader.js:849:19)\n    at require (internal/modules/cjs/helpers.js:74:18)\n    at Object.<anonymous> (/home/junior/dev/vistoria/node_modules/babel-loader/lib/index.js:10:11)\n    at Module._compile (internal/modules/cjs/loader.js:956:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)\n    at Module.load (internal/modules/cjs/loader.js:812:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:724:14)\n    at Module.require (internal/modules/cjs/loader.js:849:19)\n    at require (internal/modules/cjs/helpers.js:74:18)\n    at loadLoader (/home/junior/dev/vistoria/node_modules/loader-runner/lib/loadLoader.js:13:17)\n    at iteratePitchingLoaders (/home/junior/dev/vistoria/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/junior/dev/vistoria/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/home/junior/dev/vistoria/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/junior/dev/vistoria/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/junior/dev/vistoria/node_modules/webpack/lib/Compilation.js:151:10)\n    at factoryCallback (/home/junior/dev/vistoria/node_modules/webpack/lib/Compilation.js:342:12)\n    at /home/junior/dev/vistoria/node_modules/webpack/lib/NormalModuleFactory.js:243:5\n    at /home/junior/dev/vistoria/node_modules/webpack/lib/NormalModuleFactory.js:94:13\n    at /home/junior/dev/vistoria/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.<anonymous> (/home/junior/dev/vistoria/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/home/junior/dev/vistoria/node_modules/tapable/lib/Tapable.js:272:13)\n    at /home/junior/dev/vistoria/node_modules/webpack/lib/NormalModuleFactory.js:69:10\n    at /home/junior/dev/vistoria/node_modules/webpack/lib/NormalModuleFactory.js:196:7\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
 
 /***/ })
 
-},[52]);
+},[12]);
