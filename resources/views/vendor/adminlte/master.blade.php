@@ -31,6 +31,7 @@
     
     <!-- STYLE --> 
     {{ Html::style('/css/all.min.css') }}
+    {{ Html::style('https://www.jqueryscript.net/demo/Rich-Text-Editor-jQuery-RichText/richtext.min.css') }}
     <!--PARA NOTIFICAÇÃO -->
     {{ Html::style('css/plugins/pnotify.custom.min.css')}}
     {{ Html::style('css/plugins/animate.css')}}
@@ -45,8 +46,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script type="text/javascript">
          //GLOBALIZANDO URL
-     var project_survey = ':4000/';
-     domin  =  window.location.protocol + "//" + window.location.hostname;
+     var project_survey = '/';
+     domin  =  window.location.protocol + "//" + window.location.hostname+':50000';
      var domain_complet = domin + project_survey; 
      var url = window.location.origin;
 
@@ -79,6 +80,7 @@
 @endif
     <!-- ckeditor -->
 <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+<script src="https://www.jqueryscript.net/demo/Rich-Text-Editor-jQuery-RichText/jquery.richtext.js"></script>
 <!-- NOTIFICAÇÃO -->
 {{ Html::script('/js/plugins/pnotify/pnotify.custom.min.js') }}
 

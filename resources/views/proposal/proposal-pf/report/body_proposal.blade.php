@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 <td class="tg-0lax"><strong>Condomínio: </strong> <span>{{ ($proposta[0]['proposal_value_condominium'])}}</span></td>
-                <td class="tg-0lax"><strong>IPTU - Mensal:</strong> <span{{ number_format($proposta[0]['proposal_value_iptu'],2,',','.')}}></span></td>
+                <td class="tg-0lax"><strong>IPTU - Mensal:</strong> <span>{{ number_format($proposta[0]['proposal_value_iptu'],2,',','.')}}></span></td>
             </tr>
             <tr>
                 <td class="tg-0lax"><strong>Motivo da Locação: </strong> <span>{{ ($proposta[0]['proposal_lease_reason'])}}</span></td>
@@ -511,6 +511,55 @@
             @endif                      
         </div>
 
+        <div class="col-md-12">
+            <label class="text-info">Locatário Adicional 01</label>
+            <div class="bottom_div"></div>
+            <?php
+               // $campos = array('proposal_guarantor_name','guarantor_email');
+                     
+                ?>
+            <table style="width:100%;">
+                <tr>
+                    <td>
+                        <strong>Tipo:</strong> <span><?php echo $proposta[0]['proposal_occupant_cpf']; ?></span>
+                    </td>
+                    <td><strong>Nome:</strong> <span><?php echo $proposta[0]['proposal_occupant_name']; ?></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Opção de Cadastro:</strong> <span><?php echo $proposta[0]['proposal_occupant_option']; ?></span></td>
+                    <td><strong>E-mail:</strong> <span><?php echo $proposta[0]['proposal_occupant_email']; ?></span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+            <br />   
+        </div>
+
+        <div class="col-md-12">
+            <label class="text-info">Locatário Adicional 02</label>
+            <div class="bottom_div"></div>
+            <?php
+               // $campos = array('proposal_guarantor_name','guarantor_email');
+                     
+                ?>
+            <table style="width:100%;">
+                <tr>
+                    <td>
+                        <strong>Tipo:</strong> <span><?php echo $proposta[0]['proposal_occupant_cpf2']; ?></span>
+                    </td>
+                    <td><strong>Nome:</strong> <span><?php echo $proposta[0]['proposal_occupant_name2']; ?></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Opção de Cadastro:</strong> <span><?php echo $proposta[0]['proposal_occupant_option2']; ?></span></td>
+                    <td><strong>E-mail:</strong> <span><?php echo $proposta[0]['proposal_occupant_email2']; ?></span></td>
+                </tr>
+                <tr>
+                  <td></td>
+                </tr>
+            </table>
+            <br />   
+        </div>
         <div class="col-md-12">
             <label class="text-info">(01) Fiador</label>
             <div class="bottom_div"></div>

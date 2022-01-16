@@ -12,6 +12,7 @@
     <div class="login-box">
         <div class="login-logo">
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <label> Sistema de Vistoria</label>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

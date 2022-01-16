@@ -6,7 +6,7 @@
 @php $survey_id = base64_decode(\Request::segment(2) );//pegando o parametro desejado 
 @endphp
 <h1>Vistoria
-	<small>{{ $tit_small_survey[0] }} {{  $tit_small_survey[1] .' | ' }} <b class="label label-success">{{ $survey_update[0]->survey_code }}</b> </small>
+	<small>{{ $tit_small_survey[0] }} {{  $tit_small_survey[1] .' | ' }} <b class="label label-success">{{ $id_survey }}</b> </small>
 </h1>
 
 <ol class="breadcrumb">
@@ -468,6 +468,8 @@
 				@if($title_survey == "Nova-Vistoria")				
 				{{ Form::hidden('type_survey' , $title_survey) }}
 				@elseif ($title_survey == "Editar-Vistoria")
+				{{ Form::hidden('type_survey' , $title_survey) }}
+				@elseif ($title_survey == "Replicando-Vistoria")
 				{{ Form::hidden('type_survey' , $title_survey) }}				
 				@endif
 				{{ Form::hidden('survey_id' , $survey_id) }}

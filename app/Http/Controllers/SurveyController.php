@@ -137,6 +137,7 @@ class SurveyController extends Controller
         }
         if(isset($request['survey_occupant_name']))
         {
+            
             $veri_occupen = Survey::verifyUserExist($request['survey_occupant_name']);//VERIFICAÇÃO PARA NOME DO LOCATARIO
             if($veri_occupen['status'] == '400' ){
                 return response()->json(['message' =>'O LOCATÁRIO precisa está com o nome preenchido.', 'status' => 400] , 400);
@@ -162,7 +163,8 @@ class SurveyController extends Controller
             */
             if($request['type_survey'] == 'Nova-Vistoria'){
                 //VERIFICANDO EM TODOS OS ARRAYS SE A PRIMEIRA POSIÇÃO É VAZIA
-                //CASO, SEJA, EXCLUI O ARRAY, SE NAO, REALIZA O CADASTRO NORMAL              
+                //CASO, SEJA, EXCLUI O ARRAY, SE NAO, REALIZA O CADASTRO NORMAL
+                
                 if($request['survey_locator_name'][0] == ''){
                     unset($request['survey_locator_name']);
                 }else{
@@ -401,6 +403,7 @@ class SurveyController extends Controller
             $year = Carbon::now();
 
              try {
+                
                 Survey::where('survey_id' , $id)->update([
                             'survey_inspetor_name'      => $request['survey_inspetor_name'] ,
                             'survey_inspetor_cpf'       => $request['survey_inspetor_cpf']  ,

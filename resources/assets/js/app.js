@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8,7 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueSweetalert2 from 'vue-sweetalert2';
+import vue2Dropzone from 'vue2-dropzone'
 
+Vue.use(VueSweetalert2);
+Vue.use(vue2Dropzone);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -16,11 +19,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 
 const app = new Vue({
     el: '#app',
-    data: {
-        titleFortics: 'Espíndola Imobiliária',
-        message: 'Sistema em vue e laravel para teste de FullStack'
-    }
 });

@@ -1,6 +1,5 @@
 {
     "/js/vendor.js": "/js/vendor.js",
-    "/js/app.js": "/js/app.js",
     "/js/survey.js": "/js/survey.js",
     "/js/proposal_pf.js": "/js/proposal_pf.js",
     "/js/key.js": "/js/key.js",
@@ -8,6 +7,5 @@
     "/js/delivery.js": "/js/delivery.js",
     "/js/manifest.js": "/js/manifest.js",
     "/css/survey.css": "/css/survey.css",
-    "/css/all.min.css": "/css/all.min.css",
-    "/js/teamSite.js": "/js/teamSite.js"
+    "/css/all.min.css": "/css/all.min.css"
 }
