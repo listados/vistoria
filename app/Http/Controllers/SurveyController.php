@@ -39,15 +39,20 @@ class SurveyController extends Controller
      */
     public function create()
     {
+       
          # //Created in 2016-07-22 16:48 by Junior Oliveira
         /*NA PÁGINA DE VISTORIA TEM UM BUTÃO QUE MANDA UMA REQUISIÇÃO  VIA POST E DEVOLVO PARA OUTRA ROTA COM ID */
         try {
-            $request['survey_inspetor_cpf'] = '964.396.703-44';
+            $request['survey_inspetor_cpf'] = '   .   .   -  ';
             
             $request['survey_date'] = Carbon::now();
             $nova                   = DB::table('survey')->insertGetId([
-                                                'survey_inspetor_name' => Auth::user()->name, 'survey_date_register' => Carbon::now(), 'survey_date' => Carbon::now(), 'survey_status' => 'Rascunho'
-                                            ]); 
+                                        'survey_inspetor_name' => Auth::user()->name, 
+                                        'survey_date_register' => Carbon::now(), 
+                                        'survey_date' => Carbon::now(), 
+                                        'survey_status' => 'Rascunho',
+                                        'survey_link_tour' => ''
+                                    ]); 
             // $history                = DB::table('history_survey')->insert(
             //                             ['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => 'Criou essa vistoria', 'history_survey_created' => Carbon::now(), 'history_survey_id_survey' => $nova]);
             Survey::addOrderAmbienceSurvey($nova);
@@ -92,26 +97,25 @@ class SurveyController extends Controller
     {
         //RETIRANDO O HIFEN
         $tit_small_survey = explode('-', $action);
-        $id_survey = base64_decode($id);       
+        $id_survey = base64_decode($id);    
+       
+
         $query_survey = DB::table('relation_survey_user')
                         ->join('survey', 'survey.survey_id' , '=' , 'relation_survey_user.relation_survey_user_id_survey')
                         ->join('users' , 'users.id' , '=' , 'relation_survey_user.relation_survey_user_id_user')
                         ->where('relation_survey_user.relation_survey_user_id_survey' , $id_survey)->get();
-                       
+          
         if(count($query_survey) > 0){
             $survey_update = $query_survey;
         }else{
             $survey_update = Survey::findOrFail($id_survey)->get();
-        }                
-                       
-       //dd($survey_update);
-       // $survey = Survey::findOrFail($id_survey);
+        } 
         $survey = Survey::find($id_survey);
-
+       
         $ambience       = DB::table('ambience')->orderBy('ambience_name')->get(); 
         
         $title_survey   = $action;
-
+        
         return view('survey.create' , compact('ambience' , 'title_survey' , 'survey' , 'survey_update' , 'id_survey' , 'tit_small_survey'));
     }
 
@@ -124,7 +128,7 @@ class SurveyController extends Controller
      */
     public function update(Request $request)
     {
-        
+       
         if(isset($request['survey_locator_name']))
         {
             $veri_locator = Survey::verifyUserExist($request['survey_locator_name']);//VERIFICAÇÃO PARA NOME DO LOCADOR
@@ -134,6 +138,7 @@ class SurveyController extends Controller
         }
         if(isset($request['survey_occupant_name']))
         {
+            
             $veri_occupen = Survey::verifyUserExist($request['survey_occupant_name']);//VERIFICAÇÃO PARA NOME DO LOCATARIO
             if($veri_occupen['status'] == '400' ){
                 return response()->json(['message' =>'O LOCATÁRIO precisa está com o nome preenchido.', 'status' => 400] , 400);
@@ -150,7 +155,7 @@ class SurveyController extends Controller
         //adaptação em 28/04/20118  
         //UPDATE 27/09/2018
         if($request->ajax())
-        {
+        {   
             // //ESTOU PASSANDO ambience_id PARA BUSCAR A VISTORIA POR QUE $request['survey_id'] NAO ESTA VINDO O ID DA VISTORIA
             //ID DA VISTORIA
             $id = $request['survey_id'];    
@@ -159,7 +164,8 @@ class SurveyController extends Controller
             */
             if($request['type_survey'] == 'Nova-Vistoria'){
                 //VERIFICANDO EM TODOS OS ARRAYS SE A PRIMEIRA POSIÇÃO É VAZIA
-                //CASO, SEJA, EXCLUI O ARRAY, SE NAO, REALIZA O CADASTRO NORMAL              
+                //CASO, SEJA, EXCLUI O ARRAY, SE NAO, REALIZA O CADASTRO NORMAL
+                
                 if($request['survey_locator_name'][0] == ''){
                     unset($request['survey_locator_name']);
                 }else{
@@ -191,7 +197,7 @@ class SurveyController extends Controller
                ESSE PARAMETRO VARIAVEL É O MESMO NOME QUE ESTA NO INPUT DO FORMULARIO variavel[]
                ENTÃO EU TENHO QUE SABER QUANTAS POSIÇÕES SÃO PARA PODER DÁ FAZER UM LOOP
                CONSULTO O USUARIO PELO ID ENVIADO E FAÇO O UPDATE PASSANDO O NOVO NOME
-               */
+               */   
                /* ----  LOCADOR  --- */
                //total de posição do array id_user 
                $total_idUser = 0;
@@ -201,14 +207,13 @@ class SurveyController extends Controller
                 $total_idUser = count($request['id_user']);
                }
 
-               //toal de posição do array nome locador               
+               //toal de posição do array nome locador
                $total_nomeUs = 0;
                if($request['survey_locator_name'] == null){
                 $total_idUser = 0;
                }else{
                 $total_nomeUs = count($request['survey_locator_name']) ;
                }
-
                //calculando a diferença dos dois arrays
                $dif = ($total_nomeUs - $total_idUser);
                //dd($request->all());
@@ -260,7 +265,7 @@ class SurveyController extends Controller
                     }
                 }
                 /* ----  LOCATÁRIO  --- */
-                //total de posição do array id_user                
+                //total de posição do array id_user          
                 $total_idUserOccupant = 0;
                 if($request['id_user_occupant'] == null){
                     $total_idUserOccupant = 0;
@@ -274,7 +279,6 @@ class SurveyController extends Controller
                 }else{
                     $total_nameOccupant = count($request['survey_occupant_name']) ;
                 }
-                
                 //calculando a diferença dos dois arrays
                 $dif_occupant = ($total_nameOccupant - $total_idUserOccupant);
                 //VERIFICANDO SE ARRAY ID_USER É MENOR QUE NOME LOCADOR
@@ -323,7 +327,7 @@ class SurveyController extends Controller
 
             }
 
-            /* ----  FIADOR Guarantor --- */            
+            /* ----  FIADOR Guarantor --- */
             $total_idUserGuarantor = 0;
             if($request['id_user_guarantor'] == null){
                 $total_idUserGuarantor = 0;
@@ -336,8 +340,7 @@ class SurveyController extends Controller
             }else{
                 $total_nameGuarantor    = count($request['survey_guarantor_name']) ;
             }
-           
-            $difGuarantor           = ($total_nameGuarantor - $total_idUserGuarantor);
+            $difGuarantor   = ($total_nameGuarantor - $total_idUserGuarantor);
              //dd($request['survey_guarantor_name']);
             if($total_idUserGuarantor == 0){
 
@@ -401,6 +404,7 @@ class SurveyController extends Controller
             $year = Carbon::now();
 
              try {
+                
                 Survey::where('survey_id' , $id)->update([
                             'survey_inspetor_name'      => $request['survey_inspetor_name'] ,
                             'survey_inspetor_cpf'       => $request['survey_inspetor_cpf']  ,
@@ -457,6 +461,7 @@ class SurveyController extends Controller
         // $query = DB::getQueryLog();
        return Datatables::of($survey)
                 ->editColumn('survey_date_register', function ($survey) {
+                    
                     return $survey->survey_date_register ? with(new Carbon($survey->survey_date_register))->format('d/m/Y') : '';
                 })
                 ->editColumn('survey_address_immobile', function ($survey) {
@@ -472,13 +477,12 @@ class SurveyController extends Controller
                         $class_enable = "disabled";
                     }
                     return '<a href="'.url('vistoria/'.base64_encode($survey->survey_id).'/editar/Editar-Vistoria/acao').'" class="btn '.$class_enable.'" data-toggle="tooltip" data-placement="left" title="Editar Vistsoria '.$survey->survey_id.'"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                        <a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
-                        <a href="#" class="btn" onclick="print_survey('.$survey->survey_id.')" title="Imprmir Vistoria '.$survey->survey_id.'"><i class="fa fa-print" aria-hidden="true"></i></a>
+                        <a href="'.url('vistoria/imprimir?id_survey='.$survey->survey_id.'&imprimir_com_foto=true').'" class="btn" target="_blank" title="Imprmir Vistoria '.$survey->survey_id.'"><i class="fa fa-print" aria-hidden="true"></i></a>
                         <a href="#" class="btn" onclick="repli('.$survey->survey_id.');" title="Replicar Vistoria '.$survey->survey_id.'"><i class="fa fa-files-o" aria-hidden="true"></i></a>
                         <a href="'.url('vistoria/'.base64_encode($survey->survey_id).'/download').'" class="btn '.$class_enable.'" title="Visualizar e Download da Vistoria '.$survey->survey_id.'"><span class="badge-noti">'.Survey::countImage($survey->survey_id).'</span><i class="fa fa-picture-o" aria-hidden="true"></i></a>
                         <a href="#" class="btn text-danger '.$class_enable.'" onclick="delete_survey('.$survey->survey_id.')" title="Excluir vistoria -'.$survey->survey_id.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         <a href="'.url('vistoria/historico/'.$survey->survey_id).'" class="btn " onclick="" title=Historico da vistoria -'.$survey->survey_id.'"><i class="fa fa-history" aria-hidden="true"></i></a>';
-                })             
+                })      //<a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>       
                 ->make(true);
        
         //return Datatables::of(Survey::get()->make(true);
@@ -502,7 +506,7 @@ class SurveyController extends Controller
 
     public function upload(Request $request)
     {
-        # //Created in 2016-07-26 20:02 by Junior Oliveira
+         # //Created in 2016-07-26 20:02 by Junior Oliveira
             global $ambience , $id_survey, $tmp_name;
             //id vistoria
             $id_survey     = $request['ambience_id'];
@@ -563,6 +567,13 @@ class SurveyController extends Controller
         $id = $request['id_survey'];
         $order_ambience = DB::table('order_ambience_survey')->where('order_ambience_survey_id_survey' , $id)->get();
         
+        if(count($order_ambience) == 0){
+            Survey::addOrderAmbienceSurvey($id);
+            $order_ambience = DB::table('order_ambience_survey')->where('order_ambience_survey_id_survey' , $id)->get();
+        
+        } 
+        
+        //PARA ORDENAR O AMBIENTE
         if($order_ambience[0]->order_ambience_survey_order == 0)
         {
             $survey = DB::table('files_ambience')
@@ -576,56 +587,97 @@ class SurveyController extends Controller
             ->join('ambience', 'ambience.ambience_id', '=', 'files_ambience.files_ambience_id_ambience')
             ->where('survey_id' , $id)
             ->orderByRaw("FIELD(ambience_id,".$order_ambience[0]->order_ambience_survey_list_order.")")->get();
+           
         }        
-
-        if(empty($survey))
+        
+        if($survey->count() == 0)
         {
             $survey = Survey::where('survey_id' , $id)->get();
-            $photo_ambience = false;           
+            $photo_ambience = false;     
+           
         }else{
             $photo_ambience = true;
+           
         }        
+       
         $users = DB::table('relation_survey_user')
                     ->join('survey', 'survey.survey_id' , '=' , 'relation_survey_user.relation_survey_user_id_survey')
                     ->join('users' , 'users.id' , '=' , 'relation_survey_user.relation_survey_user_id_user')
                     ->where('relation_survey_user.relation_survey_user_id_survey' , $id)->get();
-                        
+        //PARA AS RUBRICAS DO LOCADOR(S)
+        $countLocador = 0;
+        foreach ($users as $userLocador) {
+            # code...
+            if($userLocador->relation_survey_user_type == 'Locador'){
+                $countLocador ++;
+            }
+        }         //PARA AS RUBRICAS DOS LOCATÁRIOS
+        $countLocatario = 0;
+        foreach ($users as $userLocatario) {
+            # code...
+            if($userLocatario->relation_survey_user_type == 'Locatário'){
+                $countLocatario ++;
+            }
+        }          
+         //PARA AS RUBRICAS DO(S) FIADOR(ES)
+        $countFiador = 0;
+        foreach ($users as $userFiador) {
+            # code...
+            if($userFiador->relation_survey_user_type == 'Fiador'){
+                $countFiador ++;
+            }
+        }        
+       
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
-        $data_extenso = FunctionAll::data_extenso();                
+        //DATA POR EXTENSO
+        if($survey[0]->survey_status == "Rascunho")
+        {
+            $dtSurvey = Carbon::parse($survey[0]->survey_date_register);
+            $data_extenso = FunctionAll::data_extenso($dtSurvey->day, $dtSurvey->month, $dtSurvey->year );
+
+        }else{// SE FINALIZADO
+            $dtSurvey = Carbon::parse($survey[0]->survey_finalized_date);
+            $data_extenso = FunctionAll::data_extenso($dtSurvey->day, $dtSurvey->month, $dtSurvey->year );
+        }
         $settings = DB::table('settings')->get();   
+        
        
         //FILTRANDO O ARRAY COM TIPO 360
-        $survey_type = FALSE;
-        foreach ($survey as $key => $value) {
-            
-            if(empty($value->files_ambience_id))
-            {
-                $survey_type = TRUE;
-            }
-        }
-        if($survey_type == TRUE)
-        {
-           $survey_360 = array_filter(
-                $survey,
-                function($item)
-                {
-                    if ( $item->files_ambience_type == '360' )
-                        return TRUE;
+    //     $survey_type = FALSE;
+    //     foreach ($survey as $key => $value) {
+    //         //echo "key ".$key.' - '.$value;
+    //         if(isset($value->files_ambience_id))
+    //         {
+    //             $survey_type = TRUE;
+    //         }
+    //     }//fim
+    //    dump($survey_type);
+    //    dd($survey->count());
+    //     if($survey_type == TRUE)
+    //     {
+           
+    //        $survey_360 = array_filter(
+    //             $survey,
+    //             function($item)
+    //             {
+    //                 if ( $item->files_ambience_type == '360' )
+    //                     return TRUE;
 
-                    return FALSE;
-                }
-            );
-        }else{
-            $survey_360 = [];
-        }
+    //                 return FALSE;
+    //             }
+    //         );
+    //     }else{
+    //         $survey_360 = [];
+    //     }
+        
         //VARIÁVEIS COM AS FOTOS NORMAIS
         $survey_normal = $survey;
         //LOOP RETIRANDO OS INDICES COM O TIPO 360
-        foreach ($survey_360 as $key => $value)
-        {
-            unset( $survey_normal[$key] );
-        }
+        // foreach ($survey_360 as $key => $value)
+        // {
+        //     unset( $survey_normal[$key] );
+        // }
         //$survey_normal ESTÁ NESSE MOMENTO COM AS FOTOS CONVENCIONAIS
         $survey_update = [];
         foreach ( $survey_normal as $item )
@@ -637,24 +689,34 @@ class SurveyController extends Controller
         }
 
         $survey_update_360 = [];
-        foreach ( $survey_360 as $item )
-        {
-            $survey_update_360[ $item->ambience_id ][] = $item;
-        }
-
+        // foreach ( $survey_360 as $item )
+        // {
+        //     $survey_update_360[ $item->ambience_id ][] = $item;
+        // }
+        //dd($survey);
         // return view('survey.report.view_survey',['survey' => $survey , 'survey_update' => $survey_update , 'survey_update_360' => $survey_update_360 , 'settings' => $settings , 'users' => $users, 'data_extenso' => $data_extenso , 'photo_ambience' => $photo_ambience ]);
-        $pdf = PDF::loadView('survey.report.view_survey',['survey' => $survey , 'survey_update' => $survey_update , 'survey_update_360' => $survey_update_360 , 'settings' => $settings , 'users' => $users, 'data_extenso' => $data_extenso , 'photo_ambience' => $photo_ambience ]); 
-      
+        $pdf = PDF::loadView('survey.report.view_survey',
+            ['survey' => $survey , 
+            'survey_update' => $survey_update , 
+            'survey_update_360' => $survey_update_360 , 
+            'settings' => $settings , 'users' => $users, 
+            'data_extenso' => $data_extenso , 
+            'photo_ambience' => $photo_ambience , 
+            'countLocador' => $countLocador,
+            'countLocatario' => $countLocatario, 
+            'countFiador' => $countFiador
+        ]); 
+        ob_clean();
         $pdf->setPaper('A4', 'report');  
         $pdf->output();
         $dom_pdf = $pdf->getDomPDF();
 
-        $canvas = $dom_pdf ->get_canvas();
+        $canvas = $dom_pdf->get_canvas();
         // page_text(pos_horizontal,pos_vertical , texto , null , tamanho, cor_em_rgb)
                
-        $canvas->page_text(530, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
+        $canvas->page_text(510, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
         
-        return $pdf->stream();     
+        return $pdf->stream("Vistoria_".$request['id_survey'].".pdf");
     }
 
     public function download($id)
@@ -720,7 +782,8 @@ class SurveyController extends Controller
        // dump($survey_reply->survey_id);
         //return DB::getQueryLog();
         $photo = DB::table('files_ambience')->where('files_ambience_id_survey' , '=' , $id)->get();
-
+        Survey::addOrderAmbienceSurvey($id);
+        
         global $new_photo;
         $new_photo = [];
         foreach ($photo as $value) {            

@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function() {
         
     });
     
-    /*  ----- ROTA PARA CADASTRO DE IMÓVEIS -----  */
+    /*  ----- ROTA PARA CADASTRO DE IMÃ“VEIS -----  */
     Route::prefix('imovel')->group(function(){
         Route::get('sincronizar/'   , 'ImmobileController@xml');    
         Route::get('imovel-mostra/{code}'   , 'ImmobileController@show');    
@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function() {
     });
     Route::resource('imovel' ,'ImmobileController');
     //ARQUIVOS DE AMBIENTE
-    Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@showImmobile');
+    Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
     //Route::resource('vistoria' , 'SurveyController');
     Route::prefix('usuario')->group(function(){
         Route::get('/editar/{id}' , 'UserController@edit');
@@ -88,22 +88,24 @@ Route::group(['middleware' => 'auth'], function() {
     //Proposta Escolha Azul
     Route::prefix('escolha-azul')->group(function(){    
         Route::get('/proposta-pessoa-fisica'            , 'ProposalPFController@index');
-        Route::get('getProposalPF'                      , 'ProposalPFController@getProposalPF');
+        
         Route::get('pdf-pf/{id}/{proposta}'             , 'ProposalPFController@showReportPf');
         Route::get('download/{id}/{type}'               , 'ProposalPFController@download');
         Route::get('download-proposal-pf/{id}/{type}'   , 'ProposalPFController@getFilesDonwloadProposalPF');
         //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');      
     });
-    // ROTA PARA EDIÇÃO DO SITE
+    // ROTA PARA EDIÃ‡ÃƒO DO SITE
     Route::prefix('site')->group(function(){    
         Route::get('equipe' , 'SiteController@team');
-        Route::post('createPersonTeam' , 'SiteController@createPersonTeam');
-        //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');      
+        Route::get('equipe/edit/{id}' , 'TeamController@edit');
+        Route::post('createPersonTeam' , 'TeamController@store');
+        Route::get('office' , 'TeamController@getOffice');
+        Route::delete('delete/{id}' ,'TeamController@destroy' );
     });
 
     
     Route::prefix('admin')->group(function(){
-        //CONFIGURAÇÃO 
+        //CONFIGURAÃ‡ÃƒO 
         Route::get('configuracao/ambiente', 'SettingController@ambience');
         Route::get('configuracao/get-ambiente', 'SettingController@getAmbience');
         Route::resource('configuracao', 'SettingController');     

@@ -41,7 +41,18 @@ $(document).ready(function () {
   });
 
   //EDITOR DE CONTEÚDO
-  CKEDITOR.replace('survey_general_aspects');
+  //CKEDITOR.replace('survey_general_aspects');
+  $("#editor_aspect").richText({
+    bold:true,
+    italic:true,
+    underline:true,
+    imageUpload:false,
+    fileUpload:true,
+    useParagraph:false,
+    removeStyles:true,
+    code:false
+
+  });
   CKEDITOR.replace('survey_reservation');
   CKEDITOR.replace('survey_provisions');
   CKEDITOR.replace('survey_keys');
@@ -97,9 +108,9 @@ $(function () {
     for (instance in CKEDITOR.instances) {
       CKEDITOR.instances[instance].updateElement();
     }
-    console.log(domain_complet + 'vistoria/update');
+    console.log('url' , domain_complet + 'vistoria/update');
     $.ajax({
-      url: domain_complet + 'vistoria/update',
+      url: domain_complet + '/vistoria/update',
       type: "post",
       dataType: "JSON",
       data: $("#form_survey").serialize(),
@@ -117,8 +128,10 @@ $(function () {
                 </div>');
       },
       error: function (data, status, error){
-        console.log(data.statusText);
-        errorNotify('Ocorreu um erro inexperado, tente novamente');
+        console.log('data' , data);
+        console.log('status' , status);
+        console.log('error' , error);
+        errorNotify(data.responseJSON);
        
       }
     }).done(function () {

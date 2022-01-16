@@ -16,3 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('teamEquipe/{id}' , 'TeamController@show');
+Route::put('team/{id}' , 'TeamController@update');
+Route::post('team/avatar/{id}' , 'TeamController@uploadAvatar');
+
+/**
+ * Rota para escolha azul
+ */
+Route::prefix('escolha-azul')->group(function(){ 
+    Route::get('getProposalPF'  , 'ProposalPFController@getProposalPF');
+ });

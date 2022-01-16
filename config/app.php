@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' =>'http://espindolaimobiliaria.com.br/admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -152,9 +152,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         //PDF
         Barryvdh\DomPDF\ServiceProvider::class,
-        //WIDGETS
-        Arrilot\Widgets\ServiceProvider::class,
-      
+            
 
         /*
          * Package Service Providers...
@@ -223,10 +221,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         //PDF
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        //WIDGETS
-        'Widget'       => Arrilot\Widgets\Facade::class,
-        'AsyncWidget'  => Arrilot\Widgets\AsyncFacade::class,
-       
+        
     ],
 
 ];

@@ -94,7 +94,7 @@
                <tr>
                  <td style=" padding: 5px; margin: 5px; width:250px; ">
                    <div class="">
-                     <img src="{{ public_path('dist/img/logo_grande.jpg') }}" width="64" height="32" />  
+                     <img src="{{ url('dist/img/logo_grande.jpg') }}" width="64" height="32" />  
                    </div>  
                  </td>
                  <td style=" padding: 5px; margin: 5px; text-align: left;">

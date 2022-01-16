@@ -17,11 +17,9 @@ class FunctionAll extends Model
 		
 	}
 
-    static public function data_extenso()
+    static public function data_extenso($dia, $mes, $ano)
 	{
-		$dia = date('d');
-		$mes = date('m');
-		$ano = date('Y');
+		
 		$semana = date('w');
 		$cidade = "Fortaleza";
 
