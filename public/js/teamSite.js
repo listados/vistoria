@@ -54,7 +54,7 @@ function deleteTeam(id) {
                         
                     }
                 });
-               window.location.replace('http://localhost:4000/site/equipe#');
+               window.location.replace(domain_complet + '/site/equipe#');
             }
            
         }, {
