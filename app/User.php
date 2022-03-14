@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-         'name', 'email', 'password', 'nick', 'id_profile' ,  'status', 'phone' , 'receive_proposal', 'avatar', 'adm'
+         'name', 'email', 'password', 'nick', 'id_profile' ,  'status', 'phone' , 'receive_proposal', 'avatar', 'adm', 'cpf'
     ];
 
     /**
@@ -27,16 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    static public function getNameUser($id)
+    public static function getNameUser($id)
     {
         $user = User::find($id);
         return $user->nick;
     }
 
-    static public function getNameAtendente($id)
+    public static function getNameAtendente($id)
     {
         $atendente_name = User::select('nick')->find($id);
         $atend_converter = json_decode($atendente_name, true);
-       return $atend_converter['nick'];
+        return $atend_converter['nick'];
     }
 }
