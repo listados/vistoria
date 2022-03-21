@@ -110,7 +110,6 @@ class SurveyController extends Controller
                         ->join('users', 'users.id', '=', 'relation_survey_user.relation_survey_user_id_user')
                         ->where('relation_survey_user.relation_survey_user_id_survey', $id_survey)->get();
 
-
         if (count($query_survey) > 0) {
             $survey_update = $query_survey;
         } else {
@@ -160,6 +159,12 @@ class SurveyController extends Controller
             if ($veri_occupant['status'] == '400') {
                 return response()->json(['message' => 'O LOCATÁRIO precisa está com o CPF preenchido.', 'status' => 400], 400);
             }
+        }
+
+        if ($request['type_survey'] == 'Replicando-Vistoria') {
+            DB::table('relation_survey_user')->where('relation_survey_user_id_survey', '=', $request['survey_id'])
+                ->where('relation_survey_user_type', 'Locatário')
+                ->delete();
         }
 
         # //Created in 2016-07-22 23:39 by Junior Oliveira
@@ -285,12 +290,15 @@ class SurveyController extends Controller
 
 
 
-                $total_idUserOccupant = 0;
+
+
+                $totalOcupant = 0;
                 if ($request['id_user_occupant'] == null) {
-                    $total_idUserOccupant = 0;
+                    $totalOcupant = 0;
                 } else {
-                    $total_idUserOccupant = count($request['id_user_occupant']);
+                    $totalOcupant = count($request['id_user_occupant']);
                 }
+
                 //toal de posição do array nome locador
                 $total_nameOccupant = 0;
                 if ($request['survey_occupant_name'] == null) {
@@ -299,24 +307,25 @@ class SurveyController extends Controller
                     $total_nameOccupant = count($request['survey_occupant_name']) ;
                 }
                 //calculando a diferença dos dois arrays
-                $dif_occupant = ($total_nameOccupant - $total_idUserOccupant);
+                $dif_occupant = ($total_nameOccupant - $totalOcupant);
+
                 //VERIFICANDO SE ARRAY ID_USER É MENOR QUE NOME LOCADOR
                 //dd($request->all());
-                if ($total_idUserOccupant == 0) {
+                if ($totalOcupant == 0) {
                     for ($i=0; $i < $total_nameOccupant; $i++) {                             # code...
                         $campo_user = array($request->survey_occupant_name[$i] , $request->survey_occupant_email[$i], $request->survey_occupant_cpf[$i]);
                         $surv_new_ocu = Survey::cadastra_usuario($campo_user, $request['survey_id'], $request->survey_occupant_cpf[$i], 'Locatário');
                     }
                 } else {
-                    if ($total_idUserOccupant < $total_nameOccupant) {
+                    if ($totalOcupant < $total_nameOccupant) {
                         $tot_occupant = 0;
 
 
 
-                        for ($i=0; $i < $total_idUserOccupant; $i++) {
+                        for ($i=0; $i < $totalOcupant; $i++) {
                             $userFields = [
                                 $request->survey_occupant_name[$i],
-                                $$request->survey_occupant_email[$i],
+                                $request->survey_occupant_email[$i],
                             ];
                             # code...
                             //CONSULTANDO USUARIO E ALTERANDO AS TABELAS USERS E RELATION_SERVEY_USER
@@ -340,8 +349,8 @@ class SurveyController extends Controller
                         }
 
                         //VERIFICANDO SE O TOTAL DE ARRAY ID_USER É O MESMO TOTAL DO NOMES LOCADOR, CASO SENDO ATUALIZA
-                    } elseif ($total_idUserOccupant == $total_nameOccupant) {
-                        for ($i=0; $i < $total_idUserOccupant; $i++) {
+                    } elseif ($totalOcupant == $total_nameOccupant) {
+                        for ($i=0; $i < $totalOcupant; $i++) {
                             $userFields = [
                                 $request->survey_occupant_name[$i],
                                 $request->survey_occupant_email[$i],
@@ -350,9 +359,8 @@ class SurveyController extends Controller
                             //CONSULTANDO USUARIO E ALTERANDO AS TABELAS USERS E RELATION_SERVEY_USER
                             $user_occ = User::find($request->id_user_occupant[$i]);
 
-
                             if ($user_occ->cpf !== $request->survey_occupant_cpf[$i]) {
-                                Survey::cadastra_usuario($userFields, $id, $request->survey_occupant_cpf[$i], 'Locatário');
+                                Survey::cadastra_usuario($userFields, $request['survey_id'], $request->survey_occupant_cpf[$i], 'Locatário');
                             } else {
                                 $user_where_occ = DB::table('users')->where('id', '=', $user_occ->id)->update([
                                     'name' => $request->survey_occupant_name[$i],
@@ -364,6 +372,7 @@ class SurveyController extends Controller
                     }
                 }
             }
+
 
             /* ----  FIADOR Guarantor --- */
             $total_idUserGuarantor = 0;
