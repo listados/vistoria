@@ -177,7 +177,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Equipe',
-                    'url'  => 'equipe'
+                    'url'  => 'site/equipe'
                 ],
                 [
                     'text' => 'Cadastro Pessoa Física',
