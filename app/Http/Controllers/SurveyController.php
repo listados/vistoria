@@ -133,31 +133,45 @@ class SurveyController extends Controller
      */
     public function update(Request $request)
     {
-        if (isset($request['survey_locator_name'])) {
-            $veri_locator = Survey::verifyUserExist($request['survey_locator_name']);//VERIFICAÇÃO PARA NOME DO LOCADOR
+        //SE TIVER LOCADOR NA VISTORIA
+        if(isset($request['survey_locator_name']))
+        {
+            //VERIFICAÇÃO PARA NOME DO LOCADOR
+            $veri_locator = Survey::verifyUserExist($request['survey_locator_name']);
             if ($veri_locator['status'] == '400') {
                 return response()->json(['messagem' => 'O LOCADOR precisa está com o nome preenchido.', 'status' => 400], 400);
             }
         }
 
         if (isset($request['survey_occupant_name'])) {
-            $veri_occupen = Survey::verifyUserExist($request['survey_occupant_name']);//VERIFICAÇÃO PARA NOME DO LOCATARIO
+            //VERIFICAÇÃO PARA NOME DO LOCATARIO
+            $veri_occupen = Survey::verifyUserExist($request['survey_occupant_name']);
             if ($veri_occupen['status'] == '400') {
-                return response()->json(['message' =>'O LOCATÁRIO precisa está com o nome preenchido.', 'status' => 400], 400);
+                return response()->json(['mensagem' =>'O LOCATÁRIO precisa está com o nome preenchido.', 'status' => 400], 400);
             }
         }
-        if (isset($request['survey_guarantor_name'])) {
-            $veri_guarant = Survey::verifyUserExist($request['survey_guarantor_name']);//VERIFICAÇÃO PAR NOME DO FIADOR
-            if ($veri_guarant['status'] == '400') {
-                return response()->json(['message' => 'O FIADOR precisa está com o nome preenchido.', 'status' => 400], 400);
-            }
-        }
-
-
-        if (isset($request['survey_occupant_cpf'])) {
-            $veri_occupant = Survey::verifyUserExist($request['survey_occupant_cpf']);//VERIFICAÇÃO PAR NOME DO FIADOR
+        
+        if (is_array($request['survey_occupant_cpf']) && isset($request['survey_occupant_cpf'])) {
+            //VERIFICAÇÃO PAR NOME DO LOCATÁRIO 
+            $veri_occupant = Survey::verifyUserExist($request['survey_occupant_cpf']);
             if ($veri_occupant['status'] == '400') {
-                return response()->json(['message' => 'O LOCATÁRIO precisa está com o CPF preenchido.', 'status' => 400], 400);
+                return response()->json(['mensagem' => 'O LOCATÁRIO precisa está com o CPF preenchido.', 'status' => 400], 400);
+            }
+        }
+
+        if (isset($request['survey_guarantor_name'])) {
+            //VERIFICAÇÃO PAR NOME DO FIADOR
+            $veri_guarant = Survey::verifyUserExist($request['survey_guarantor_name']);
+            if ($veri_guarant['status'] == '400') {
+                return response()->json(['mensagem' => 'O FIADOR precisa está com o nome preenchido.', 'status' => 400], 400);
+            }
+        }
+
+         if (is_array($request['survey_guarantor_cpf']) && isset($request['survey_guarantor_cpf'])) {
+             //VERIFICAÇÃO PAR NOME DO FIADOR            
+            $veri_occupant = Survey::verifyUserExist($request['survey_guarantor_cpf']);
+            if ($veri_occupant['status'] == '400') {
+                return response()->json(['mensagem' => 'O FIADOR precisa está com o CPF preenchido.', 'status' => 400], 400);
             }
         }
 
@@ -784,6 +798,7 @@ class SurveyController extends Controller
 
     public function reply_survey($id_survey)
     {
+        //decodifica id da vistoria
         $id = base64_decode($id_survey);
 
         $carbon = Carbon::now();
@@ -793,11 +808,11 @@ class SurveyController extends Controller
         $survey_reply->survey_status = 'Rascunho';
         $survey_reply->survey_code = $survey_reply->survey_id.'/'.date('y');
         $survey_reply->save();
-
+        
         //BUSCANDO A VISTORIA REPLICADA
-        $survey_update = Survey::where('survey_id', $survey_reply->survey_id)->get();
+        Survey::where('survey_id', $survey_reply->survey_id)->get();
 
-        $ambience       = DB::table('ambience')->get();
+        DB::table('ambience')->get();
 
         //MESMA ROTINA PARA UPDATE - RELACIONA AS TABELAS VISTORIA, USUARIO NA TABELA RELAÇAO
         // DB::enableQueryLog();
@@ -805,6 +820,7 @@ class SurveyController extends Controller
                         ->join('survey', 'survey.survey_id', '=', 'relation_survey_user.relation_survey_user_id_survey')
                         ->join('users', 'users.id', '=', 'relation_survey_user.relation_survey_user_id_user')
                         ->where('relation_survey_user.relation_survey_user_id_survey', $id)->get();
+        
         // dump($survey_reply->survey_id);
         //return DB::getQueryLog();
         $photo = DB::table('files_ambience')->where('files_ambience_id_survey', '=', $id)->get();
@@ -825,13 +841,21 @@ class SurveyController extends Controller
             );
         }
         # code / DUPLICANDO REGISTRO RELATION_SURVEY_USER COM O ID DA VISTORIA DUPLICADA
+        $new_rel = [];
         foreach ($survey as $id_rel) {
-            # code...
             //METODO REPLICATE SÓ FUNCIONOU COM O MODEL E METODO FIND
             $new_rel = RelSurveyUser::find($id_rel->relation_survey_user_id)->replicate();
+            
             //ALTERANDO O ID DA VISTORIA PARA O ID DA NOVA VISTORIA REPLICADA
             $new_rel->relation_survey_user_id_survey = $survey_reply->survey_id;
             $new_rel->save();
+
+            //VERFICANDO CADA USUARIO REPLICADO SE ELE É LOCATARIO OU FIADOR
+            //SENDO, OS MESMOS SERA EXCLUIDO E VISTORIA GERADA SOMENTE COM LOCADOR
+            if($new_rel->relation_survey_user_type == 'Locatário' || $new_rel->relation_survey_user_type == 'Fiador')
+            {
+                RelSurveyUser::find($new_rel->relation_survey_user_id)->delete();
+            }
         }
         $id_survey =  $survey_reply->survey_id;
 

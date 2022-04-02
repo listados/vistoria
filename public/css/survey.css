@@ -14,8 +14,3 @@
     border-radius: 10px;
     float: right;
 }
-
-.list-group-item{
-    cursor: pointer;
-    cursor: -webkit-grabbing;
-}

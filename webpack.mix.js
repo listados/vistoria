@@ -11,8 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-// mix.js('resources/assets/js/app.js', 'public/js')
-//    .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css');
+
 mix.styles([
     'resources/assets/css/survey.css'
 ], 'public/css/survey.css');
@@ -25,6 +26,11 @@ mix.styles([
  mix.js([
 	'resources/assets/js/survey.js'],
 	'public/js/survey.js').extract(['vue']);
+
+//TEAM
+mix.scripts([
+    'resources/assets/js/teamSite.js'
+], 'public/js/teamSite.js');
 
 //DELIVERY
  mix.js([
@@ -46,6 +52,7 @@ mix.styles([
   mix.js([
 	'resources/assets/js/proposal_pf.js'],
 	'public/js/proposal_pf.js');  
+
 // mix.scripts([
 //     'public/js/admin.js',
 //     'public/js/dashboard.js'

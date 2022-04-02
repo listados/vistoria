@@ -1,6 +1,7 @@
 
   //VARIÁVEL PARA CONFIRMAR SE DEU CERTO O UPLOAD
   confirm_complet = false;
+  Dropzone.autoDiscover = false;
   myDropzone = new Dropzone('#form-dropzone-upload', {
   	url: domain_complet + '/vistoria/upload',
   	dictDefaultMessage: "Arraste seus arquivos para essa área ou click para localizar",
