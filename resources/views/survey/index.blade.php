@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-{{ Html::script('/js/all.js') }}
+
 
 <div class="col-md-12 box">
 <a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> <i class="fa fa-plus"></i>  Nova Vistoria</a>	
@@ -48,7 +48,7 @@
 
 
 @section('js')
-
+{{ Html::script('/js/all.js') }}
 {{ Html::script('/js/manifest.js') }}
 {{ Html::script('/js/vendor.js') }}
 {{ Html::script('/js/survey.js') }}
