@@ -10,7 +10,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-.env
 public/dist/img/upload
 public/dist/img/profile
 docker-compose.yml
