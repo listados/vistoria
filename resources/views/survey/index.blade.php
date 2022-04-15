@@ -18,8 +18,9 @@
 
 <div class="col-md-12 box">
 <a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> <i class="fa fa-plus"></i>  Nova Vistoria</a>	
-
+<a href="#" class="btn bg-navy btn-flat pull-left"  tabindex="0"  data-toggle="modal" data-target="#modalSearchSurvey" data-content="Pesquisar mais vistorias" data-placement="left" style="margin: 10px;"> <i class="fa fa-search"></i>  Pesquisar Vistoria</a>	
 @include('modal.modal_load')
+@include('modal.modal_search_survey')
 
 <div class="table table-responsive">
 		<table id="table-survey" class="table table-striped table-bordered" style="width:100%;">
@@ -32,7 +33,6 @@
 				<th>Vistorador</th>
 				<th>Status</th>
 				<th>Ação</th>
-				
 			</tr>
 		</thead>
 	</table>

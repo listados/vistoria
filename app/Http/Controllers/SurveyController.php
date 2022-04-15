@@ -503,10 +503,15 @@ class SurveyController extends Controller
         //
     }
 
-    public function getSurvey()
+    public function getSurvey(Request $request)
     {
         // DB::enableQueryLog();
-        $survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc');
+
+        foreach ($request->server as $key => $value) {
+            dump($key.' - '.$value);
+        }
+        dd(gettype($request->server));
+        $survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc')->take(50);
 
         // $query = DB::getQueryLog();
         return Datatables::of($survey)

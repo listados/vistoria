@@ -269,3 +269,18 @@ $("#btn_alter_order_ambience").click(function(){
     }
   });
 });
+
+$("#btnSearchSurvey").click(function (e) { 
+  e.preventDefault();
+  form = $("#formSearchSurvey").serialize();
+  
+  $.ajax({
+    type: "post",
+    url: domain_complet + 'vistoria/all-survey',
+    data: form,
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+    }
+  });
+});

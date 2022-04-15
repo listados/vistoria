@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function() {
 //COM PREFIXO
     Route::prefix('vistoria')->group(function () {
         Route::get('/' , 'SurveyController@index');
-        Route::get('all-survey' , 'SurveyController@getSurvey');
+        Route::match(['get', 'post'], 'all-survey',  'SurveyController@getSurvey');
         Route::get('create' , 'SurveyController@create');
         Route::get('nova-vistoria/{id}' , 'SurveyController@edit');
         Route::post('update' , 'SurveyController@update');
