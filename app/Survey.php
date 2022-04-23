@@ -197,4 +197,10 @@ class Survey extends Model
 
         return $list_id;
     }
+
+    public static function getTypeImmobile()
+    {
+        $survey = Survey::where('survey_type_immobile','<>', '')->select('survey_type_immobile')->distinct()->get();
+        return $survey;
+    }
 }

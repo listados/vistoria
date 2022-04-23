@@ -9,39 +9,23 @@
             <form id="formSearchSurvey">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group col-md-6">
-                        <label for="">Código: </label>
-                        <input type="text" name="immobile_code" class="form-control" id="code" placeholder="Código">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Tipo: </label>
+                    <div class="form-group">
+                        <label for="">Escolha a pesquisa: </label>
                         <select name="immobile_type" class="form-control" id="TypeImmobile">
                             <option value="">--Selecione--</option>
-                            <option value="">01</option>
-                            <option value="">02</option>
+                            <option value="code">Código</option>
+                            <option value="type">Tipo de imóvel</option>
+                            <option value="status">Status da vistoria</option>
+                            <option value="inspector">Vistoriador</option>
                         </select>
+                    </div>
+                    <div class="form-group" id="divInfoType" style="background: #efefef; padding: 2px; border: 1px solid #c3c3c3;">
+                        <label id="labelInfoType"></label>
+                        <input type="text" name="immobile_code" class="form-control" id="inputInfoType" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-12">
                     <br>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group col-md-6">
-                        <label for="">Status: </label>
-                        <select name="immobile_type" class="form-control" id="TypeImmobile">
-                            <option value="">--Selecione--</option>
-                            <option value="">Rascunho</option>
-                            <option value="">Finalizado</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Vistoriado: </label>
-                        <select name="immobile_type" class="form-control" id="TypeImmobile">
-                            <option value="">--Selecione--</option>
-                            <option value="">Francisco</option>
-                            <option value="">Yara Pereira</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="col-md-12">
                     <div class="col-md-12">

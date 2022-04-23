@@ -506,37 +506,45 @@ class SurveyController extends Controller
     public function getSurvey(Request $request)
     {
         // DB::enableQueryLog();
-
+        $is_post = false;//PARA ALTERAR DEPOIS SE CASO FOR METODO POST
         foreach ($request->server as $key => $value) {
-            dump($key.' - '.$value);
+            // dump($key.' - '.$value);
+            if($key == 'REQUEST_METHOD' && $value == 'POST'){
+                $is_post = true;
+            }
         }
-        dd(gettype($request->server));
-        $survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc')->take(50);
+        
+        //SE REQUEST_METHOD FOR TIPO GET
+        if(!$is_post){
+            $survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc')->take(50);
 
-        // $query = DB::getQueryLog();
-        return Datatables::of($survey)
-            ->editColumn('survey_date_register', function ($survey) {
-                return $survey->survey_date_register ? with(new Carbon($survey->survey_date_register))->format('d/m/Y') : '';
-            })
-            ->editColumn('survey_address_immobile', function ($survey) {
-                return  substr($survey->survey_address_immobile, 0, 50) . '...';
-            })
-            ->editColumn('survey_inspetor_name', function ($survey) {
-                return  substr($survey->survey_inspetor_name, 0, 17) . '...';
-            })
-            ->addColumn('action', function ($survey) {
-                $class_enable = "enabled";
-                if ($survey->survey_status == "Finalizada") {
-                    $class_enable = "disabled";
-                }
-                return '<a href="' . url('vistoria/' . base64_encode($survey->survey_id) . '/editar/Editar-Vistoria/acao') . '" class="btn ' . $class_enable . '" data-toggle="tooltip" data-placement="left" title="Editar Vistsoria ' . $survey->survey_id . '"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                        <a href="' . url('vistoria/imprimir?id_survey=' . $survey->survey_id . '&imprimir_com_foto=true') . '" class="btn" target="_blank" title="Imprmir Vistoria ' . $survey->survey_id . '"><i class="fa fa-print" aria-hidden="true"></i></a>
-                        <a href="#" class="btn" onclick="repli(' . $survey->survey_id . ');" title="Replicar Vistoria ' . $survey->survey_id . '"><i class="fa fa-files-o" aria-hidden="true"></i></a>
-                        <a href="' . url('vistoria/' . base64_encode($survey->survey_id) . '/download') . '" class="btn ' . $class_enable . '" title="Visualizar e Download da Vistoria ' . $survey->survey_id . '"><span class="badge-noti">' . Survey::countImage($survey->survey_id) . '</span><i class="fa fa-picture-o" aria-hidden="true"></i></a>
-                        <a href="#" class="btn text-danger ' . $class_enable . '" onclick="delete_survey(' . $survey->survey_id . ')" title="Excluir vistoria -' . $survey->survey_id . '"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                        <a href="' . url('vistoria/historico/' . $survey->survey_id) . '" class="btn " onclick="" title=Historico da vistoria -' . $survey->survey_id . '"><i class="fa fa-history" aria-hidden="true"></i></a>';
-            })      //<a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
-            ->make(true);
+            // $query = DB::getQueryLog();
+            return Datatables::of($survey)
+                ->editColumn('survey_date_register', function ($survey) {
+                    return $survey->survey_date_register ? with(new Carbon($survey->survey_date_register))->format('d/m/Y') : '';
+                })
+                ->editColumn('survey_address_immobile', function ($survey) {
+                    return  substr($survey->survey_address_immobile, 0, 50) . '...';
+                })
+                ->editColumn('survey_inspetor_name', function ($survey) {
+                    return  substr($survey->survey_inspetor_name, 0, 17) . '...';
+                })
+                ->addColumn('action', function ($survey) {
+                    $class_enable = "enabled";
+                    if ($survey->survey_status == "Finalizada") {
+                        $class_enable = "disabled";
+                    }
+                    return '<a href="' . url('vistoria/' . base64_encode($survey->survey_id) . '/editar/Editar-Vistoria/acao') . '" class="btn ' . $class_enable . '" data-toggle="tooltip" data-placement="left" title="Editar Vistsoria ' . $survey->survey_id . '"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            <a href="' . url('vistoria/imprimir?id_survey=' . $survey->survey_id . '&imprimir_com_foto=true') . '" class="btn" target="_blank" title="Imprmir Vistoria ' . $survey->survey_id . '"><i class="fa fa-print" aria-hidden="true"></i></a>
+                            <a href="#" class="btn" onclick="repli(' . $survey->survey_id . ');" title="Replicar Vistoria ' . $survey->survey_id . '"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+                            <a href="' . url('vistoria/' . base64_encode($survey->survey_id) . '/download') . '" class="btn ' . $class_enable . '" title="Visualizar e Download da Vistoria ' . $survey->survey_id . '"><span class="badge-noti">' . Survey::countImage($survey->survey_id) . '</span><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                            <a href="#" class="btn text-danger ' . $class_enable . '" onclick="delete_survey(' . $survey->survey_id . ')" title="Excluir vistoria -' . $survey->survey_id . '"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="' . url('vistoria/historico/' . $survey->survey_id) . '" class="btn " onclick="" title=Historico da vistoria -' . $survey->survey_id . '"><i class="fa fa-history" aria-hidden="true"></i></a>';
+                })      //<a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
+                ->make(true);
+        }else{
+
+        }
 
         //return Datatables::of(Survey::get()->make(true);
     }
@@ -940,5 +948,10 @@ class SurveyController extends Controller
         } catch (Exception $e) {
             return response()->json(['message' => 'erro' . $e->getMessage(), 'status' => 400], 400);
         }
+    }
+
+    public function getTypeImmobile() {
+        $survey = Survey::getTypeImmobile();
+        return $survey;
     }
 }

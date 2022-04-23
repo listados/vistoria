@@ -80,7 +80,9 @@ $(document).ready(function () {
     // Remove <div> with id
     $("#divFiador_" + deleteindex).remove();
   });
+  
 });
+
 $(function () {
   //PARA UPLOAD DE IMAGENS
   $("#ambience_upload").change(function () {
@@ -201,6 +203,10 @@ $(document).ready(function () {
       }
     });
   });
+  
+  //ocultando div no modal de pesquisa da vistoria
+  $("#divInfoType").hide();
+  $("#inputInfoType").hide();
 });
 
 $("#sendAlterAmbience").click(function (event) {
@@ -283,4 +289,32 @@ $("#btnSearchSurvey").click(function (e) {
       console.log(response);
     }
   });
+});
+
+
+$('#TypeImmobile').on('change', function() {
+  console.log( this.value );
+  $("#divInfoType").show();
+  $("#inputInfoType").show();
+  switch (this.value) {
+    case 'code':
+      $("#labelInfoType").text('Código');
+      $("#inputInfoType").attr("placeholder", "Código da vistoria");
+      break;
+    case 'type':
+      $("#labelInfoType").text('Tipo de imóvel');
+      $("#inputInfoType").attr("placeholder", "Escolha o tipo do imóvel");
+      break;
+    case 'status':
+      $("#labelInfoType").text('Status de vistoria');
+      $("#inputInfoType").attr("placeholder", "Escolha o status da vistoria");
+      break;
+    case 'inspector':
+      $("#labelInfoType").text('Vistoriador');
+      $("#inputInfoType").attr("placeholder", "Escolha o vistoriador");
+      break;
+  
+    default:
+      break;
+  }
 });

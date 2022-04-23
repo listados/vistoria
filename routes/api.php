@@ -26,4 +26,11 @@ Route::post('team/avatar/{id}' , 'TeamController@uploadAvatar');
  */
 Route::prefix('escolha-azul')->group(function(){ 
     Route::get('getProposalPF'  , 'ProposalPFController@getProposalPF');
- });
+});
+
+/**
+ * Rota para informar os tipos de imóveis
+ */
+Route::prefix('survey')->group(function(){ 
+    Route::get('type-immobile'  , 'SurveyController@getTypeImmobile');
+});
