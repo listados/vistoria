@@ -14,3 +14,4 @@ yarn-error.log
 public/dist/img/upload
 public/dist/img/profile
 docker-compose.yml
+phpdocker/mysql
