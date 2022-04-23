@@ -10,7 +10,7 @@ services:
         image: 'mysql:5.7'
         working_dir: /application
         volumes:
-            - '.:/application'
+            - './phpdocker/mysql/data:/var/lib/mysql'
         environment:
             - MYSQL_ROOT_PASSWORD=livre
             - MYSQL_DATABASE=vistoria
