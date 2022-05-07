@@ -17,17 +17,19 @@
                             <option value="type">Tipo de imóvel</option>
                             <option value="status">Status da vistoria</option>
                             <option value="inspector">Vistoriador</option>
+                            <option value="porPeriod">Por período</option>
+                            <option value="address">Pelo endereço</option>
                         </select>
                     </div>
                     <div class="form-group" id="divInfoType" style="background: #efefef; padding: 2px; border: 1px solid #c3c3c3;">
                         <label id="labelInfoType"></label>
-                        <input type="text" name="immobile_code" class="form-control" id="inputInfoType" placeholder="">
+                        <input type="text" name="immobile_search_field" class="form-control" id="inputInfoType">
                     </div>
                 </div>
                 <div class="col-md-12">
                     <br>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12"  id="divInfoPeriod">
                     <div class="col-md-12">
                         <p class="help-block">Pesquisar as vistorias rascunho ou finalizada que estão em um período.</p>
                     </div>
@@ -40,9 +42,9 @@
                         <input type="text" name="immobile_dateEnd" class="form-control" id="immobile_dateEnd" placeholder="__/__/____">
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" id="divInfoAddress">
                     <div class="form-group">
-                        <label for="">Endereço do Imóvel: </label>
+                        {{-- <label for="">Endereço do Imóvel: </label> --}}
                         <input type="text" name="immobile_address" class="form-control" id="immobile_address" placeholder="Ex: Avenida Santos Dummont">
                     </div>
                 </div>
