@@ -203,4 +203,23 @@ class Survey extends Model
         $survey = Survey::where('survey_type_immobile','<>', '')->select('survey_type_immobile')->distinct()->get();
         return $survey;
     }
+
+    /**
+     * Método para fazer uma pesquisa para retornar o imovel de acordo com a pesquisa
+     */
+    public static function searchSurvey($request)
+    {
+        $survey = [];
+        switch ($request['immobile_type']) {
+            case 'code':
+                $survey = Survey::where('survey_code','like', '%'.$request['immobile_search_field'].'%')->get();
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        return $survey;
+
+    }
 }
