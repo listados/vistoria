@@ -214,6 +214,21 @@ class Survey extends Model
             case 'code':
                 $survey = Survey::where('survey_code','like', '%'.$request['immobile_search_field'].'%')->get();
                 break;
+            case 'type':
+                $survey = Survey::where('survey_type_immobile', $request['immobile_search_field'])->get();
+                break;
+            case 'status':
+                $survey = Survey::where('survey_status','like', '%'.$request['immobile_search_field'].'%')->get();
+                break;
+            case 'inspector':
+                $survey = Survey::where('survey_inspetor_name','like', '%'.$request['immobile_search_field'].'%')->get();
+                break;
+            case 'porPeriod':
+                //$survey = Survey::where('survey_code','like', '%'.$request['immobile_search_field'].'%')->get();
+                break;
+            case 'address':
+                $survey = Survey::where('survey_address_immobile','like', '%'.$request['immobile_search_field'].'%')->get();
+                break;
             
             default:
                 # code...
