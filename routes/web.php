@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::prefix('vistoria')->group(function () {
         Route::get('/' , 'SurveyController@index');
         Route::match(['get', 'post'], 'all-survey',  'SurveyController@getSurvey');
+        Route::match('get', 'pesquisar-vistoria',  'SurveyController@searchSurvey');
         Route::get('create' , 'SurveyController@create');
         Route::get('nova-vistoria/{id}' , 'SurveyController@edit');
         Route::post('update' , 'SurveyController@update');
@@ -40,7 +41,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('historico/{id}' , 'SurveyController@history');
         Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
         Route::post('orderBy', 'SurveyController@alter_order_ambience_survey');
-        
     });
     
     /*  ----- ROTA PARA CADASTRO DE IMÃ“VEIS -----  */

@@ -13,20 +13,20 @@ $(document).ready(function () {
     iDisplayLength: 50,
     language: {
       rows: "%d linhas selecionada",
-          infoEmpty:      "Sem registro para mostrar",
-          infoFiltered:   " - Filtrando para _MAX_ registros",
-          infoEmpty:      'Mostrando 0 de 0 para 0 registros',
-          lengthMenu:     "Mostrando _MENU_ registro",
-          loadingRecords: "Lendo...",
-          processing:     "Processando...",
-          search:         "Pesquisar por:",
-          zeroRecords:    "Nenhum registro encontrado",
-          paginate: {
-              first:      "Primeiro",
-              last:       "Último",
-              next:       "Próximo",
-              previous:   "Anterior"
-          }
+      infoEmpty: "Sem registro para mostrar",
+      infoFiltered: " - Filtrando para _MAX_ registros",
+      infoEmpty: 'Mostrando 0 de 0 para 0 registros',
+      lengthMenu: "Mostrando _MENU_ registro",
+      loadingRecords: "Lendo...",
+      processing: "Processando...",
+      search: "Pesquisar por:",
+      zeroRecords: "Nenhum registro encontrado",
+      paginate: {
+        first: "Primeiro",
+        last: "Último",
+        next: "Próximo",
+        previous: "Anterior"
+      }
     },
     ajax: domain_complet + '/vistoria/all-survey',
     order: [[0, "desc"]],
@@ -37,14 +37,14 @@ $(document).ready(function () {
   //EDITOR DE CONTEÚDO
   //CKEDITOR.replace('survey_general_aspects');
   $("#editor_aspect").richText({
-    bold:true,
-    italic:true,
-    underline:true,
-    imageUpload:false,
-    fileUpload:true,
-    useParagraph:false,
-    removeStyles:true,
-    code:false
+    bold: true,
+    italic: true,
+    underline: true,
+    imageUpload: false,
+    fileUpload: true,
+    useParagraph: false,
+    removeStyles: true,
+    code: false
 
   });
   CKEDITOR.replace('survey_reservation');
@@ -80,12 +80,11 @@ $(document).ready(function () {
     // Remove <div> with id
     $("#divFiador_" + deleteindex).remove();
   });
-  
+
 });
 
-function reloadTable()
-{
-	$("#table-survey").DataTable().ajax.reload();
+function reloadTable() {
+  $("#table-survey").DataTable().ajax.reload();
 }
 
 $(function () {
@@ -102,7 +101,7 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
   //SALVAR VISTORIA
   $("#save_button").click(function (event) {
-   //$("#load-modal").modal('show');
+    //$("#load-modal").modal('show');
     //ATRIBUINDO UM RASCUNHO
     $("#survey_status").val("Rascunho");
     //FORÇANDO A ATUALIZAR OS VALORES DO CKEDITOR
@@ -127,12 +126,12 @@ $(function () {
                 <a href="' + domain_complet + '/vistoria/' + id_survey_enc + '/editar/Editar-Vistoria/acao" class="btn btn-primary">Continuar na vistoria</a>\
                 </div>');
       },
-      error: function (data, status, error){
-        console.log('data' , data);
-        console.log('status' , status);
-        console.log('error' , data.responseJSON.mensagem);
+      error: function (data, status, error) {
+        console.log('data', data);
+        console.log('status', status);
+        console.log('error', data.responseJSON.mensagem);
         errorNotify(data.responseJSON.mensagem);
-       
+
       }
     }).done(function () {
       console.log("success");
@@ -204,11 +203,11 @@ $(document).ready(function () {
         });
       },
       error: function error(e) {
-        $.each(e, function (e, t) {});
+        $.each(e, function (e, t) { });
       }
     });
   });
-  
+
   //ocultando div no modal de pesquisa da vistoria
   $("#divInfoType").hide();
   $("#inputInfoType").hide();
@@ -262,7 +261,7 @@ $("#deleteAmbience").click(function (event) {
   });
 });
 //PARA ALTERAR O AMBIENCE NA PÁGINA DE DOWNLOAD
-$("#btn_alter_order_ambience").click(function(){
+$("#btn_alter_order_ambience").click(function () {
   list_id_ambience = "";
   $('#list-group > li').each(function (index, element) {
     // element == this
@@ -271,57 +270,64 @@ $("#btn_alter_order_ambience").click(function(){
   $.ajax({
     type: "POST",
     url: domain_complet + "/vistoria/orderBy",
-    data: { order_ambience_survey_list_order: list_id_ambience, order_ambience_survey_id_survey: $("#id_survey_ambience").val()} ,
+    data: { order_ambience_survey_list_order: list_id_ambience, order_ambience_survey_id_survey: $("#id_survey_ambience").val() },
     dataType: "json",
     success: function (response) {
       successNotify('Ambiente Alterado');
     },
-    error: function(response)
-    {
+    error: function (response) {
       errorNotify(response.responseJSON.message);
     }
   });
 });
 
-$("#btnSearchSurvey").click(function (e) { 
+$("#btnSearchSurvey").click(function (e) {
   e.preventDefault();
   form = $("#formSearchSurvey").serialize();
   
-  $.ajax({
-    type: "post",
-    url: domain_complet + 'vistoria/all-survey',
-    data: form,
-    dataType: "json",
-    success: function (response) {
-      console.log(response.data);
-      var returnData = response.data;
-      var table = $('#table-survey').DataTable( {
-          paging: false,
-          retrieve: true,
-          pageLength: 100
-      } );
-      table.clear();
-      table.destroy();
-      $('#table-survey').DataTable().ajax.reload(response,true);
-      // table = $('#table-survey').DataTable({
-      //     processing: true,
-      //     serverSide: true,
-      //     pageLength: 100,
-      //     data: returnData,
-      //     columns: [{ data: 'survey_code', name: 'survey_code' }, { data: 'survey_address_immobile', name: 'survey_address_immobile' }, { data: 'survey_date_register', name: 'survey_date_register' }, { data: 'survey_type_immobile', name: 'survey_type_immobile' }, { data: 'survey_inspetor_name', name: 'survey_inspetor_name' }, { data: 'survey_status', name: 'survey_status' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
-      // });
-      // var table = $('#entry-table').DataTable();
-      // table
-      //   .order(  [ 0, 'asc' ] )
-      //   .draw();
-      //table.destroy();
-      }
+  console.log(form.immobile_type);
+  $('#table-survey-search').DataTable().destroy();
+  console.log($("#TypeImmobile").val());
+  console.log($("#inputInfoType").val());
+  var fieldSearch = "";
+  switch ($("#TypeImmobile").val()) {
+    case "porPeriod":
+      fieldSearch = $("#inputInfoType").val();
+      break;
+    case "address":
+      fieldSearch = $("#immobile_address").val();
+      break;
+  
+    default:
+      fieldSearch = $("#inputInfoType").val();
+      break;
+  }
+
+  let colunas   =  [{ data: 'survey_code', name: 'survey_code' }, { data: 'survey_address_immobile', name: 'survey_address_immobile' }, { data: 'survey_date_register', name: 'survey_date_register' }, { data: 'survey_type_immobile', name: 'survey_type_immobile' }, { data: 'survey_inspetor_name', name: 'survey_inspetor_name' }, { data: 'survey_status', name: 'survey_status' }, { data: 'action', name: 'action', orderable: false, searchable: false }];
+  //PESQUISA VIA POST
+  table = $('#table-survey-search').DataTable({
+      processing: true,
+      serverSide: true,
+      pageLength: 25,
+      ajax: {
+        url: domain_complet+"vistoria/all-survey",
+        type: "POST",
+        data: {
+          immobile_type : $("#TypeImmobile").val(), immobile_search_field: fieldSearch
+        },
+      },
+      columns: colunas
   });
+  $("#modalSearchSurvey").modal('hide');
 });
 
+$('#modalSearchSurvey').on('hidden.bs.modal', function (e) {
+  $("#inputInfoType").val("");
+})
 
-$('#TypeImmobile').on('change', function() {
-  console.log( this.value );
+
+$('#TypeImmobile').on('change', function () {
+  console.log(this.value);
   $("#divInfoType").show();
   $("#inputInfoType").show();
   switch (this.value) {
@@ -358,7 +364,7 @@ $('#TypeImmobile').on('change', function() {
       $("#inputInfoType").attr("placeholder", "Digite um trecho ou o endereço completo");
       $("#divInfoPeriod").hide();
       break;
-  
+
     default:
       break;
   }

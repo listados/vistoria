@@ -2,29 +2,29 @@
 
 namespace EspindolaAdm\Http\Controllers;
 
-use Illuminate\Http\Request;
+use DB;
 
+use PDF;
+use Auth;
+use Carbon\Carbon;
+use EspindolaAdm\User;
 use EspindolaAdm\Survey;
+use EspindolaAdm\Ambience;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use EspindolaAdm\FunctionAll;
 use EspindolaAdm\FilesAmbience;
 use EspindolaAdm\RelSurveyUser;
-use DB;
-use Auth;
-use PDF;
 use Yajra\Datatables\Datatables;
-use Carbon\Carbon;
-use Dotenv\Validator as DotenvValidator;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Str;
-use EspindolaAdm\User;
-use Illuminate\Http\RedirectResponse;
-use EspindolaAdm\Widgets\RecentNews;
-use EspindolaAdm\Ambience;
-use EspindolaAdm\Http\Requests\SurveyRequest;
-use EspindolaAdm\OrderAmbienceSurvey;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\FuncCall;
+use EspindolaAdm\Widgets\RecentNews;
+use EspindolaAdm\OrderAmbienceSurvey;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Input;
+use Dotenv\Validator as DotenvValidator;
+use Illuminate\Support\Facades\Validator;
+use EspindolaAdm\Http\Requests\SurveyRequest;
 
 class SurveyController extends Controller
 {
@@ -543,7 +543,7 @@ class SurveyController extends Controller
                 })      //<a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
                 ->make(true);
         } else {
-            //$survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc')->take(50);
+            
             $survey = Survey::searchSurvey($request->all());
             // $query = DB::getQueryLog();
             return Datatables::of($survey)
@@ -574,6 +574,9 @@ class SurveyController extends Controller
         //return Datatables::of(Survey::get()->make(true);
     }
 
+    public function searchSurvey() {
+        return view('survey.search');
+    }
     public function delete_user_survey(Request $request)
     {
         # code...
