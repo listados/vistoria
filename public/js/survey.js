@@ -83,6 +83,11 @@ $(document).ready(function () {
   
 });
 
+function reloadTable()
+{
+	$("#table-survey").DataTable().ajax.reload();
+}
+
 $(function () {
   //PARA UPLOAD DE IMAGENS
   $("#ambience_upload").change(function () {
@@ -207,6 +212,8 @@ $(document).ready(function () {
   //ocultando div no modal de pesquisa da vistoria
   $("#divInfoType").hide();
   $("#inputInfoType").hide();
+  $("#divInfoPeriod").hide();
+  $("#divInfoAddress").hide();
 });
 
 $("#sendAlterAmbience").click(function (event) {
@@ -286,8 +293,29 @@ $("#btnSearchSurvey").click(function (e) {
     data: form,
     dataType: "json",
     success: function (response) {
-      console.log(response);
-    }
+      console.log(response.data);
+      var returnData = response.data;
+      var table = $('#table-survey').DataTable( {
+          paging: false,
+          retrieve: true,
+          pageLength: 100
+      } );
+      table.clear();
+      table.destroy();
+      $('#table-survey').DataTable().ajax.reload(response,true);
+      // table = $('#table-survey').DataTable({
+      //     processing: true,
+      //     serverSide: true,
+      //     pageLength: 100,
+      //     data: returnData,
+      //     columns: [{ data: 'survey_code', name: 'survey_code' }, { data: 'survey_address_immobile', name: 'survey_address_immobile' }, { data: 'survey_date_register', name: 'survey_date_register' }, { data: 'survey_type_immobile', name: 'survey_type_immobile' }, { data: 'survey_inspetor_name', name: 'survey_inspetor_name' }, { data: 'survey_status', name: 'survey_status' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
+      // });
+      // var table = $('#entry-table').DataTable();
+      // table
+      //   .order(  [ 0, 'asc' ] )
+      //   .draw();
+      //table.destroy();
+      }
   });
 });
 
@@ -300,18 +328,35 @@ $('#TypeImmobile').on('change', function() {
     case 'code':
       $("#labelInfoType").text('Código');
       $("#inputInfoType").attr("placeholder", "Código da vistoria");
+      $("#divInfoPeriod").hide();
       break;
     case 'type':
       $("#labelInfoType").text('Tipo de imóvel');
       $("#inputInfoType").attr("placeholder", "Escolha o tipo do imóvel");
+      $("#divInfoPeriod").hide();
       break;
     case 'status':
       $("#labelInfoType").text('Status de vistoria');
       $("#inputInfoType").attr("placeholder", "Escolha o status da vistoria");
+      $("#divInfoPeriod").hide();
       break;
     case 'inspector':
       $("#labelInfoType").text('Vistoriador');
       $("#inputInfoType").attr("placeholder", "Escolha o vistoriador");
+      $("#divInfoPeriod").hide();
+      break;
+    case 'porPeriod':
+      $("#labelInfoType").text('Por período');
+      $("#divInfoPeriod").show();
+      $("#divInfoType").hide();
+      $("#inputInfoType").hide();
+      $("#divInfoAddress").hide();
+      //$("#inputInfoType").attr("placeholder", "Escolha o vistoriador");
+      break;
+    case 'address':
+      $("#labelInfoType").text('Endereço');
+      $("#inputInfoType").attr("placeholder", "Digite um trecho ou o endereço completo");
+      $("#divInfoPeriod").hide();
       break;
   
     default:
