@@ -243,9 +243,9 @@ class SurveyController extends Controller
                 }
                 //calculando a diferença dos dois arrays
                 $dif = ($totalLocator - $total_idUser);
-                
+
                 /*É FEITO A VERIFICAÇÃO NO ARRAY ID_USER PARA CONSTATAR QUE NAO TEM CAMPOS NO ARRAY PARA FAZER UM NOVO CADASTRO*/
-                
+
                 if ($total_idUser == 0) {
                     //DARÁ O LOOP DO TOTAL DE CAMPO ADICIONADO
                     for ($i = 0; $i < $totalLocator; $i++) {
@@ -255,7 +255,7 @@ class SurveyController extends Controller
                     }
                 } else {
                     //VERIFICANDO SE ARRAY ID_USER É MENOR QUE NOME LOCADOR
-                   
+
                     if ($total_idUser < $totalLocator) {
                         $tot = 0;
                         for ($i = 0; $i < $total_idUser; $i++) {
@@ -317,8 +317,8 @@ class SurveyController extends Controller
                 $dif_occupant = ($total_nameOccupant - $totalOcupant);
 
                 //VERIFICANDO SE ARRAY ID_USER É MENOR QUE NOME LOCADOR
-               
-                
+
+
                 if ($totalOcupant == 0) {
                     for ($i = 0; $i < $total_nameOccupant; $i++) {
                         # code...
@@ -377,7 +377,6 @@ class SurveyController extends Controller
                         }
                     }
                 }
-                
             }
 
 
@@ -506,16 +505,17 @@ class SurveyController extends Controller
     public function getSurvey(Request $request)
     {
         // DB::enableQueryLog();
-        $is_post = false;//PARA ALTERAR DEPOIS SE CASO FOR METODO POST
+        $is_post = false; //PARA ALTERAR DEPOIS SE CASO FOR METODO POST
         foreach ($request->server as $key => $value) {
             // dump($key.' - '.$value);
-            if($key == 'REQUEST_METHOD' && $value == 'POST'){
+            if ($key == 'REQUEST_METHOD' && $value == 'POST') {
                 $is_post = true;
             }
         }
+        //dd($request->all());
         
         //SE REQUEST_METHOD FOR TIPO GET
-        if(!$is_post){
+        if (!$is_post) {
             $survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc')->take(50);
 
             // $query = DB::getQueryLog();
@@ -542,8 +542,33 @@ class SurveyController extends Controller
                             <a href="' . url('vistoria/historico/' . $survey->survey_id) . '" class="btn " onclick="" title=Historico da vistoria -' . $survey->survey_id . '"><i class="fa fa-history" aria-hidden="true"></i></a>';
                 })      //<a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
                 ->make(true);
-        }else{
-
+        } else {
+            //$survey = Survey::where(['survey_filed' => 0])->orderBy('survey_id', 'desc')->take(50);
+            $survey = Survey::searchSurvey($request->all());
+            // $query = DB::getQueryLog();
+            return Datatables::of($survey)
+                ->editColumn('survey_date_register', function ($survey) {
+                    return $survey->survey_date_register ? with(new Carbon($survey->survey_date_register))->format('d/m/Y') : '';
+                })
+                ->editColumn('survey_address_immobile', function ($survey) {
+                    return  substr($survey->survey_address_immobile, 0, 50) . '...';
+                })
+                ->editColumn('survey_inspetor_name', function ($survey) {
+                    return  substr($survey->survey_inspetor_name, 0, 17) . '...';
+                })
+                ->addColumn('action', function ($survey) {
+                    $class_enable = "enabled";
+                    if ($survey->survey_status == "Finalizada") {
+                        $class_enable = "disabled";
+                    }
+                    return '<a href="' . url('vistoria/' . base64_encode($survey->survey_id) . '/editar/Editar-Vistoria/acao') . '" class="btn ' . $class_enable . '" data-toggle="tooltip" data-placement="left" title="Editar Vistsoria ' . $survey->survey_id . '"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            <a href="' . url('vistoria/imprimir?id_survey=' . $survey->survey_id . '&imprimir_com_foto=true') . '" class="btn" target="_blank" title="Imprmir Vistoria ' . $survey->survey_id . '"><i class="fa fa-print" aria-hidden="true"></i></a>
+                            <a href="#" class="btn" onclick="repli(' . $survey->survey_id . ');" title="Replicar Vistoria ' . $survey->survey_id . '"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+                            <a href="' . url('vistoria/' . base64_encode($survey->survey_id) . '/download') . '" class="btn ' . $class_enable . '" title="Visualizar e Download da Vistoria ' . $survey->survey_id . '"><span class="badge-noti">' . Survey::countImage($survey->survey_id) . '</span><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                            <a href="#" class="btn text-danger ' . $class_enable . '" onclick="delete_survey(' . $survey->survey_id . ')" title="Excluir vistoria -' . $survey->survey_id . '"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="' . url('vistoria/historico/' . $survey->survey_id) . '" class="btn " onclick="" title=Historico da vistoria -' . $survey->survey_id . '"><i class="fa fa-history" aria-hidden="true"></i></a>';
+                })      //<a href="#" class="btn" data-toggle="tooltip" data-placement="left" title="Visualizar em 360 '.$survey->survey_id.'"><i class="fa fa-street-view" aria-hidden="true"></i></a>
+                ->make(true);
         }
 
         //return Datatables::of(Survey::get()->make(true);
@@ -950,7 +975,8 @@ class SurveyController extends Controller
         }
     }
 
-    public function getTypeImmobile() {
+    public function getTypeImmobile()
+    {
         $survey = Survey::getTypeImmobile();
         return $survey;
     }
