@@ -10,7 +10,7 @@ $(document).ready(function () {
   $("#table-survey").DataTable({
     processing: true,
     //serverSide: true,
-    iDisplayLength: 50,
+    iDisplayLength: 10,
     language: {
       rows: "%d linhas selecionada",
       infoEmpty: "Sem registro para mostrar",
@@ -363,6 +363,12 @@ $('#TypeImmobile').on('change', function () {
       $("#labelInfoType").text('Endereço');
       $("#inputInfoType").attr("placeholder", "Digite um trecho ou o endereço completo");
       $("#divInfoPeriod").hide();
+      break;
+    case 'select':
+      $("#labelInfoType").text('');
+      $("#inputInfoType").val("");
+      $("#divInfoPeriod").hide();
+      $("#divInfoType").hide();
       break;
 
     default:

@@ -17,8 +17,12 @@
 
 
 <div class="col-md-12 box">
-<a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> <i class="fa fa-plus"></i>  Nova Vistoria</a>	
-<a href="#" class="btn bg-navy btn-flat pull-left"  tabindex="0"  data-toggle="modal" data-target="#modalSearchSurvey" data-content="Pesquisar mais vistorias" data-placement="left" style="margin: 10px;"> <i class="fa fa-search"></i>  Pesquisar Vistoria</a>	
+<a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> 
+	<i class="fa fa-plus"></i>  Nova Vistoria
+</a>
+<a href="{{url('vistoria/pesquisar-vistoria')}}" target="_blank" class="btn bg-navy btn-flat pull-left"  tabindex="0" title="Pesquisar mais vistorias" style="margin: 10px;">
+	<i class="fa fa-search"></i> Pesquisa avançada
+</a>
 @include('modal.modal_load')
 @include('modal.modal_search_survey')
 
