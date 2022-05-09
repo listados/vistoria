@@ -16,13 +16,20 @@
 
 @section('content')
 
-
 <div class="col-md-12 box">
 <div class="col-md-12">
 	<form id="formSearchSurvey">
 		<div class="row">
+			<div class="box-header with-border">
+				<h3 class="box-title">Pesquisa avançada de vistoria</h3>
+				<div class="box-tools pull-right">
+					<a href="{{url('vistoria')}}" class="btn pull-right" title="Voltar para vistorias"  style="cursor: pointer;">
+						<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+					</a>
+				</div>
+			</div>	
 			<div class="col-md-12">
-				<div class="form-group">
+				<div class="form-group" style="margin-top: 3px;">
 					<label for="">Escolha a pesquisa: </label>
 					<select name="immobile_type" class="form-control" id="TypeImmobile">
 						<option value="select">--Selecione--</option>
