@@ -9,18 +9,20 @@ services:
     mysql:
         image: 'mysql:5.7'
         working_dir: /application
+        container_name: 'dbvistoria'
         volumes:
             - './phpdocker/mysql/data:/var/lib/mysql'
         environment:
             - MYSQL_ROOT_PASSWORD=livre
             - MYSQL_DATABASE=vistoria
-            - MYSQL_USER=root
+            # - MYSQL_USER=root
             - MYSQL_PASSWORD=livre
         ports:
             - '50001:3306'
 
     webserver:
         image: 'nginx:alpine'
+        container_name: 'webvistoria'
         working_dir: /application
         volumes:
             - '.:/application'
@@ -31,7 +33,7 @@ services:
     php-fpm:
         build: phpdocker/php-fpm
         working_dir: /application
-        container_name: vistoriaphp
+        container_name: phpvistoria
         volumes:
             - '.:/application'
             - '.env:/application/.env'
