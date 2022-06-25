@@ -16,28 +16,28 @@ class CreateSurveyTable extends Migration
     {
         Schema::create('survey', function (Blueprint $table) {
             $table->increments('survey_id');
-            $table->date('survey_date');
-            $table->string('survey_type')->nullable()->change();
-            $table->string('survey_address_immobile')->nullable()->change();
-            $table->string('survey_type_immobile')->nullable()->change();
-            $table->string('survey_energy_meter')->nullable()->default('000')->change();
-            $table->string('survey_energy_load')->nullable()->default('000')->change();
-            $table->string('survey_water_meter')->nullable()->default('000')->change();
-            $table->string('survey_water_load')->nullable()->default('000')->change();
-            $table->string('survey_gas_meter')->nullable()->default('000')->change();
-            $table->string('survey_gas_load')->nullable()->default('000')->change();
-            $table->longText('survey_general_aspects');
-            $table->longtext('survey_reservation');
-            $table->string('survey_status');
+            $table->date('survey_date')->default(Carbon::now());
+            $table->longText('survey_general_aspects')->nullable();
+            $table->longtext('survey_reservation')->nullable();
+            $table->string('survey_status')->default('Rascunho');
             $table->timestamp('survey_finalized_date');
-            $table->longtext('survey_keys');
-            $table->string('survey_code');
-            $table->string('survey_link_tour');
-            $table->longtext('survey_provisions');
-            $table->string('survey_date_register')->nullable()->default(Carbon::now())->change();
-            $table->string('survey_inspetor_name')->nullable()->change();
-            $table->string('survey_inspetor_cpf')->nullable()->change();
+            $table->longtext('survey_keys')->nullable();
+            $table->string('survey_code')->nullable();
+            $table->string('survey_link_tour')->nullable();
+            $table->longtext('survey_provisions')->nullable();
             $table->boolean('survey_filed')->default(0)->comment('Se a vistoria foi arquivada');
+            $table->string('survey_type')->nullable();
+            $table->string('survey_address_immobile')->nullable();
+            $table->string('survey_type_immobile')->nullable();
+            $table->string('survey_energy_meter')->nullable()->default('---');
+            $table->string('survey_energy_load')->nullable()->default('---');
+            $table->string('survey_water_meter')->nullable()->default('---');
+            $table->string('survey_water_load')->nullable()->default('---');
+            $table->string('survey_gas_meter')->nullable()->default('---');
+            $table->string('survey_gas_load')->nullable()->default('---');
+            $table->timestamp('survey_date_register')->nullable();
+            $table->string('survey_inspetor_name')->nullable();
+            $table->string('survey_inspetor_cpf')->nullable();
             $table->timestamps();
 
         });
