@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   var _language;
 
@@ -15,7 +14,7 @@ $(document).ready(function () {
       rows: "%d linhas selecionada",
       infoEmpty: "Sem registro para mostrar",
       infoFiltered: " - Filtrando para _MAX_ registros",
-      infoEmpty: 'Mostrando 0 de 0 para 0 registros',
+      infoEmpty: "Mostrando 0 de 0 para 0 registros",
       lengthMenu: "Mostrando _MENU_ registro",
       loadingRecords: "Lendo...",
       processing: "Processando...",
@@ -25,13 +24,20 @@ $(document).ready(function () {
         first: "Primeiro",
         last: "Último",
         next: "Próximo",
-        previous: "Anterior"
-      }
+        previous: "Anterior",
+      },
     },
-    ajax: domain_complet + '/vistoria/all-survey',
+    ajax: domain_complet + "/vistoria/all-survey",
     order: [[0, "desc"]],
-    columns: [{ data: 'survey_code', name: 'survey_code' }, { data: 'survey_address_immobile', name: 'survey_address_immobile' }, { data: 'survey_date_register', name: 'survey_date_register' }, { data: 'survey_type_immobile', name: 'survey_type_immobile' }, { data: 'survey_inspetor_name', name: 'survey_inspetor_name' }, { data: 'survey_status', name: 'survey_status' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
-
+    columns: [
+      { data: "survey_code", name: "survey_code" },
+      { data: "survey_address_immobile", name: "survey_address_immobile" },
+      { data: "survey_date_register", name: "survey_date_register" },
+      { data: "survey_type_immobile", name: "survey_type_immobile" },
+      { data: "survey_inspetor_name", name: "survey_inspetor_name" },
+      { data: "survey_status", name: "survey_status" },
+      { data: "action", name: "action", orderable: false, searchable: false },
+    ],
   });
 
   //EDITOR DE CONTEÚDO
@@ -44,12 +50,11 @@ $(document).ready(function () {
     fileUpload: true,
     useParagraph: false,
     removeStyles: true,
-    code: false
-
+    code: false,
   });
-  CKEDITOR.replace('survey_reservation');
-  CKEDITOR.replace('survey_provisions');
-  CKEDITOR.replace('survey_keys');
+  CKEDITOR.replace("survey_reservation");
+  CKEDITOR.replace("survey_provisions");
+  CKEDITOR.replace("survey_keys");
   /*
   Link exemplo : http://makitweb.com/dynamically-add-and-remove-element-with-jquery/
   @autor: Excellence Soft - Junior Oliveira
@@ -58,7 +63,7 @@ $(document).ready(function () {
   Para Fiador o nome do campo é: guarantor
   */
   // Removendo elemento
-  $('.container').on('click', '.remove', function () {
+  $(".container").on("click", ".remove", function () {
     var id = this.id;
     var split_id = id.split("_");
     var deleteindex = split_id[1];
@@ -66,21 +71,20 @@ $(document).ready(function () {
     $("#div_" + deleteindex).remove();
   });
 
-  $('.containerLocatario').on('click', '.removeLocatario', function () {
+  $(".containerLocatario").on("click", ".removeLocatario", function () {
     var id = this.id;
     var split_id = id.split("_");
     var deleteindex = split_id[1];
     // Remove <div> with id
     $("#divLocatario_" + deleteindex).remove();
   });
-  $('.containerFiador').on('click', '.removeFiador', function () {
+  $(".containerFiador").on("click", ".removeFiador", function () {
     var id = this.id;
     var split_id = id.split("_");
     var deleteindex = split_id[1];
     // Remove <div> with id
     $("#divFiador_" + deleteindex).remove();
   });
-
 });
 
 function reloadTable() {
@@ -109,37 +113,49 @@ $(function () {
       CKEDITOR.instances[instance].updateElement();
     }
     $.ajax({
-      url: domain_complet + '/vistoria/update',
+      url: domain_complet + "/vistoria/update",
       type: "post",
       dataType: "JSON",
       data: $("#form_survey").serialize(),
       success: function success(data) {
-        $("#load-modal").modal('show');
+        $("#load-modal").modal("show");
         $("#gif-load-modal").hide();
-        $("#label-title-load-modal").html('Rascunho salvo com sucesso');
-        $("#success-load-modal").append('<i class="fa fa-check-circle fa-3x"></i>');
-        $("#success-load-modal").addClass('text-success');
+        $("#label-title-load-modal").html("Rascunho salvo com sucesso");
+        $("#success-load-modal").append(
+          '<i class="fa fa-check-circle fa-3x"></i>'
+        );
+        $("#success-load-modal").addClass("text-success");
         $("#success-load-modal").show();
         //ADICIONANDO BOTÃO DE CONTINUAR NA VISTORIA OU SAIR PARA PÁGINA INICIAL
-        $("#footer_load_modal").append('<div class="modal-footer">\
-                <a href="' + domain_complet + '/vistoria" class="btn btn-default">Sair da Vistoria</a>\
-                <a href="' + domain_complet + '/vistoria/' + id_survey_enc + '/editar/Editar-Vistoria/acao" class="btn btn-primary">Continuar na vistoria</a>\
-                </div>');
+        $("#footer_load_modal").append(
+          '<div class="modal-footer">\
+                <a href="' +
+            domain_complet +
+            '/vistoria" class="btn btn-default">Sair da Vistoria</a>\
+                <a href="' +
+            domain_complet +
+            "/vistoria/" +
+            id_survey_enc +
+            '/editar/Editar-Vistoria/acao" class="btn btn-primary">Continuar na vistoria</a>\
+                </div>'
+        );
       },
       error: function (data, status, error) {
-        console.log('data', data);
-        console.log('status', status);
-        console.log('error', data.responseJSON.mensagem);
+        console.log("data", data);
+        console.log("status", status);
+        console.log("error", data.responseJSON.mensagem);
         errorNotify(data.responseJSON.mensagem);
-
-      }
-    }).done(function () {
-      console.log("success");
-    }).fail(function () {
-      console.log("Falhou");
-    }).always(function () {
-      console.log("complete");
-    });
+      },
+    })
+      .done(function () {
+        console.log("success");
+      })
+      .fail(function () {
+        console.log("Falhou");
+      })
+      .always(function () {
+        console.log("complete");
+      });
   });
 
   $(".click_print_survey").click(function () {
@@ -147,21 +163,45 @@ $(function () {
   });
 
   function getImageAmbience() {
-    route = domain_complet + '/dist/img/upload/vistoria/';
-    $.get(domain_complet + "/files_ambience/show/" + $("#id_survey_ambience").val(), function (data) {
-      /*optional stuff to do after success */
-      $.each(data, function (index, val) {
-        /* iterate through array or object */
-        $('#table-ambience-survey').append('<tbody>' + '<tr>' + '<td>' + val.ambience_name + '</td>' + '<td style="width: 50%;"><a href="#" class="thumbnail">' + '<img src="' + route + val.files_ambience_description_file + '" alt="' + val.files_ambience_description_file + '" width="50%" height="50%">' + '</a></td>' + '<td> <input type="checkbox" name="surveyAlter[]" title="Alterar Ambiente" value="' + val.files_ambience_id + '"></td>' + '<td><input type="checkbox" name="surveyDelete[]" title="Excluir Ambiente" value="' + val.files_ambience_id + '"></td>' + '</tr>' + '</tbody>');
-      });
-    });
+    route = domain_complet + "/dist/img/upload/vistoria/";
+    $.get(
+      domain_complet + "/files_ambience/show/" + $("#id_survey_ambience").val(),
+      function (data) {
+        /*optional stuff to do after success */
+        $.each(data, function (index, val) {
+          /* iterate through array or object */
+          $("#table-ambience-survey").append(
+            "<tbody>" +
+              "<tr>" +
+              "<td>" +
+              val.ambience_name +
+              "</td>" +
+              '<td style="width: 50%;"><a href="#" class="thumbnail">' +
+              '<img src="' +
+              route +
+              val.files_ambience_description_file +
+              '" alt="' +
+              val.files_ambience_description_file +
+              '" width="50%" height="50%">' +
+              "</a></td>" +
+              '<td> <input type="checkbox" name="surveyAlter[]" title="Alterar Ambiente" value="' +
+              val.files_ambience_id +
+              '"></td>' +
+              '<td><input type="checkbox" name="surveyDelete[]" title="Excluir Ambiente" value="' +
+              val.files_ambience_id +
+              '"></td>' +
+              "</tr>" +
+              "</tbody>"
+          );
+        });
+      }
+    );
   }
 
   getImageAmbience();
 });
 
 $(document).ready(function () {
-
   $("#completed_button").click(function (t) {
     showMessageLoad();
     $("#survey_status").val("Finalizada");
@@ -174,37 +214,39 @@ $(document).ready(function () {
       data: form_complete_survey,
       success: function success(t) {
         new PNotify({
-          title: 'Finalizado',
-          text: 'Vistoria Finalizada com sucesso',
-          icon: 'fa fa-check-circle',
-          type: 'success',
+          title: "Finalizado",
+          text: "Vistoria Finalizada com sucesso",
+          icon: "fa fa-check-circle",
+          type: "success",
           hide: false,
           confirm: {
             confirm: true,
-            buttons: [{
-              text: 'Ok, ir para lista de vistoria',
-              addClass: 'btn-default pull-right',
-              click: function click(notice) {
-                //ENVIO DE FORMULÁRIO
-                window.location.replace(route_complet_survey + 'vistoria');
-              }
-
-            }, null]
+            buttons: [
+              {
+                text: "Ok, ir para lista de vistoria",
+                addClass: "btn-default pull-right",
+                click: function click(notice) {
+                  //ENVIO DE FORMULÁRIO
+                  window.location.replace(route_complet_survey + "vistoria");
+                },
+              },
+              null,
+            ],
           },
           buttons: {
             closer: false,
-            sticker: false
+            sticker: false,
           },
           history: {
-            history: false
+            history: false,
           },
-          addclass: 'stack-modal',
-          stack: { 'dir1': 'down', 'dir2': 'right', 'modal': true }
+          addclass: "stack-modal",
+          stack: { dir1: "down", dir2: "right", modal: true },
         });
       },
       error: function error(e) {
-        $.each(e, function (e, t) { });
-      }
+        $.each(e, function (e, t) {});
+      },
     });
   });
 
@@ -222,73 +264,76 @@ $("#sendAlterAmbience").click(function (event) {
 
 $("#deleteAmbience").click(function (event) {
   new PNotify({
-    title: 'Excluir Imagem',
-    text: 'Você realmente deseja excluir essa imagem?',
-    icon: 'fa fa-question-circle',
+    title: "Excluir Imagem",
+    text: "Você realmente deseja excluir essa imagem?",
+    icon: "fa fa-question-circle",
     hide: false,
     confirm: {
       confirm: true,
-      buttons: [{
-        text: 'Excluir',
-        addClass: 'btn-default pull-left',
-        click: function click(notice) {
-          //ENVIO DE FORMULÁRIO
-          $("#form_alter_delete_ambience").submit();
-          //MOSTRANDO LOAD
-          $("#load-modal").modal({ show: true });
-          // //REDIRECIONANDO APOS 2 SEGUNDOS
-          // setTimeout(function(){ 
-          //   window.location.replace(domain_complet + '/alter-delete-ambience/');
-          // }, 2000);
-        }
-
-      }, {
-        text: 'Cancelar',
-        click: function click(notice) {
-          notice.remove();
-        }
-      }]
+      buttons: [
+        {
+          text: "Excluir",
+          addClass: "btn-default pull-left",
+          click: function click(notice) {
+            //ENVIO DE FORMULÁRIO
+            $("#form_alter_delete_ambience").submit();
+            //MOSTRANDO LOAD
+            $("#load-modal").modal({ show: true });
+            // //REDIRECIONANDO APOS 2 SEGUNDOS
+            // setTimeout(function(){
+            //   window.location.replace(domain_complet + '/alter-delete-ambience/');
+            // }, 2000);
+          },
+        },
+        {
+          text: "Cancelar",
+          click: function click(notice) {
+            notice.remove();
+          },
+        },
+      ],
     },
     buttons: {
       closer: false,
-      sticker: false
+      sticker: false,
     },
     history: {
-      history: false
+      history: false,
     },
-    addclass: 'stack-modal',
-    stack: { 'dir1': 'down', 'dir2': 'right', 'modal': true }
+    addclass: "stack-modal",
+    stack: { dir1: "down", dir2: "right", modal: true },
   });
 });
 //PARA ALTERAR O AMBIENCE NA PÁGINA DE DOWNLOAD
 $("#btn_alter_order_ambience").click(function () {
   list_id_ambience = "";
-  $('#list-group > li').each(function (index, element) {
+  $("#list-group > li").each(function (index, element) {
     // element == this
     list_id_ambience = list_id_ambience + element.value + ",";
   });
   $.ajax({
     type: "POST",
     url: domain_complet + "/vistoria/orderBy",
-    data: { order_ambience_survey_list_order: list_id_ambience, order_ambience_survey_id_survey: $("#id_survey_ambience").val() },
+    data: {
+      order_ambience_survey_list_order: list_id_ambience,
+      order_ambience_survey_id_survey: $("#id_survey_ambience").val(),
+    },
     dataType: "json",
     success: function (response) {
-      successNotify('Ambiente Alterado');
+      successNotify("Ambiente Alterado");
     },
     error: function (response) {
       errorNotify(response.responseJSON.message);
-    }
+    },
   });
 });
 
 $("#btnSearchSurvey").click(function (e) {
   e.preventDefault();
   form = $("#formSearchSurvey").serialize();
-  
-  console.log(form.immobile_type);
-  $('#table-survey-search').DataTable().destroy();
-  console.log($("#TypeImmobile").val());
-  console.log($("#inputInfoType").val());
+
+  $("#table-survey-search").DataTable().destroy();
+
   var fieldSearch = "";
   switch ($("#TypeImmobile").val()) {
     case "porPeriod":
@@ -297,75 +342,87 @@ $("#btnSearchSurvey").click(function (e) {
     case "address":
       fieldSearch = $("#immobile_address").val();
       break;
-  
+
     default:
       fieldSearch = $("#inputInfoType").val();
       break;
   }
 
-  let colunas   =  [{ data: 'survey_code', name: 'survey_code' }, { data: 'survey_address_immobile', name: 'survey_address_immobile' }, { data: 'survey_date_register', name: 'survey_date_register' }, { data: 'survey_type_immobile', name: 'survey_type_immobile' }, { data: 'survey_inspetor_name', name: 'survey_inspetor_name' }, { data: 'survey_status', name: 'survey_status' }, { data: 'action', name: 'action', orderable: false, searchable: false }];
+  let colunas = [
+    { data: "survey_code", name: "survey_code" },
+    { data: "survey_address_immobile", name: "survey_address_immobile" },
+    { data: "survey_date_register", name: "survey_date_register" },
+    { data: "survey_type_immobile", name: "survey_type_immobile" },
+    { data: "survey_inspetor_name", name: "survey_inspetor_name" },
+    { data: "survey_status", name: "survey_status" },
+    { data: "action", name: "action", orderable: false, searchable: false },
+  ];
   //PESQUISA VIA POST
-  table = $('#table-survey-search').DataTable({
-      processing: true,
-      serverSide: true,
-      pageLength: 25,
-      ajax: {
-        url: domain_complet+"vistoria/all-survey",
-        type: "POST",
-        data: {
-          immobile_type : $("#TypeImmobile").val(), immobile_search_field: fieldSearch
-        },
+  table = $("#table-survey-search").DataTable({
+    processing: true,
+    serverSide: true,
+    pageLength: 25,
+    ajax: {
+      url: domain_complet + "vistoria/all-survey",
+      type: "POST",
+      data: {
+        immobile_type: $("#TypeImmobile").val(),
+        immobile_search_field: fieldSearch,
       },
-      columns: colunas
+    },
+    columns: colunas,
   });
-  $("#modalSearchSurvey").modal('hide');
+  $("#btnSearchSurvey").val('');
+  $("#modalSearchSurvey").modal("hide");
 });
 
-$('#modalSearchSurvey').on('hidden.bs.modal', function (e) {
+$("#modalSearchSurvey").on("hidden.bs.modal", function (e) {
   $("#inputInfoType").val("");
-})
+});
 
-
-$('#TypeImmobile').on('change', function () {
+$("#TypeImmobile").on("change", function () {
   console.log(this.value);
   $("#divInfoType").show();
   $("#inputInfoType").show();
   switch (this.value) {
-    case 'code':
-      $("#labelInfoType").text('Código');
+    case "code":
+      $("#labelInfoType").text("Código");
       $("#inputInfoType").attr("placeholder", "Código da vistoria");
       $("#divInfoPeriod").hide();
       break;
-    case 'type':
-      $("#labelInfoType").text('Tipo de imóvel');
+    case "type":
+      $("#labelInfoType").text("Tipo de imóvel");
       $("#inputInfoType").attr("placeholder", "Escolha o tipo do imóvel");
       $("#divInfoPeriod").hide();
       break;
-    case 'status':
-      $("#labelInfoType").text('Status de vistoria');
+    case "status":
+      $("#labelInfoType").text("Status de vistoria");
       $("#inputInfoType").attr("placeholder", "Escolha o status da vistoria");
       $("#divInfoPeriod").hide();
       break;
-    case 'inspector':
-      $("#labelInfoType").text('Vistoriador');
+    case "inspector":
+      $("#labelInfoType").text("Vistoriador");
       $("#inputInfoType").attr("placeholder", "Escolha o vistoriador");
       $("#divInfoPeriod").hide();
       break;
-    case 'porPeriod':
-      $("#labelInfoType").text('Por período');
+    case "porPeriod":
+      $("#labelInfoType").text("Por período");
       $("#divInfoPeriod").show();
       $("#divInfoType").hide();
       $("#inputInfoType").hide();
       $("#divInfoAddress").hide();
       //$("#inputInfoType").attr("placeholder", "Escolha o vistoriador");
       break;
-    case 'address':
-      $("#labelInfoType").text('Endereço');
-      $("#inputInfoType").attr("placeholder", "Digite um trecho ou o endereço completo");
+    case "address":
+      $("#labelInfoType").text("Endereço");
+      $("#inputInfoType").attr(
+        "placeholder",
+        "Digite um trecho ou o endereço completo"
+      );
       $("#divInfoPeriod").hide();
       break;
-    case 'select':
-      $("#labelInfoType").text('');
+    case "select":
+      $("#labelInfoType").text("");
       $("#inputInfoType").val("");
       $("#divInfoPeriod").hide();
       $("#divInfoType").hide();
