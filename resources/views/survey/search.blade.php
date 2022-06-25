@@ -43,7 +43,7 @@
 				</div>
 				<div class="form-group" id="divInfoType" style="background: #efefef; padding: 2px; border: 1px solid #c3c3c3;">
 					<label id="labelInfoType"></label>
-					<input type="text" name="immobile_search_field" value="955" class="form-control" id="inputInfoType">
+					<input type="text" name="immobile_search_field" value="" class="form-control" id="inputInfoType">
 				</div>
 			</div>
 			<div class="col-md-12">
