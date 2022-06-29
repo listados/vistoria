@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('createPersonTeam' , 'TeamController@store');
         Route::get('office' , 'TeamController@getOffice');
         Route::delete('delete/{id}' ,'TeamController@destroy' );
+        Route::post('alterar/{id}', 'TeamController@update');
     });
 
     

@@ -89,9 +89,33 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $team = Team::findOrFail($id);
+        //dump($request->all());
+        $team = Team::where('teamSites_id', $id)->get()->first();
+        $photo = $team->teamSites_photo;
+        if(isset($request['fileAvatar']))
+        {
+           $this->uploadAvatar($request, $id);
+        }else{
+
+        }
+        $insert = [
+            'teamSites_id' => $id,
+            'teamSites_office' => $request['teamSites_office'],
+            'teamSites_name' => $request['teamSites_name'],
+            'teamSites_phoneOne' => $request['teamSites_phoneOne'],
+            'teamSites_phoneTwo' => $request['teamSites_phoneTwo'],
+            'teamSites_text' => $request['teamSites_text'],
+            'teamSites_linkedin' => $request['teamSites_linkedin'],
+            'teamSites_photo' => $request['teamSites_photo'],
+        ];
+        dump($insert);
         try {
-            $team->update($request->all());
+            //$team->update($insert);
+            // if(isset($request['fileAvatar']))
+            // {
+            //     dump('existe');
+            // }
+            dd('team');
             return response()->json(['message' => 'success'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()] , 401);
@@ -120,10 +144,10 @@ class TeamController extends Controller
     public function getOffice()
     {
         $gestor = Team::get();
-       // dd($gestor);
+        // dd($gestor);
         return Datatables::of($gestor)
                 ->editColumn('teamSites_photo', function ($gestor) {
-                    return '<img src="'.url('images/'.$gestor->teamSites_photo).'" width="128" height="96" />';
+                    return '<img src="'.url('images/team/'.$gestor->teamSites_photo).'" width="128" height="96" />';
                 })
                 ->editColumn('teamSites_linkedin', function ($gestor) {
                     return '<a href="'.$gestor->teamSites_linkedin.'" target="_blank" />Link</a>';
@@ -135,8 +159,17 @@ class TeamController extends Controller
                     } else {
                         $status = '<a href="#" class="btn" onclick="showModalStatus('.$gestor->teamSites_status.','.$gestor->id.')" title="Funcionário desativado"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>';
                     }
-                    return '<a href="'.url('site/equipe/edit/'.$gestor->id).'" class="btn " onclick="" title="Editar Funcionário"><i class="fa fa-edit" aria-hidden="true"></i></a>'.$status.'
-                    <a href="#" class="btn btn-danger" onclick="deleteTeam('.$gestor->id.');" title="Excluir Funcionário"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+                    return '<a href="#" data-id="'.$gestor->teamSites_id.'" 
+                    data-id="'.$gestor->teamSites_id.'"
+                    data-name="'.$gestor->teamSites_name.'"
+                    data-phone="'.$gestor->teamSites_phoneOne.'"
+                    data-office="'.$gestor->teamSites_office.'"
+                    data-text="'.$gestor->teamSites_text.'"
+                    data-linkedin="'.$gestor->teamSites_linkedin.'"
+                    data-photo="'.$gestor->teamSites_photo.'"
+                    class="btn " title="Editar Funcionário"
+                    data-toggle="modal" data-target="#modalEditTeam"><i class="fa fa-edit" aria-hidden="true"></i></a>'.$status.'
+                    <a href="#" class="btn btn-danger" onclick="deleteTeam('.$gestor->teamSites_id.');" title="Excluir Funcionário"><i class="fa fa-trash" aria-hidden="true"></i></a>';
                 })
                 ->rawColumns(['teamSites_photo', 'action', 'teamSites_linkedin'])
                 ->make(true);
@@ -144,14 +177,26 @@ class TeamController extends Controller
 
     public function uploadAvatar(Request $request, $id)
     {
-        $fileName = time().'_avatar'.'.'.$request->file->getClientOriginalExtension();
-        $team = Team::findOrFail($id);
-        try {
-            $team->update(['teamSites_photo' => $fileName]);
-            $request->file->move(public_path('images'), $fileName);
-            return response()->json(['message' => 'success'], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['message' => 'error'], 401);
-        }
+        
+        if($request->ajax())
+        {
+            $fileName = time().'_avatar'.'.'.$request->file->getClientOriginalExtension();
+            $team = Team::findOrFail($id);
+            try {
+                $team->update(['teamSites_photo' => $fileName]);
+                $request->file->move(public_path('images/team'), $fileName);
+                return response()->json(['message' => 'success'], 200);
+            } catch (\Throwable $th) {
+                return response()->json(['message' => 'error'], 401);
+            }
+        }else{
+            $fileName = time().'_avatar'.'.'.$request->fileAvatar->getClientOriginalExtension();
+            $up = $request->fileAvatar->move(public_path('images/team'), $fileName);
+            dump($fileName);
+            $team = Team::where('teamSites_id', $id)->get()->first();
+            $team->teamSites_photo = $fileName;
+            $team->save();
+            dump($team);
+        }    
     }
 }

@@ -31,50 +31,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-body">
-                            <div class="form-group">
-                                <label>Nome do funcionário</label>
-                                <input type="text" name="teamSites_name" class="form-control" placeholder="Irá mostrar no site">
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Fone de contato</label>
-                                        <input type="text" 
-                                        name="teamSites_phoneOne"
-                                        class="form-control"
-                                        onkeyup="mascara( this, mtel );"
-                                        id="teamSites_phoneOne"
-                                        maxlength="15">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Cargo do funcionario</label>
-                                        <select 
-                                        name="teamSites_office"
-                                        class="form-control">
-                                            <option selected>--Selecione--</option>
-                                            <option>Gestor</option>
-                                            <option>Comercial</option>
-                                            <option>Administração de Imóveis</option>
-                                            <option>Administrativo e Financeiro</option>
-                                            <option>Equipe Jurídico</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Descrição do funcionário</label>
-                                <textarea 
-                                name="teamSites_text"
-                                class="form-control" rows="3" placeholder="Digite o perfil ou uma descrição para o funcionário"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Link do linkedin</label>
-                                <input name="teamSites_linkedin"
-                                type="text" class="form-control" placeholder="Por exemplo: https://www.linkedin.com/in/sua-url-010203/">
-                            </div>
+                            @include('site.team.form')
                             <div class="form-group">
                                 <label>Foto</label>
                                 <input 
@@ -131,6 +88,46 @@
                         </div>
                     </div>
                     @include('modal.modal_alter_status_team')
+                    <!-- Modal -->
+<div class="modal fade" id="modalEditTeam" tabindex="-1" role="dialog" aria-labelledby="modalEditTeam">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Editar Funcionário</h4>
+        </div>
+        <form id="formAlterTeam" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+                @include('site.team.form')
+            </div>
+            <div class="col-md-6">
+                <div class="thumbnail">
+                    <img id="thumbnailPhoto" alt="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Foto</label>
+                    <input 
+                    name="fileAvatar"
+                    type="file" placeholder="link da foto">
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+          <button type="submit" class="btn btn-primary">
+            Atualizar <i class="fa fa-save"></i>
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>
