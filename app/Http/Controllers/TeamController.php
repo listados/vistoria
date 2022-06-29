@@ -46,13 +46,13 @@ class TeamController extends Controller
         ]);
        
         $fileName = time().'_avatar'.'.'.$request->fileAvatar->getClientOriginalExtension();
-        $up = $request->fileAvatar->move(public_path('images'), $fileName);
+        $up = $request->fileAvatar->move(public_path('images/team'), $fileName);
         $request['teamSites_photo'] = $fileName;
         try {
            Team::create($request->all());
            return redirect()->back()->with('message', 'Cadastrado com sucesso');
         } catch (\Throwable $th) {
-            echo 'error';
+            echo 'error : '.$th->getMessage();
         }
     }
 
