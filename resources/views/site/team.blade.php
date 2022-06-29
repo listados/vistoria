@@ -145,5 +145,7 @@
 
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+<script src="{{url('js/helpers.js')}}"></script>
 <script src="{{url('js/all.js')}}"></script>
+<script src="{{url('js/teamSite.js')}}"></script>
 @stop
