@@ -2,6 +2,7 @@
 $(document).ready(function () {
     var _language;
     console.log(domain_complet + 'site/office');
+    console.log(Admin.baseUrl());
     PNotify.prototype.options.styling = "fontawesome";
     $("#tabelaComercial").DataTable({
         processing: true,
@@ -20,6 +21,7 @@ $(document).ready(function () {
             { data: 'teamSites_phoneOne', name: 'teamSites_phoneOne' },
             { data: 'teamSites_linkedin', name: 'teamSites_linkedin' },
             { data: 'teamSites_text', name: 'teamSites_text' },
+            { data: 'teamSites_office', name: 'teamSites_office' },
             { data: 'action', name: 'action', orderable: false, searchable: false }]
     });
 });
