@@ -5,6 +5,7 @@ namespace EspindolaAdm\Http\Controllers;
 use EspindolaAdm\Team;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use EspindolaAdm\Repository\TeamRepository;
 
 class TeamController extends Controller
 {
@@ -89,33 +90,12 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dump($request->all());
-        $team = Team::where('teamSites_id', $id)->get()->first();
-        $photo = $team->teamSites_photo;
-        if(isset($request['fileAvatar']))
-        {
-           $this->uploadAvatar($request, $id);
-        }else{
-
-        }
-        $insert = [
-            'teamSites_id' => $id,
-            'teamSites_office' => $request['teamSites_office'],
-            'teamSites_name' => $request['teamSites_name'],
-            'teamSites_phoneOne' => $request['teamSites_phoneOne'],
-            'teamSites_phoneTwo' => $request['teamSites_phoneTwo'],
-            'teamSites_text' => $request['teamSites_text'],
-            'teamSites_linkedin' => $request['teamSites_linkedin'],
-            'teamSites_photo' => $request['teamSites_photo'],
-        ];
-        dump($insert);
+        $up = TeamRepository::updateTeam($request, $id);
         try {
-            //$team->update($insert);
-            // if(isset($request['fileAvatar']))
-            // {
-            //     dump('existe');
-            // }
-            dd('team');
+            //retornando a instancia
+            $team = Team::where('teamSites_id', $id)->get()->first();
+            $team->update($up);
+            dd($team);
             return response()->json(['message' => 'success'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()] , 401);
@@ -175,28 +155,5 @@ class TeamController extends Controller
                 ->make(true);
     }
 
-    public function uploadAvatar(Request $request, $id)
-    {
-        
-        if($request->ajax())
-        {
-            $fileName = time().'_avatar'.'.'.$request->file->getClientOriginalExtension();
-            $team = Team::findOrFail($id);
-            try {
-                $team->update(['teamSites_photo' => $fileName]);
-                $request->file->move(public_path('images/team'), $fileName);
-                return response()->json(['message' => 'success'], 200);
-            } catch (\Throwable $th) {
-                return response()->json(['message' => 'error'], 401);
-            }
-        }else{
-            $fileName = time().'_avatar'.'.'.$request->fileAvatar->getClientOriginalExtension();
-            $up = $request->fileAvatar->move(public_path('images/team'), $fileName);
-            dump($fileName);
-            $team = Team::where('teamSites_id', $id)->get()->first();
-            $team->teamSites_photo = $fileName;
-            $team->save();
-            dump($team);
-        }    
-    }
+   
 }
