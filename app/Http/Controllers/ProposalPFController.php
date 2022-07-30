@@ -207,7 +207,7 @@ class ProposalPFController extends Controller
                 ->editColumn('files_name', function($files ) {
                     //$document_root = dirname(dirname($_SERVER['DOCUMENT_ROOT'])); 
                     $extensao = '.pdf'; 
-                    $dominio_pdf_externo = "http://209.97.128.184/escolhaazul";                   
+                    $dominio_pdf_externo = "https://espindolaimobiliaria.com.br/escolhaazul";                   
                     if(strripos($files->files_name, $extensao) == true){
                         return '<iframe src="'.$dominio_pdf_externo.'/public/img/upload/'.$files->files_name.'" 
                         frameborder="0" width="128" height="128"></iframe>';
@@ -217,7 +217,7 @@ class ProposalPFController extends Controller
                             </a>';
                     })
                 ->addColumn('action', function ($files) {
-                    $dominio_pdf_externo = "http://209.97.128.184/escolhaazul";
+                    $dominio_pdf_externo = "https://espindolaimobiliaria.com.br/escolhaazul";
                     return '<a href="'.$dominio_pdf_externo.'/public/img/upload/'.$files->files_name.'" download="'.$files->files_name.'" class="btn" title="Fazer download desse arquivo" >
                                 <i class="fa fa-download"></i>
                             </a>';
