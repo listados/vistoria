@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('teamEquipe/{id}' , 'TeamController@show');
 Route::put('team/{id}' , 'TeamController@update');
 Route::post('team/avatar/{id}' , 'TeamController@uploadAvatar');
-
+Route::get('team' , 'TeamController@getTeamApi');
 /**
  * Rota para escolha azul
  */

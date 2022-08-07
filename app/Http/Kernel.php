@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'settings' => \EspindolaAdm\Http\Middleware\Settings::class,
+        'cors' => \App\Http\Middleware\Cors::class, 
     ];
 }

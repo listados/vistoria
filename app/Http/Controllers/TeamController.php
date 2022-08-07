@@ -95,10 +95,10 @@ class TeamController extends Controller
             //retornando a instancia
             $team = Team::where('teamSites_id', $id)->get()->first();
             $team->update($up);
-            dd($team);
-            return response()->json(['message' => 'success'], 200);
+            return redirect()->back()->with('message', 'Cadastrado com sucesso');
         } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()] , 401);
+            // return response()->json(['message' => $th->getMessage()] , 401);
+            return redirect()->back()->with('message ', 'Ocorreu um erro: '.$th->getMessage());
         }
         
     }
@@ -153,6 +153,11 @@ class TeamController extends Controller
                 })
                 ->rawColumns(['teamSites_photo', 'action', 'teamSites_linkedin'])
                 ->make(true);
+    }
+
+    public function getTeamApi()
+    {
+        return Team::all();
     }
 
    
