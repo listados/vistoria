@@ -66,7 +66,8 @@
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    
+    {{ Html::script('js/plugins/select2.min.js')}}
 @endif
 
 @if(config('adminlte.plugins.datatables'))   

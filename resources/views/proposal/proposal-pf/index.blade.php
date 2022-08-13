@@ -46,8 +46,8 @@
 @stop
 
 @section('js')
-
+{{-- 
 {{ Html::script('/js/manifest.js') }}
-{{ Html::script('/js/vendor.js') }}
+{{ Html::script('/js/vendor.js') }} --}}
 {{ Html::script('js/proposal_pf.js') }}
 @stop

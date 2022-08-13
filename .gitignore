@@ -14,3 +14,6 @@ public/dist/img/upload
 public/dist/img/profile
 docker-compose.yml
 phpdocker/mysql
+public/img/upload/*
+public/imagens/*
+public/imagens/team/*

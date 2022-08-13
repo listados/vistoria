@@ -8,6 +8,8 @@ class Team extends Model
 {
     protected $table = 'teamSites';
 
+    protected $primaryKey = 'teamSites_id';
+
     protected $fillable = [
         'teamSites_office',
         'teamSites_name',
