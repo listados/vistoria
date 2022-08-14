@@ -4,7 +4,8 @@ namespace EspindolaAdm\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use DB, Auth, PDF;
+use DB;
+use Barryvdh\DomPDF\Facade as PDF;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
@@ -136,11 +137,13 @@ class ProposalPFController extends Controller
         if($type == "proposta"){
             $titulo_proposta = 'Proposta Pessoa Física';
             //return view('proposal.proposal-pf.report.proposal-pf',compact('proposta' , 'titulo_proposta' , 'name_atendent')); 
-            $pdf = PDF::loadView('proposal.proposal-pf.report.proposal-pf',compact('proposta' , 'titulo_proposta' , 'name_atendent')); 
+            $pdf = PDF::loadView('proposal.proposal-pf.report.proposal-pf',
+            compact('proposta' , 'titulo_proposta' , 'name_atendent'))->setOptions(['defaultFont' => 'sans-serif']); 
         }else{
             $titulo_proposta = 'Análise Cadastral (PF)';
-            //return view('proposal.proposal-pf.report.analyze_pf',compact('proposta' , 'titulo_proposta' , 'name_atendent'));
-            $pdf = PDF::loadView('proposal.proposal-pf.report.analyze_pf',compact('proposta' , 'titulo_proposta' , 'name_atendent')); 
+            // return view('proposal.proposal-pf.report.analyze_pf',compact('proposta' , 'titulo_proposta' , 'name_atendent'));
+            $pdf = PDF::loadView('proposal.proposal-pf.report.analyze_pf',
+            compact('proposta' , 'titulo_proposta' , 'name_atendent'))->setOptions(['defaultFont' => 'sans-serif']); 
         }
         
         $pdf->setPaper('A4', 'report');  

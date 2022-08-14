@@ -37,7 +37,7 @@
             <br/>
             <br/>
             <br/>
-            <label>Proposta Enviada em: <?php echo date("d/m/Y H:i:s", strtotime($proposta[0]['date_cadastre'])). ' para a Espíndola Imobiliária';?></label>
+            <label>Proposta Enviada em: <?php echo date("d/m/Y H:i:s", strtotime($proposta[0]['date_cadastre'])). ' para a Espíndola Imobiliária.'?></label>
         </td>
     </tr>
 </table>

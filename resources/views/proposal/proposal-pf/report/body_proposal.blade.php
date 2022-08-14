@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 <td class="tg-0lax"><strong>Condomínio: </strong> <span>{{ ($proposta[0]['proposal_value_condominium'])}}</span></td>
-                <td class="tg-0lax"><strong>IPTU - Mensal:</strong> <span>{{ number_format($proposta[0]['proposal_value_iptu'],2,',','.')}}></span></td>
+                <td class="tg-0lax"><strong>IPTU - Mensal:</strong> <span>{{ number_format($proposta[0]['proposal_value_iptu'],2,',','.')}}</span></td>
             </tr>
             <tr>
                 <td class="tg-0lax"><strong>Motivo da Locação: </strong> <span>{{ ($proposta[0]['proposal_lease_reason'])}}</span></td>
