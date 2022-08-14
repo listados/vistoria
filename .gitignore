@@ -17,3 +17,4 @@ phpdocker/mysql
 public/img/upload/*
 public/imagens/*
 public/imagens/team/*
+.env
