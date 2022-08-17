@@ -57,9 +57,13 @@
     
 </head>
 <body class="hold-transition @yield('body_class')">
+    <div id="app">
+        @yield('body')
+    </div>
 
-@yield('body')
-
+<script src="/js/manifest.js"></script>
+   <script src="/js/vendor.js"></script>
+   <script src="{{asset('js/app.js')}}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>

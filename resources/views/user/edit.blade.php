@@ -14,6 +14,9 @@
 @section('content')
 
 <div class="row">
+  <div class="col-md-12">
+    <example-component></example-component>
+  </div>
   @include('message.message_general')
 	<div class="col-md-3">
     <!-- Profile Image -->

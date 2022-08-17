@@ -11,8 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js');
 
 mix.styles([
     'resources/assets/css/survey.css'
@@ -23,35 +22,35 @@ mix.styles([
 ], 'public/css/all.min.css');
 
 
- mix.js([
-	'resources/assets/js/survey.js'],
-	'public/js/survey.js').extract(['vue']);
+//  mix.js([
+// 	'resources/assets/js/survey.js'],
+// 	'public/js/survey.js').extract(['vue']);
 
 //TEAM
-mix.scripts([
-    'resources/assets/js/teamSite.js'
-], 'public/js/teamSite.js');
+// mix.scripts([
+//     'resources/assets/js/teamSite.js'
+// ], 'public/js/teamSite.js');
 
 //DELIVERY
- mix.js([
-	'resources/assets/js/delivery.js'],
-	'public/js/delivery.js');
+//  mix.js([
+// 	'resources/assets/js/delivery.js'],
+// 	'public/js/delivery.js');
 
 //IMOVEL
- mix.js([
-	'resources/assets/js/immobile.js'],
-	'public/js/immobile.js');
+//  mix.js([
+// 	'resources/assets/js/immobile.js'],
+// 	'public/js/immobile.js');
 
 //CHAVES
-  mix.js([
-	'resources/assets/js/key.js'],
-	'js/key.js');
+//   mix.js([
+// 	'resources/assets/js/key.js'],
+// 	'js/key.js');
 
 /* - PARA TODO O ESCOLHA AZUL - */
 //PROPOSTA PF
-  mix.js([
-	'resources/assets/js/proposal_pf.js'],
-	'public/js/proposal_pf.js');  
+//   mix.js([
+// 	'resources/assets/js/proposal_pf.js'],
+// 	'public/js/proposal_pf.js');  
 
 // mix.scripts([
 //     'public/js/admin.js',

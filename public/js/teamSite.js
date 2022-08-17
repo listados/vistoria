@@ -1,9 +1,9 @@
 
 $(document).ready(function () {
     var _language;
-    console.log(domain_complet + 'site/office');
-    console.log(Admin.baseUrl());
+    console.log(domain_complet + 'site/office/Gestor');
     PNotify.prototype.options.styling = "fontawesome";
+    console.log('sdfas');
     $("#tabelaComercial").DataTable({
         processing: true,
         //serverSide: true,
@@ -24,24 +24,6 @@ $(document).ready(function () {
             { data: 'teamSites_office', name: 'teamSites_office' },
             { data: 'action', name: 'action', orderable: false, searchable: false }]
     });
-
-    $('#modalEditTeam').on('show.bs.modal', function (event) {
-        var target = $(event.relatedTarget) // Button that triggered the modal
-        var id = target.data('id') // Extract info from data-* attributes
-        $(".teamSites_name").val(target.data('name'));
-        $(".teamSites_phoneOne").val(target.data('phone'));
-        $(".teamSites_office").val(target.data('office'));
-        $(".teamSites_text").val(target.data('text'));
-        $(".teamSites_linkedin").val(target.data('linkedin'));
-        console.log(Admin.baseUrl()+'/images/team/'+target.data('photo'));
-        $("#thumbnailPhoto").attr('src', Admin.baseUrl()+'/images/team/'+target.data('photo'));
-        $("#formAlterTeam").attr('action', Admin.baseUrl()+'/site/alterar/'+target.data('id'));
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        // var modal = $(this)
-        // modal.find('.modal-title').text('New message to ' + recipient)
-        // modal.find('.modal-body input').val(recipient)
-      })
 });
 
 function deleteTeam(id) {
@@ -74,7 +56,7 @@ function deleteTeam(id) {
                         
                     }
                 });
-               window.location.replace(domain_complet + '/site/equipe#');
+               window.location.replace('http://localhost:4000/site/equipe#');
             }
            
         }, {

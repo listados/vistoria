@@ -157,7 +157,8 @@ class TeamController extends Controller
 
     public function getTeamApi()
     {
-        return Team::all();
+        $team = Team::all();
+        return response()->json($team, 200);
     }
 
    

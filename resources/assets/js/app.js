@@ -7,11 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import VueSweetalert2 from 'vue-sweetalert2';
-import vue2Dropzone from 'vue2-dropzone'
+// import VueSweetalert2 from 'vue-sweetalert2';
+// import vue2Dropzone from 'vue2-dropzone'
 
-Vue.use(VueSweetalert2);
-Vue.use(vue2Dropzone);
+// Vue.use(VueSweetalert2);
+// Vue.use(vue2Dropzone);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -19,7 +19,7 @@ Vue.use(vue2Dropzone);
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
+// Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 
 const app = new Vue({
     el: '#app',
