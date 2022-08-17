@@ -142,9 +142,6 @@
 
 
 @section('js')
-
-{{ Html::script('/js/manifest.js') }}
-{{ Html::script('/js/vendor.js') }}
 {{ Html::script('/js/all.js') }}
 {{ Html::script('/js/immobile.js') }}
 
