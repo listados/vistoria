@@ -22,6 +22,10 @@ mix.styles([
 ], 'public/css/all.min.css');
 
 
+ mix.js([
+	'resources/assets/js/all.js'],
+	'public/js/all.js').extract(['vue']);
+
 //  mix.js([
 // 	'resources/assets/js/survey.js'],
 // 	'public/js/survey.js').extract(['vue']);
