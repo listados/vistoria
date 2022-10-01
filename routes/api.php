@@ -34,3 +34,6 @@ Route::prefix('escolha-azul')->group(function(){
 Route::prefix('survey')->group(function(){ 
     Route::get('type-immobile'  , 'SurveyController@getTypeImmobile');
 });
+
+
+Route::get('contact'  , 'SiteController@contact');
