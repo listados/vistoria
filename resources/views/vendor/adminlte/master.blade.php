@@ -47,7 +47,7 @@
     <script type="text/javascript">
          //GLOBALIZANDO URL
      var project_survey = '/';
-     domin  =  window.location.protocol + "//" + window.location.hostname+':50000';
+     domin  =  window.location.protocol + "//" + window.location.hostname+':5050';
      var domain_complet = domin + project_survey; 
      var url = window.location.origin;
 
