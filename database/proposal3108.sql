@@ -243,7 +243,7 @@ CREATE TABLE `proposal` (
   `proposal_occupant_type` varchar(30) DEFAULT NULL,
   `proposal_occupant_type2` varchar(30) DEFAULT NULL,
   `proposal_occupant_relation` varchar(50) DEFAULT NULL,
-  `proposal_completed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `proposal_completed` datetime,
   `proposal_send` int(11) NOT NULL,
   `proposal_id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
