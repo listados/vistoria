@@ -3,28 +3,14 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Contato</h1>
+    <h1>Contato <small>Contatos da imobiliária</small> </h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
-    <div class="col-md-12 ">
-        <div class="">
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="list-group" id="list-group">
-                        <li class="list-group-item" value="01"><i class="fa fa-arrows-alt"></i> Sala</li>
-                        <li class="list-group-item" value="02"><i class="fa fa-arrows-alt"></i> Cozinha</li>
-                        <li class="list-group-item" value="03"><i class="fa fa-arrows-alt"></i> Wc Social</li>
-                        <li class="list-group-item" value="04"><i class="fa fa-arrows-alt"></i> Garagem</li>
-                        <li class="list-group-item" value="05"><i class="fa fa-arrows-alt"></i> Hall de entrada</li>
-                      </ul>
-                </div>
-                
-            </div>
-        </div>
+    <div class="row">
+        <info-contact></info-contact>         
     </div>
-    <example-component></example-component>
+    
 @stop
 
 @section('css')
@@ -37,9 +23,6 @@
 @stop
 
 @section('js')
-  {{Html::script('js/plugins/sortable.min.js')}}
-  {{Html::script('js/plugins/jquery.binding.js')}}
-<script src="/js/manifest.js"></script>
-<script src="/js/vendor.js"></script>
-<script src="/js/app.js"></script>
+<script src="/js/all.js"></script>
+
 @stop
