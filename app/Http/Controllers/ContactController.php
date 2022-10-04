@@ -4,6 +4,7 @@ namespace EspindolaAdm\Http\Controllers;
 
 use EspindolaAdm\Contact;
 use Illuminate\Http\Request;
+use EspindolaAdm\DataGrid\contactGrid;
 
 class ContactController extends Controller
 {
@@ -36,7 +37,14 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Contact::create($request->all());
+            return response()->json(['message' => 'Sucesso'], 200);
+        } catch (\Throwable $th) {
+            //throw $th
+            return response()->json(['errors' => $th->getMessage()], 400);
+        }
+        return response()->json($request->all());
     }
 
     /**
@@ -83,4 +91,12 @@ class ContactController extends Controller
     {
         //
     }
+
+    public function getContacts()
+    {
+        $contact = Contact::all();
+        return response()->json($contact,200);
+    }
+
+
 }
