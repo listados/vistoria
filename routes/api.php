@@ -36,4 +36,5 @@ Route::prefix('survey')->group(function(){
 });
 
 
-Route::get('contact'  , 'SiteController@contact');
+Route::get('contact' , 'ContactController@getContacts');
+Route::post('contact/create' , 'ContactController@store');
