@@ -3,8 +3,25 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-body">
-                <h1>Lista</h1>
-                {{contacts}}
+                <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Endereço</th>
+                    <th>Fone Fixo</th>
+                    <th>CRECI</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="contact in contacts" :key="contact.id">
+                    <td>{{contact.address}} ... {{contact.district}}</td>
+                    <td>{{contact.phoneFixed}}</td>
+                    <td>{{contact.creci}}</td>
+                    <td>
+                        <button @click="editContact($event, contact)">Editar</button></td>
+                </tr>
+            </tbody>
+        </table>
             </div>           
         </div>
     </div>
@@ -106,18 +123,41 @@
         </div>
         </form>
     </div>
-
+    <modal name="example" @before-open="beforeOpen">
+        <div class="partition-title">CREATE ACCOUNT</div>
+        <div class="col-md-12">
+            <div class="form-group">
+                        <label>Endereço</label>
+                            <input type="text" v-model="formEdit.address" class="form-control" id="" placeholder="Logradouro">
+                    </div>
+        </div>
+    </modal>
 </div>
 </template>
 
 <script>
-
+import 'vue-js-modal/dist/styles.css'
 export default {
+    name: 'DemoLoginModal',
     data () {
         return {
             contacts: [],
             form: {
                 address: '',
+                number: '',
+                complement: '',
+                district: '',
+                city: '',
+                state: '',
+                email: '',
+                phoneFixed: '',
+                mobile: '',
+                cnpj: '',
+                creci: '',
+                cep: ''
+            },
+            formEdit: {
+                address: 'Rua aqui',
                 number: '',
                 complement: '',
                 district: '',
@@ -137,6 +177,7 @@ export default {
     },
     mounted() {
         // this.savecontact();
+        
     },
     methods: {
         getContact(){
@@ -154,6 +195,14 @@ export default {
             console.log(response);
            })
            .catch()
+        },
+        editContact(event, contacts) {
+            console.log(contacts)
+            this.formEdit.address = contacts.address
+            this.$modal.show('example')
+        },
+        beforeOpen (event) {
+            console.log(event.params);
         }
     }
 }
