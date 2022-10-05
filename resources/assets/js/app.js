@@ -8,13 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import Vue from 'vue';
+import VModal from 'vue-js-modal'
 // import VueSweetalert2 from 'vue-sweetalert2';
 // import vue2Dropzone from 'vue2-dropzone'
 
 
 // Vue.use(VueSweetalert2);
 // Vue.use(vue2Dropzone);
-
+Vue.use(VModal);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
