@@ -87,9 +87,14 @@ class ContactController extends Controller
      * @param  \EspindolaAdm\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy($id)
     {
-        //
+        dump($id);
+        try {
+            Contact::find($id);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     public function getContacts()

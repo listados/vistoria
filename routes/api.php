@@ -38,3 +38,4 @@ Route::prefix('survey')->group(function(){
 
 Route::get('contact' , 'ContactController@getContacts');
 Route::post('contact/create' , 'ContactController@store');
+Route::delete('contact/delete/{id}' , 'ContactController@destroy');

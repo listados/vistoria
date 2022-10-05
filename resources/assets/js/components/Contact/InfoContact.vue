@@ -14,11 +14,26 @@
             </thead>
             <tbody>
                 <tr v-for="contact in contacts" :key="contact.id">
-                    <td>{{contact.address}} ... {{contact.district}}</td>
+                    <td>
+                        {{contact.address}}, {{contact.district}},
+                        {{contact.city}}, {{contact.state}}, CEP: {{contact.cep}}
+                    </td>
                     <td>{{contact.phoneFixed}}</td>
                     <td>{{contact.creci}}</td>
                     <td>
-                        <button @click="editContact($event, contact)">Editar</button></td>
+                        <button 
+                        @click="editContact($event, contact)" 
+                        title="Alterar"
+                        class="btn btn-default">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button 
+                        @click="deleteContact(contact)" 
+                        title="Excluir"
+                        class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -27,110 +42,24 @@
     </div>
     <div class="col-md-12">
         <form @submit.prevent="savecontact($event)" ref="form" enctype="multipart/form-data" >
-        <div class="box">
-            <div class="box-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Endereço</label>
-                            <input type="text" v-model="form.address" class="form-control" id="" placeholder="Logradouro">
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="col-md-6 col-xs-12">
-                        <div class="form-group">
-                            <label>Número</label>
-                            <input type="text"  v-model="form.number" class="form-control" id="" placeholder="Número">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Complemento</label>
-                            <input type="text" v-model="form.complement" class="form-control" id="" placeholder="Complemento">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Bairro</label>
-                            <input type="text" v-model="form.district" class="form-control" id="" placeholder="Bairro">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Cidade</label>
-                            <input type="text" v-model="form.city" class="form-control" id="" placeholder="Cidade">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Estado</label>
-                            <input type="text" v-model="form.state" class="form-control" id="" placeholder="Estado">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>E-mail</label>
-                            <input type="text" v-model="form.email" class="form-control" id="" placeholder="E-mail">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Telefone Fixo</label>
-                            <input type="text" v-model="form.phoneFixed" class="form-control" id="" placeholder="Telefone Fixo">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Telefone Celular</label>
-                            <input type="text" v-model="form.mobile" class="form-control" id="" placeholder="Telefone Celular">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>CNPJ</label>
-                        <input type="text" v-model="form.cnpj" class="form-control" id="" placeholder="CNPJ">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>CRECI/CE</label>
-                            <input type="text" v-model="form.creci" class="form-control" id="" placeholder="CRECI/CE">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>CEP</label>
-                            <input type="text" v-model="form.cep" class="form-control" id="" placeholder="CEP">
-                        </div>
-                    </div>
-                </div>
-
-            </div>    
-            <div class="box-footer">
-                <button type="submit" class="btn btn-primary pull-right" title="Cadatrar Contato"> 
-                    <i class="fa fa-save"></i>  Cadastrar
-                </button>
-            </div>
-        </div>
+            <form-contact :form="this.form" :typeSave="this.typeSave"></form-contact>
         </form>
     </div>
-    <modal name="example" @before-open="beforeOpen">
-        <div class="partition-title">CREATE ACCOUNT</div>
-        <div class="col-md-12">
-            <div class="form-group">
-                        <label>Endereço</label>
-                            <input type="text" v-model="formEdit.address" class="form-control" id="" placeholder="Logradouro">
-                    </div>
+    <modal 
+    name="modal-edit" 
+    @before-open="beforeOpen" 
+    :width="600" 
+    :adaptive="true"
+    :height="430">
+        <div class="modal-header">           
+            <div class="dialog-c-title">Excluir Registro</div>  <br />            
         </div>
+        <div class="dialog-content">
+            <div class="dialog-c-text">Deseja realmente excluir esse registro?</div>
+        </div>
+        <form @submit.prevent="savecontact($event)" ref="form" enctype="multipart/form-data" ></form>
+            <!-- <form-contact :form="this.form" :typeSave="this.typeUpdate"></form-contact> -->
+        </form>
     </modal>
 </div>
 </template>
@@ -138,12 +67,12 @@
 <script>
 import 'vue-js-modal/dist/styles.css'
 export default {
-    name: 'DemoLoginModal',
     data () {
         return {
             contacts: [],
             form: {
-                address: '',
+                id: '',
+                address: 'address',
                 number: '',
                 complement: '',
                 district: '',
@@ -156,20 +85,8 @@ export default {
                 creci: '',
                 cep: ''
             },
-            formEdit: {
-                address: 'Rua aqui',
-                number: '',
-                complement: '',
-                district: '',
-                city: '',
-                state: '',
-                email: '',
-                phoneFixed: '',
-                mobile: '',
-                cnpj: '',
-                creci: '',
-                cep: ''
-            }
+            typeSave: 'create',
+            titleDelete: ''
         }
     },
     created() {
@@ -190,16 +107,65 @@ export default {
         },
         savecontact(event){
             var form = this.form;
-           axios.post(domain_complet + 'api/contact/create', form)
-           .then(function (response) {
-            console.log(response);
-           })
-           .catch()
+            console.log(form);
+            if(form.id === ''){
+                axios.post(domain_complet + 'api/contact/create', form)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch()
+            }else{
+                console.log({form});
+                console.log('Realiza o Update');
+                // axios.post(domain_complet + 'api/contact/create', form)
+                // .then(function (response) {
+                //     console.log(response);
+                // })
+                // .catch()
+            }  
         },
         editContact(event, contacts) {
             console.log(contacts)
-            this.formEdit.address = contacts.address
-            this.$modal.show('example')
+            this.form.id = contacts.id
+            this.form.address = contacts.address
+            this.form.complement = contacts.address
+            this.form.district = contacts.district
+            this.form.city = contacts.city
+            this.form.state = contacts.state
+            this.form.email = contacts.email
+            this.form.phoneFixed = contacts.phoneFixed
+            this.form.mobile = contacts.mobile
+            this.form.cnpj = contacts.cnpj
+            this.form.creci = contacts.creci
+            this.form.cep = contacts.cep
+            this.typeSave = 'update'
+            // this.$modal.show('modal-edit')
+        },
+        deleteContact(contacts){
+            // this.$modal.show('modal-edit')
+            // this.$swal('Hello Vue world!!!');
+            console.log({contacts})
+            this.$swal({
+            title: 'Excluir Contato',
+            text: "Deseja realmente excluir esse contato?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, quero excluir'
+            }).then((result) => {
+                console.log('contacts',contacts)
+                axios.delete(domain_complet + 'api/contact/delete/'+contacts.id)
+                .then()
+                .catch()
+            if (result.isConfirmed) {
+                this.$swal(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+            }
+            })
         },
         beforeOpen (event) {
             console.log(event.params);
@@ -207,3 +173,34 @@ export default {
     }
 }
 </script>
+<style>
+    .vm--modal {
+        border-radius: 8px;
+    }
+    .dialog-content {
+        flex: 1 0 auto;
+        width: 100%;
+        padding: 15px;
+        font-size: 14px;
+    }
+    .dialog-c-title {
+        font-weight: 600;
+        padding-bottom: 15px;
+    }
+    .modal-header {
+        display: flex;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #e9ecef;
+        border-top-left-radius: .3rem;
+        border-top-right-radius: .3rem;
+    }
+    .vue-dialog div {
+        box-sizing: border-box;
+    }
+</style>
