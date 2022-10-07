@@ -10,12 +10,16 @@ window.Vue = require('vue');
 import Vue from 'vue';
 import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueMask from 'v-mask';
 // import vue2Dropzone from 'vue2-dropzone'
 
 import 'sweetalert2/dist/sweetalert2.min.css';
+
+
 Vue.use(VueSweetalert2);
 // Vue.use(vue2Dropzone);
 Vue.use(VModal);
+Vue.use(VueMask);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
