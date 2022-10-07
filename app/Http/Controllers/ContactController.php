@@ -39,7 +39,7 @@ class ContactController extends Controller
     {
         try {
             Contact::create($request->all());
-            return response()->json(['message' => 'Sucesso'], 200);
+            return response()->json(['message' => 'Contato cadastrado com sucesso'], 200);
         } catch (\Throwable $th) {
             //throw $th
             return response()->json(['errors' => $th->getMessage()], 400);
@@ -89,11 +89,15 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        dump($id);
+        
         try {
-            Contact::find($id);
+            $contact = Contact::find($id);
+            $contact->delete();
+            return response()->json(
+                ['message' => 'Contato excluído com sucesso',200]
+            );
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json(['error: ' => $th->getMessage(),400]);
         }
     }
 

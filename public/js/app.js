@@ -36326,12 +36326,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         savecontact: function savecontact(event) {
+            var _this2 = this;
+
             var form = this.form;
             console.log(form);
             if (form.id === '') {
                 axios.post(domain_complet + 'api/contact/create', form).then(function (response) {
-                    console.log(response);
-                }).catch();
+                    _this2.$swal({
+                        icon: 'success',
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    _this2.getContact();
+                }).catch(function (error) {
+                    console.log({ error: error });
+                    _this2.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ocorreu um erro inesperado'
+                    });
+                });
             } else {
                 console.log({ form: form });
                 console.log('Realiza o Update');
@@ -36360,7 +36375,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // this.$modal.show('modal-edit')
         },
         deleteContact: function deleteContact(contacts) {
-            var _this2 = this;
+            var _this3 = this;
 
             // this.$modal.show('modal-edit')
             // this.$swal('Hello Vue world!!!');
@@ -36368,16 +36383,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$swal({
                 title: 'Excluir Contato',
                 text: "Deseja realmente excluir esse contato?",
-                icon: 'warning',
+                icon: 'error',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, quero excluir'
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, quero excluir',
+                cancelButtonText: 'Não, quero sair'
             }).then(function (result) {
                 console.log('contacts', contacts);
-                axios.delete(domain_complet + 'api/contact/delete/' + contacts.id).then().catch();
                 if (result.isConfirmed) {
-                    _this2.$swal('Deleted!', 'Your file has been deleted.', 'success');
+                    axios.delete(domain_complet + 'api/contact/delete/' + contacts.id).then(function (response) {
+                        _this3.getContact();
+                        _this3.$swal({
+                            icon: 'success',
+                            title: 'Excluído com sucesso',
+                            showConfirmButton: true
+                        });
+                    }).catch(function (error) {
+                        _this3.$swal({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        });
+                    });
                 }
             });
         },

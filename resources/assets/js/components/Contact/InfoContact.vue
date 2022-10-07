@@ -110,10 +110,23 @@ export default {
             console.log(form);
             if(form.id === ''){
                 axios.post(domain_complet + 'api/contact/create', form)
-                .then(function (response) {
-                    console.log(response);
+                .then((response) =>  {
+                    this.$swal({
+                        icon: 'success',
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    this.getContact();
                 })
-                .catch()
+                .catch( (error) =>{
+                   console.log({error})
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ocorreu um erro inesperado'
+                    })
+                })
             }else{
                 console.log({form});
                 console.log('Realiza o Update');
@@ -148,23 +161,34 @@ export default {
             this.$swal({
             title: 'Excluir Contato',
             text: "Deseja realmente excluir esse contato?",
-            icon: 'warning',
+            icon: 'error',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, quero excluir'
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, quero excluir',
+            cancelButtonText: 'Não, quero sair'
             }).then((result) => {
                 console.log('contacts',contacts)
+                if (result.isConfirmed) {
                 axios.delete(domain_complet + 'api/contact/delete/'+contacts.id)
-                .then()
-                .catch()
-            if (result.isConfirmed) {
-                this.$swal(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
-            }
+                .then(response =>{
+                    this.getContact();
+                    this.$swal({
+                        icon: 'success',
+                        title: 'Excluído com sucesso',
+                        showConfirmButton: true
+                    })
+                })
+                .catch(error =>{
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                })
+                
+                }
             })
         },
         beforeOpen (event) {
