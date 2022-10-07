@@ -47,7 +47,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>E-mail</label>
-                            <input type="text" v-model="form.email" class="form-control" id="" placeholder="E-mail">
+                            <input type="email" v-model="form.email" class="form-control" id="" placeholder="E-mail">
                     </div>
                 </div>
 
@@ -55,13 +55,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Telefone Fixo</label>
-                            <input type="text" v-model="form.phoneFixed" class="form-control" id="" placeholder="Telefone Fixo">
+                            <input type="text" v-model="form.phoneFixed" v-mask="'(##) ####-####'" 
+                            class="form-control" id="" placeholder="Telefone Fixo">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Telefone Celular</label>
-                            <input type="text" v-model="form.mobile" class="form-control" id="" placeholder="Telefone Celular">
+                            <input type="text" v-model="form.mobile"  v-mask="'(##) ####-####'" 
+                            class="form-control" id="" placeholder="Telefone Celular">
                         </div>
                     </div>
                 </div>
@@ -69,7 +71,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>CNPJ</label>
-                        <input type="text" v-model="form.cnpj" class="form-control" id="" placeholder="CNPJ">
+                        <input type="text" v-model="form.cnpj"  v-mask="'##.###.###/####-##'" 
+                        class="form-control" id="" placeholder="CNPJ">
                     </div>
                 </div>
 
@@ -77,13 +80,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>CRECI/CE</label>
-                            <input type="text" v-model="form.creci" class="form-control" id="" placeholder="CRECI/CE">
+                            <input type="text" v-model="form.creci" required class="form-control" id="" placeholder="CRECI/CE">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>CEP</label>
-                            <input type="text" v-model="form.cep" class="form-control" id="" placeholder="CEP">
+                            <input type="text" v-model="form.cep" v-mask="'##.###-##'" 
+                            class="form-control" id="" placeholder="CEP">
                         </div>
                     </div>
                 </div>
@@ -95,7 +99,7 @@
                     <span v-if="typeSave == 'create'">Cadastrar</span>
                     <span v-if="typeSave == 'update'">Alterar</span>
                 </button>
-                <input type="text" v-model="form.id">
+                <input type="hidden" v-model="form.id">
                 <button type="button" class="btn btn-default pull-left" title="Limpar" v-if="typeSave == 'update'"> 
                     <span>Cancelar alteração</span>
                 </button>
@@ -109,16 +113,7 @@ export default {
     props: {
         form: Object,
         typeSave: String
-    },
-    data(){
-        return {
-            
-        }
-    },
-    created() {
-        console.log(this.form)
-        console.log(this.typeSave)
-    },
+    }
 }
 </script>
 <style lang="">

@@ -100,9 +100,8 @@ export default {
         getContact(){
             axios.get(domain_complet + 'api/contact')
             .then(response =>{
-                console.log('contact', response.data)
+                // console.log('contact', response.data)
                 this.contacts = response.data
-                console.log(this.contacts)
             })
         },
         savecontact(event){
@@ -139,6 +138,7 @@ export default {
         },
         editContact(event, contacts) {
             console.log(contacts)
+            contacts.forEach(item => console.log(item));
             this.form.id = contacts.id
             this.form.address = contacts.address
             this.form.complement = contacts.address
