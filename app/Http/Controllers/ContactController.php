@@ -5,6 +5,8 @@ namespace EspindolaAdm\Http\Controllers;
 use EspindolaAdm\Contact;
 use Illuminate\Http\Request;
 use EspindolaAdm\DataGrid\contactGrid;
+use Illuminate\Support\Facades\Validator;
+use EspindolaAdm\Repository\ContactRepository;
 
 class ContactController extends Controller
 {
@@ -37,11 +39,13 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        if(empty($request['address']) || $request['address'] == null) {
-            return response()->json(['message' => 'O endereço é obrigatório' ], 400);
+        $validator = ContactRepository::validatorContact($request);
+        if ($validator->fails()) {
+            return response()->json(['errors' => 'Verifique os campos obrigatórios'], 400);
         }
+            
         try {
-            Contact::create($request->all());
+            // Contact::create($request->all());
             return response()->json(['message' => 'Contato cadastrado com sucesso'], 200);
         } catch (\Throwable $th) {
             //throw $th
