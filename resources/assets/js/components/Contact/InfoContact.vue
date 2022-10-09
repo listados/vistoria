@@ -41,25 +41,28 @@
         </div>
     </div>
     <div class="col-md-12">
-        <form @submit.prevent="savecontact($event)" ref="form" enctype="multipart/form-data" >
-            <form-contact :form="this.form" :typeSave="this.typeSave"></form-contact>
+        <form @submit.prevent="savecontact($event)" ref="formContact" enctype="multipart/form-data" >
+            <form-contact 
+                :form="this.form" 
+                :typeSave="this.typeSave" 
+                @resetFormContact="formReset(form)"
+            ></form-contact>
         </form>
     </div>
     <modal 
-    name="modal-edit" 
-    @before-open="beforeOpen" 
-    :width="600" 
-    :adaptive="true"
-    :height="430">
-        <div class="modal-header">           
-            <div class="dialog-c-title">Excluir Registro</div>  <br />            
-        </div>
-        <div class="dialog-content">
-            <div class="dialog-c-text">Deseja realmente excluir esse registro?</div>
-        </div>
-        <form @submit.prevent="savecontact($event)" ref="form" enctype="multipart/form-data" ></form>
-            <!-- <form-contact :form="this.form" :typeSave="this.typeUpdate"></form-contact> -->
-        </form>
+        name="modal-edit" 
+        :width="600" 
+        :adaptive="true"
+        :height="430">
+            <div class="modal-header">           
+                <div class="dialog-c-title">Excluir Registro</div>  <br />            
+            </div>
+            <div class="dialog-content">
+                <div class="dialog-c-text">Deseja realmente excluir esse registro?</div>
+            </div>
+            <form @submit.prevent="savecontact($event)" ref="form" enctype="multipart/form-data" ></form>
+                <!-- <form-contact :form="this.form" :typeSave="this.typeUpdate"></form-contact> -->
+            </form>
     </modal>
 </div>
 </template>
@@ -72,7 +75,7 @@ export default {
             contacts: [],
             form: {
                 id: '',
-                address: 'address',
+                address: '',
                 number: '',
                 complement: '',
                 district: '',
@@ -92,10 +95,6 @@ export default {
     created() {
         this.getContact()
     },
-    mounted() {
-        // this.savecontact();
-        
-    },
     methods: {
         getContact(){
             axios.get(domain_complet + 'api/contact')
@@ -106,7 +105,6 @@ export default {
         },
         savecontact(event){
             var form = this.form;
-            console.log(form);
             if(form.id === ''){
                 axios.post(domain_complet + 'api/contact/create', form)
                 .then((response) =>  {
@@ -117,6 +115,7 @@ export default {
                         timer: 1500
                     })
                     this.getContact();
+                    
                 })
                 .catch( (error) =>{
                    console.log({error})
@@ -127,18 +126,28 @@ export default {
                     })
                 })
             }else{
-                console.log({form});
-                console.log('Realiza o Update');
-                // axios.post(domain_complet + 'api/contact/create', form)
-                // .then(function (response) {
-                //     console.log(response);
-                // })
-                // .catch()
+                axios.patch(domain_complet + 'api/contact/'+form.id, form)
+                .then((response) =>  {
+                    this.$swal({
+                        icon: 'success',
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    this.getContact();
+                })
+                .catch( (error) => {
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: error.data.message
+                    })
+                })
             }  
+            
         },
         editContact(event, contacts) {
             console.log(contacts)
-            contacts.forEach(item => console.log(item));
             this.form.id = contacts.id
             this.form.address = contacts.address
             this.form.complement = contacts.address
@@ -191,8 +200,16 @@ export default {
                 }
             })
         },
-        beforeOpen (event) {
-            console.log(event.params);
+        resetForm(form){
+            var self = this;
+            Object.keys(form).forEach(function(key,index) {
+                self.form[key] = '';
+            });
+        },
+        formReset(form) {
+            console.log('formReset' , form)
+            this.resetForm(form);
+            this.typeSave = 'create'
         }
     }
 }
