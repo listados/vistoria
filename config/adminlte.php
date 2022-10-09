@@ -180,6 +180,10 @@ return [
                     'url'  => 'site/equipe'
                 ],
                 [
+                    'text' => 'Contato',
+                    'url'  => 'site/contato'
+                ],
+                [
                     'text' => 'Cadastro Pessoa Física',
                     'url'  => 'escolha-azul/proposta-pessoa-jurídica'                   
                 ]
