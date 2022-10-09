@@ -37,6 +37,9 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        if(empty($request['address']) || $request['address'] == null) {
+            return response()->json(['message' => 'O endereço é obrigatório' ], 400);
+        }
         try {
             Contact::create($request->all());
             return response()->json(['message' => 'Contato cadastrado com sucesso'], 200);
@@ -76,9 +79,16 @@ class ContactController extends Controller
      * @param  \EspindolaAdm\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update($id, Request $request)
     {
-        //
+        try {
+            $contact = Contact::findOrFail($id);
+            $contact->update($request->all());
+        return response()->json(['message' => 'Contato alterado com sucesso'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Ocorreu um erro inesperado. '.$th->getMessage()] , 400);
+        }
+
     }
 
     /**
