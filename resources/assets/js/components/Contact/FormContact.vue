@@ -55,7 +55,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Telefone Celular</label>
-                            <input type="text" required v-model="form.mobile"  v-mask="'(##) ####-####'" 
+                            <input type="text" required v-model="form.phoneMobile"  v-mask="'(##) ####-####'" 
                                 class="form-control" id="" placeholder="Telefone Celular">
                         </div>
                     </div>

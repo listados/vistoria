@@ -18,7 +18,7 @@
                         {{contact.address}}, {{contact.district}},
                         {{contact.city}}, {{contact.state}}, CEP: {{contact.cep}}
                     </td>
-                    <td>{{contact.phoneFixed}}</td>
+                    <td>{{contact.phoneMobile}}</td>
                     <td>{{contact.creci}}</td>
                     <td>
                         <button 
@@ -83,7 +83,7 @@ export default {
                 state: '',
                 email: '',
                 phoneFixed: '',
-                mobile: '',
+                phoneMobile: '',
                 cnpj: '',
                 creci: '',
                 cep: ''
@@ -156,7 +156,7 @@ export default {
             this.form.state = contacts.state
             this.form.email = contacts.email
             this.form.phoneFixed = contacts.phoneFixed
-            this.form.mobile = contacts.mobile
+            this.form.phoneMobile = contacts.phoneMobile
             this.form.cnpj = contacts.cnpj
             this.form.creci = contacts.creci
             this.form.cep = contacts.cep
@@ -207,7 +207,6 @@ export default {
             });
         },
         formReset(form) {
-            console.log('formReset' , form)
             this.resetForm(form);
             this.typeSave = 'create'
         }
