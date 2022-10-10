@@ -5,6 +5,7 @@ namespace EspindolaAdm\Http\Controllers;
 use EspindolaAdm\Site;
 use Illuminate\Http\Request;
 use EspindolaAdm\Team;
+use DB;
 
 class SiteController extends Controller
 {
@@ -102,5 +103,11 @@ class SiteController extends Controller
         //     ->with('image',$imageName);
         $create = Team::create($request->all());
         dump($create);
+    }
+
+    public function contact()
+    {
+        $contact = DB::table('contacts')->get(); 
+        return response()->json($contact[0], 200);
     }
 }

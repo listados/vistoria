@@ -2,8 +2,9 @@
 $(document).ready(function () {
     var _language;
     console.log(domain_complet + 'site/office/Gestor');
+
     PNotify.prototype.options.styling = "fontawesome";
-    console.log('sdfas');
+    
     $("#tabelaComercial").DataTable({
         processing: true,
         //serverSide: true,

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TableProposal extends Migration
+class AlterContact extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class TableProposal extends Migration
      */
     public function up()
     {
-        Schema::create('proposal', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->string('cnpj', 30)->nullable()->change();
         });
     }
 
@@ -26,6 +25,8 @@ class TableProposal extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proposal');
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->string('cnpj', 15)->nullable()->change();
+        });
     }
 }

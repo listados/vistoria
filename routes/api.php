@@ -34,3 +34,9 @@ Route::prefix('escolha-azul')->group(function(){
 Route::prefix('survey')->group(function(){ 
     Route::get('type-immobile'  , 'SurveyController@getTypeImmobile');
 });
+
+
+Route::get('contact' , 'ContactController@getContacts');
+Route::post('contact/create' , 'ContactController@store');
+Route::delete('contact/delete/{id}' , 'ContactController@destroy');
+Route::patch('contact/{id}' , 'ContactController@update');

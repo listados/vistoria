@@ -7,11 +7,19 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-// import VueSweetalert2 from 'vue-sweetalert2';
+import Vue from 'vue';
+import VModal from 'vue-js-modal'
+import VueSweetalert2 from 'vue-sweetalert2';
+import VueMask from 'v-mask';
 // import vue2Dropzone from 'vue2-dropzone'
 
-// Vue.use(VueSweetalert2);
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+
+Vue.use(VueSweetalert2);
 // Vue.use(vue2Dropzone);
+Vue.use(VModal);
+Vue.use(VueMask);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -19,6 +27,9 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('info-contact', require('./components/Contact/InfoContact.vue'));
+Vue.component('form-contact', require('./components/Contact/FormContact.vue'));
+
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 
 const app = new Vue({

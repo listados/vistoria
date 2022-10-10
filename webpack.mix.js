@@ -31,9 +31,9 @@ mix.styles([
 // 	'public/js/survey.js').extract(['vue']);
 
 //TEAM
-// mix.scripts([
-//     'resources/assets/js/teamSite.js'
-// ], 'public/js/teamSite.js');
+mix.scripts([
+    'resources/assets/js/teamSite.js'
+], 'public/js/teamSite.js');
 
 //DELIVERY
 //  mix.js([
