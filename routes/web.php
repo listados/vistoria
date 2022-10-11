@@ -87,11 +87,11 @@ Route::group(['middleware' => 'auth'], function() {
     });
     //Proposta Escolha Azul
     Route::prefix('escolha-azul')->group(function(){    
-        Route::get('/proposta-pessoa-fisica'            , 'ProposalPFController@index');
-        
+        Route::get('/proposta-pessoa-fisica'            , 'ProposalPFController@index');        
         Route::get('pdf-pf/{id}/{proposta}'             , 'ProposalPFController@showReportPf');
         Route::get('download/{id}/{type}'               , 'ProposalPFController@download');
         Route::get('download-proposal-pf/{id}/{type}'   , 'ProposalPFController@getFilesDonwloadProposalPF');
+        Route::get('getProposalPF' , 'ProposalPFController@getProposalPF');
         //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');      
     });
     // ROTA PARA EDIÃ‡ÃƒO DO SITE
@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     
     Route::prefix('admin')->group(function(){
-        //CONFIGURAÃ‡ÃƒO 
+        //CONFIGURAÇÃO 
         Route::get('configuracao/ambiente', 'SettingController@ambience');
         Route::get('configuracao/get-ambiente', 'SettingController@getAmbience');
         Route::resource('configuracao', 'SettingController');     

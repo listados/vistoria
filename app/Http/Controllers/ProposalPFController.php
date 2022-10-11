@@ -22,8 +22,8 @@ class ProposalPFController extends Controller
      */
     public function index()
     {
-
-        return view('proposal.proposal-pf.index');
+        $atendent = User::where('receive_proposal', 1)->get()->pluck('name','id');
+        return view('proposal.proposal-pf.index', compact('atendent'));
     }
 
     /**

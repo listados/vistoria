@@ -4,10 +4,17 @@
         <div class="modal-content">
             <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title">ALTERAR ATENDENTE</h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+     
+        <label for="">Escolha o atendente</label>
+        {{Form::select('size', $atendent,0,
+            [
+                'class' => 'form-control',
+                'placeholder' => 'Selecione um atendente'
+            ]
+        )}}
       </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>

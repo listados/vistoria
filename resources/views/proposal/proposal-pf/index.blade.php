@@ -35,7 +35,7 @@
 				</tr>
 			</thead>
 		</table>
-		@include('modal.modal_alter_func')
+		@include('modal.modal_alter_func', ['atendent' => $atendent])
 	</div>
 	<!-- /.box-body -->
 </div>
