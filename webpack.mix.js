@@ -52,9 +52,9 @@ mix.scripts([
 
 /* - PARA TODO O ESCOLHA AZUL - */
 //PROPOSTA PF
-//   mix.js([
-// 	'resources/assets/js/proposal_pf.js'],
-// 	'public/js/proposal_pf.js');  
+  mix.js([
+	'resources/assets/js/proposal_pf.js'],
+	'public/js/proposal_pf.js');  
 
 // mix.scripts([
 //     'public/js/admin.js',
