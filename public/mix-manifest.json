@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/vendor.js": "/js/vendor.js",
+    "/js/proposal_pf.js": "/js/proposal_pf.js",
     "/js/all.js": "/js/all.js",
     "/js/manifest.js": "/js/manifest.js",
     "/css/survey.css": "/css/survey.css",
