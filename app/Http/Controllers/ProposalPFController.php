@@ -78,7 +78,13 @@ class ProposalPFController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $proposal = ProposalPF::where('proposal_id', $id);
+            $proposal->update($request->all());
+            return response()->json(['message' => 'Alterado com sucesso'], 200);
+        } catch (\Throwable $th) {
+            dump($th->getMessage());
+        }
     }
 
     /**
@@ -116,7 +122,10 @@ class ProposalPFController extends Controller
                 $atend_converter = User::getNameAtendente($proposals->proposal_id_user);
                 //PREENCHENDO VARIÁVEL SE FOR VAZIO
                 if(empty($atend_converter)){ $atend_converter = "Não informado";}
-                return $atend_converter.' <a href="#modal_alter_functionary" title="Alterar Atendente" data-toggle="modal" ><small class="label label-info btn-xs"> <i class="fa fa-edit"></i></small> </a> ';
+                return $atend_converter.' <a href="#modal_alter_functionary" title="Alterar Atendente" 
+                data-toggle="modal" data-id="'.$proposals->proposal_id.'" >
+                <small class="label label-info btn-xs"> 
+                <i class="fa fa-edit"></i></small> </a>';
             })
             ->rawColumns(['proposal_id_user', 'action'])
             ->make(true);
