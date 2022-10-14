@@ -12,14 +12,16 @@
         {{Form::select('size', $atendent,0,
             [
                 'class' => 'form-control',
-                'placeholder' => 'Selecione um atendente'
+                'placeholder' => 'Selecione um atendente',
+                'id' => 'selectAtendentModal'
             ]
         )}}
       </div>
             <div class="modal-footer">
+                <input type="text" name="idProposalPf" id="inputIdProposalPf">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-                <button type="submit" value="Alterar" id="alterar_status_proposta" class="btn btn-primary pull-right">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Alterar Atendente
+                <button type="button" value="Alterar" id="alterar_atendente_proposta" class="btn btn-primary pull-right">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Alterar
                 </button>
             </div>
             {{Form::close()}}
