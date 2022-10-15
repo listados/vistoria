@@ -87,12 +87,14 @@ Route::group(['middleware' => 'auth'], function() {
     });
     //Proposta Escolha Azul
     Route::prefix('escolha-azul')->group(function(){    
-        Route::get('/proposta-pessoa-fisica'            , 'ProposalPFController@index');        
+        Route::get('/proposta-pessoa-fisica'            , 'ProposalPFController@index');
         Route::get('pdf-pf/{id}/{proposta}'             , 'ProposalPFController@showReportPf');
         Route::get('download/{id}/{type}'               , 'ProposalPFController@download');
         Route::get('download-proposal-pf/{id}/{type}'   , 'ProposalPFController@getFilesDonwloadProposalPF');
         Route::get('getProposalPF' , 'ProposalPFController@getProposalPF');
-        //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');      
+        //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');   
+        Route::get('cadastro-pessoa-fisica'            , 'GuarantorController@index');
+        Route::get('getGuarantorPF', 'GuarantorController@getGuarantorDataTable');  
     });
     // ROTA PARA EDIÃ‡ÃƒO DO SITE
     Route::prefix('site')->group(function(){    
