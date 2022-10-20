@@ -167,7 +167,7 @@ return [
                 ],
                 [
                     'text' => 'Cadastro Pessoa Física',
-                    'url'  => 'escolha-azul/proposta-pessoa-jurídica'                   
+                    'url'  => 'escolha-azul/cadastro-pessoa-fisica'                   
                 ]
             ]
         ],
