@@ -1,61 +1,93 @@
 <template lang="">
-    <ag-grid-vue
-    style="width: 100%; height: 200px"
-    class="ag-theme-alpine"
-    :columnDefs="columnDefs"
-    :rowData="rowData"
-  >
-  </ag-grid-vue>
+     <el-table
+    :data="tableData.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()))"
+    style="width: 100%">
+    <el-table-column
+      fixed
+      prop="date"
+      label="Cod Cadastro"
+      width="150">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="Concluída"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="state"
+      label="Nome"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="city"
+      label="CPF"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="Nome Proposnente"
+      width="300">
+    </el-table-column>
+    <el-table-column
+      prop="zip"
+      label="Zip"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      fixed="right">
+            <template slot="header" slot-scope="scope">
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="Pesquise"/>
+      </template>
+      <template slot-scope="scope">
+        <el-button @click="handleClick(scope.$index, scope.row)" type="danger" size="small" title="Excluir cadastro">
+            <i class="fa fa-trash"></i>
+        </el-button>
+        <el-button type="dafault" size="small">
+            <i class="fa fa-edit"></i>
+        </el-button>
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 <script>
 
-import { AgGridVue } from 'ag-grid-vue';
-
-import TotalValueRenderer from './totalValueRendererVue'
-
-const ColourComponent = {
-  template: `<span>
-    <a class="btn" href="https://bitbucket.org/dashboard/overview">
-         Editar</a>        
-    </span>`
-};
-
-
 export default {
-    components: {
-        AgGridVue,
-        ColourComponent,
-        totalValueRenderer: TotalValueRenderer,
-    },
     data() {
         return {
             idButton: 0,
             displayValue: '',
-            columnDefs: [
-                { headerName: "Make", field: "make" },
-                { headerName: "Model", field: "model" },
-                { headerName: "Price", field: "price" },
-                { 
-                    headerName: "Ação", 
-                    field: "action",
-                    cellRenderer: 'totalValueRenderer',
-                },
-            ],
-            rowData: [
-                { make: "Toyota", model: "Celica", price: 35000 },
-                { make: "Ford", model: "Mondeo", price: 32000 },
-                { make: "Porsche", model: "Boxster", price: 72000 },
-                { make: "Porsche", model: "Boxster", price: 72000 },
-            ],
+            tableData: [],
+            search: 'junior',
+            name: ''
         }
     },
     beforeMount() {
        this.displayValue = this.params;
    },
+   created() {
+        this.getCadastre()
+   },
     methods: {
         btnClickedHandler() {
             this.params.clicked(this.params.value);
         },
+        handleClick(index, row) {
+            console.log(index, row);
+        },
+        getCadastre() {
+            axios.get(domain_complet + 'api/escolha-azul/getCadastrePF')
+            .then(response =>{
+                console.log('contact', response.data)
+                this.tableData = response.data
+            })
+        },
+        searchData(dataTable, query) {
+            console.log({ query })
+            return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
+        }
     }
 }
 </script>
