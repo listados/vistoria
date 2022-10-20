@@ -2,7 +2,8 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### Insalação ###
+* docker-compose exec php-fpm composer install
 
 * Quick summary
 * Version
@@ -23,7 +24,15 @@ This README would normally document whatever steps are necessary to get your app
 * Code review
 * Other guidelines
 
-### Who do I talk to? ###
+### Erro index: name PackageManifest.php  ###
 
+``` vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php ```
+Comentar a linha 116
+``` $packages = json_decode($this->files->get($path), true); ```
+Add o trecho de codigo
+``` 
+    $installed = json_decode($this->files->get($path), true);
+    $packages = $installed['packages'] ?? $installed;
+```
 * Repo owner or admin
 * Other community or team contact
