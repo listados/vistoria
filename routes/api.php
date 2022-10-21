@@ -27,6 +27,9 @@ Route::get('team' , 'TeamController@getTeamApi');
 Route::prefix('escolha-azul')->group(function(){ 
     Route::get('getProposalPF'  , 'ProposalPFController@getProposalPF');
     Route::patch('update/{id}', 'ProposalPFController@update');
+    Route::get('getCadastrePF' , 'GuarantorController@getGuarantorDataTable');
+    Route::post('alter-agent', 'ProposalPFController@alterAtendent');
+    Route::delete('delete-proposal-pf/{id}' , 'ProposalPFController@destroy');
 });
 
 /**

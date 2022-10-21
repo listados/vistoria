@@ -21,28 +21,15 @@
 	</div>
 	<!-- /.box-header -->
 	<div class="box-body">
-		<table class="table table-bordered" id="table-proposal-pf">
-			<thead>
-				<tr>
-					<th>N. Propos.</th>
-					<th>Conclusão</th>
-					<th>Nome</th>
-					<th>Atendente</th>
-					<th>E-mail</th>
-					<th>Status</th>
-					<th>Ação</th>
 
-				</tr>
-			</thead>
-		</table>
-		@include('modal.modal_alter_func', ['atendent' => $atendent])
+		<proposal-pf :atendent="{{ json_encode($atendents) }}"></proposal-pf>
 	</div>
 	<!-- /.box-body -->
 </div>
 @stop
 
 @section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')

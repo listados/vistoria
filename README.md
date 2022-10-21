@@ -36,3 +36,7 @@ Add o trecho de codigo
 ```
 * Repo owner or admin
 * Other community or team contact
+
+### Stack ###
+Node: 12
+Npm: 6 ou 8

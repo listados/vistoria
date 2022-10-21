@@ -20,7 +20,6 @@
 @section('content')
 
 <div class="box box-primary">
-    <h2>Fiador</h2>
     <cadastre-pf></cadastre-pf>
 </div>
 

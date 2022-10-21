@@ -2,19 +2,20 @@
 
 namespace EspindolaAdm\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use DB;
-use Barryvdh\DomPDF\Facade as PDF;
-use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Str;
+
 use EspindolaAdm\User;
 use EspindolaAdm\ProposalPF;
+use Illuminate\Http\Request;
+use EspindolaAdm\FunctionAll;
+
+use Yajra\Datatables\Datatables;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 
 class ProposalPFController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +24,13 @@ class ProposalPFController extends Controller
     public function index()
     {
         $atendent = User::where('receive_proposal', 1)->get()->pluck('name','id');
-        return view('proposal.proposal-pf.index', compact('atendent'));
+        $atendents = [];
+        foreach ($atendent as $key => $value) {
+            // dump($value.' - '.$key);
+            array_push($atendents, ['value' => $key, 'label' => $value]);
+        };
+        // dd($atendents);
+        return view('proposal.proposal-pf.index', compact('atendents'));
     }
 
     /**
@@ -95,40 +102,36 @@ class ProposalPFController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $proposal = ProposalPF::where('proposal_id', $id);
+            $proposal->delete
+            ();
+            return response()->json(['message' => 'Proposata Excluída com sucesso'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)], 400);
+        }
     }
 
     public function getProposalPF()
     {
         # code...
-        $proposal = ProposalPF::orderBy('proposal_id', 'desc');
-        return Datatables::of($proposal)
-            ->addColumn('action', function ($proposals) {
-            $count_files = DB::table('files')->where('files_id_proposal' , $proposals->proposal_id)->count();
-            return '<a href="'.url('escolha-azul/pdf-pf/'.$proposals->proposal_id).'/proposta" class="btn btn-xs proposal_ancora_info title="visualizar Proposta" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
-            <a href="'.url('escolha-azul/pdf-pf/'.$proposals->proposal_id).'/analise" class="btn btn-xs" target="_blank" data-toggle="tooltip" title="Análise de Proposta"><i class="fa fa-pie-chart" aria-hidden="true"></i></a>
-            <a href="'.url('escolha-azul/download/'.$proposals->proposal_id.'/proposta-pf').'" class="btn" target="_blank" data-toggle="tooltip" title="Enviado '.$count_files.' arquivos">
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <span class="badge bg-green">'.$count_files.'</span></a>';
-            })
-            ->editColumn('proposal_completed', function($proposals) {
-                if($proposals->proposal_status == 'Incompleta'){
-                    return "---";    
-                }
-                return date('d/m/Y' , strtotime($proposals->proposal_completed));
-            })
-            ->editColumn('proposal_id_user', function($proposals) {
-                //CHAMANDO FUNÇÃO PARA NOME DO ATENDENTE
-                $atend_converter = User::getNameAtendente($proposals->proposal_id_user);
-                //PREENCHENDO VARIÁVEL SE FOR VAZIO
-                if(empty($atend_converter)){ $atend_converter = "Não informado";}
-                return $atend_converter.' <a href="#modal_alter_functionary" title="Alterar Atendente" 
-                data-toggle="modal" data-id="'.$proposals->proposal_id.'" >
-                <small class="label label-info btn-xs"> 
-                <i class="fa fa-edit"></i></small> </a>';
-            })
-            ->rawColumns(['proposal_id_user', 'action'])
-            ->make(true);
+        $proposalAll = ProposalPF::join('users' ,'proposal_id_user', '=', 'users.id')
+        ->leftJoin('files', 'proposal_id', '=', 'files.files_id_proposal')
+        ->select(
+            'proposal_id', 
+            'proposal_name',
+            'proposal_id_user',
+            'proposal_email',
+            'proposal_status',
+            'users.id',
+            'users.name',
+            'files.files_id',
+            DB::raw('DATE_FORMAT(proposal_completed, "%d/%m/%Y") as completed')
+        )
+        ->orderBy('proposal_id', 'desc')
+        ->get();
+       
+        return response()->json($proposalAll);
     }
 
     /*
@@ -237,5 +240,17 @@ class ProposalPFController extends Controller
                 ->rawColumns(['files_name', 'action'])->make(true);		
             
         }    
+    }
+
+    public function alterAtendent(Request $request)
+    {
+        try {
+            $proposal = ProposalPF::where('proposal_id', $request['proposal_id']);
+            $proposal->update($request->all());
+            return response()->json(['message' => 'Atendente alterado']);
+        } catch (\Exception $th) {
+            throw $th;
+            return response()->json($th->getMessage());
+        }
     }
 }
