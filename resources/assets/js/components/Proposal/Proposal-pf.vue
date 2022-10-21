@@ -1,43 +1,55 @@
 <template lang="">
-    <div>
-       
+    <div>       
     <el-table
-    :data="tableData"
-    style="width: 100%">
+    :data="tableData.filter(data => !this.search || data.proposal_name.toLowerCase().includes(this.search.toLowerCase()))"
+    style="width: 100%"
+    :default-sort = "{prop: 'completed', order: 'descending'}">
     <el-table-column
       prop="proposal_id"
-      label="Nº Proposta">
+      label="Nº Prop."
+      width="80">
     </el-table-column>
     <el-table-column
       prop="completed"
-      label="Conclusão">
+      label="Conclusão"
+      width="110"
+      sortable>
     </el-table-column>
     <el-table-column
       prop="proposal_name"
-      label="Nome">
+      label="Nome"
+      width="220">
     </el-table-column>
     <el-table-column
       prop="name"
-      label="Atend.">
+      label="Atend."
+      width="130">
       <template slot-scope="scope">
         <el-button type="text" 
         @click="showModalAtendent(scope.row)">
-        {{ scope.row.name }}
+        {{ scope.row.name.slice(0, 15) }}...
       </el-button>
       </template>
     </el-table-column>
     <el-table-column
       prop="proposal_email"
-      label="E-mail">
+      label="E-mail"
+      width="200">
     </el-table-column>
     <el-table-column
       prop="proposal_status"
-      label="Status">
+      label="Status"
+      width="80">
     </el-table-column>
     <el-table-column
       fixed="right"
-      label="Visualizar"
-      width="120">
+      width="180">
+      <template slot="header" slot-scope="scope">
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="Pesquise pelo nome"/>
+      </template>
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.$index, scope.row)" type="text" size="small">
             <i class="fa fa-eye" aria-hidden="true"></i>
@@ -45,7 +57,7 @@
         <el-button type="text" size="small">
             <i class="fa fa-pie-chart" aria-hidden="true"></i>
         </el-button> 
-        <el-button type="text" size="small">
+        <el-button type="text" size="small"  v-if="scope.row.files_id > 0" title="Existe arquivos enviados">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
         <el-button type="text" size="small"  @click="openDeleteAgent(scope.row)">
@@ -154,12 +166,9 @@ export default {
                 message: error.response.data.message
               });
             })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: 'Delete canceled'
-            });          
           });
+          // COCÔ
+          // 1,00
         }
     }
 }

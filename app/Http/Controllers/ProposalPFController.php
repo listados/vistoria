@@ -104,7 +104,8 @@ class ProposalPFController extends Controller
     {
         try {
             $proposal = ProposalPF::where('proposal_id', $id);
-            $proposal->delete();
+            $proposal->delete
+            ();
             return response()->json(['message' => 'Proposata Excluída com sucesso'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => FunctionAll::error($th)], 400);
@@ -114,19 +115,23 @@ class ProposalPFController extends Controller
     public function getProposalPF()
     {
         # code...
-        $proposal = ProposalPF::join('users' ,'proposal_id_user', '=', 'users.id')
+        $proposalAll = ProposalPF::join('users' ,'proposal_id_user', '=', 'users.id')
+        ->leftJoin('files', 'proposal_id', '=', 'files.files_id_proposal')
         ->select(
             'proposal_id', 
             'proposal_name',
             'proposal_id_user',
             'proposal_email',
             'proposal_status',
-            'users.*',
+            'users.id',
+            'users.name',
+            'files.files_id',
             DB::raw('DATE_FORMAT(proposal_completed, "%d/%m/%Y") as completed')
         )
         ->orderBy('proposal_id', 'desc')
         ->get();
-        return response()->json($proposal);
+       
+        return response()->json($proposalAll);
     }
 
     /*
