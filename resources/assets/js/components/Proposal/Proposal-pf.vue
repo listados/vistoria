@@ -60,7 +60,12 @@
         <el-button type="text" size="small"  v-if="scope.row.files_id > 0" title="Existe arquivos enviados">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
-        <el-button type="text" size="small"  @click="openDeleteAgent(scope.row)">
+        <el-button type="text" 
+          size="small"  
+          @click="openDeleteAgent(scope.row)"
+          style="color: red"
+          title="Excluir Proposta"  
+        >
             <i class="fa fa-trash" aria-hidden="true"></i>
         </el-button>
       </template>
