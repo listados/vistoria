@@ -9,7 +9,7 @@
       label="Nº Proposta">
     </el-table-column>
     <el-table-column
-      prop="proposal_completed"
+      prop="completed"
       label="Conclusão">
     </el-table-column>
     <el-table-column
@@ -20,7 +20,10 @@
       prop="name"
       label="Atend.">
       <template slot-scope="scope">
-        <el-button type="text" @click="dialogVisible = true">{{ scope.row.name }} </el-button>
+        <el-button type="text" 
+        @click="showModalAtendent(scope.row)">
+        {{ scope.row.name }}
+      </el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -45,7 +48,7 @@
         <el-button type="text" size="small">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
-        <el-button type="text" size="small">
+        <el-button type="text" size="small"  @click="openDeleteAgent(scope.row)">
             <i class="fa fa-trash" aria-hidden="true"></i>
         </el-button>
       </template>
@@ -54,11 +57,12 @@
   <el-dialog
   title="Alterar Atendente"
   :visible.sync="dialogVisible"
-  width="30%"
-  :before-close="handleClose">
-  <span>Você tem que selecionar um atendente para ser o responsável por essa proposta.</span>
-  <el-select v-model="value" placeholder="-- Selecione um agente --" size="large" @change="updateDropdowns">
-
+  width="30%">
+  <span>Você tem que selecionar um atendente para ser o <br/> responsável por essa proposta.</span>
+  <el-select v-model="value" 
+  placeholder="-- Selecione um agente --" 
+  size="large" 
+  @change="updateDropdowns">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -68,7 +72,6 @@
   </el-select>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">Sair</el-button>
-    <el-button type="primary">Alterar</el-button>
   </span>
 </el-dialog>
 </div>
@@ -84,19 +87,18 @@ export default {
             search: '',
             dialogVisible: false,
             options: [],
-            value: ''
+            value: '',
+            idProposal: 0
         }
     },
     created() {
         this.getProposalPF()
-        console.log(this.atendent)
         this.options = this.atendent
    },
     methods: {
         getProposalPF() {
             axios.get(domain_complet + 'escolha-azul/getProposalPF')
             .then(response =>{
-                console.log('contact', response.data)
                 this.tableData = response.data
             })
         },
@@ -105,18 +107,59 @@ export default {
             return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
         },
         handleClick(index, row) {
-            console.log('click');
+            this.$message('Redirecionando para id = ' + row.proposal_id);
         },
         updateDropdowns: function (value) {
-            console.log(value);
+            // console.log(value);
+            // console.log('id proposal' , this.idProposal)
+            let data = {proposal_id: this.idProposal, proposal_id_user: value}
+            axios.post(domain_complet + 'api/escolha-azul/alter-agent', data)
+            .then( (response) => {
+              this.$message({
+                type: 'success',
+                message: response.data.message
+              });
+              this.getProposalPF()
+            })
+            .catch( (error) => {
+              this.$message({
+                type: 'error',
+                message: 'Ocorreu um erro inesperado: ' + error.response.data.message
+              }); 
+            })
             //enviar para alterar a proposta para agente escolhido
         },
-        handleClose(done) {
-            this.$confirm('Are you sure to close this dialog?')
-            .then(_ => {
-                done();
+        showModalAtendent(row) {
+          this.dialogVisible = true
+          this.idProposal = row.proposal_id
+        },
+        openDeleteAgent(row) {          
+          this.$confirm('Deseja realmente excluir essa proposta?', 'Excluir Proposta', {
+            confirmButtonText: 'Sim, quero excluir',
+            cancelButtonText: 'Não',
+            type: 'error'
+          }).then((res) => {
+            axios.delete(domain_complet + 'api/escolha-azul/delete-proposal-pf/' + row.proposal_id)
+            .then( (response) => {
+              this.$message({
+                type: 'success',
+                message: response.data.message
+              });
+              this.getProposalPF()
             })
-            .catch(_ => {});
+            .catch( (error) => {
+              console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'Delete canceled'
+            });          
+          });
         }
     }
 }
