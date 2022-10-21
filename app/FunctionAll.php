@@ -60,4 +60,8 @@ class FunctionAll extends Model
 		return $cidade . ', '. $dia . ' de '. $mes . ' de '. $ano;
 	}
 
+	static public function error($error)
+    {
+        return 'Ocorreu um erro inesperado: '  . $error->getMessage();
+    }
 }
