@@ -64,4 +64,12 @@ class FunctionAll extends Model
     {
         return 'Ocorreu um erro inesperado: '  . $error->getMessage();
     }
+
+	static public function getFiles($id, $type)
+	{
+		return Files::where([
+			['files_id_proposal', '=', $id],
+			['files_type' , '=', $type]
+		])->get();
+	}
 }
