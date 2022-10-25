@@ -51,26 +51,40 @@
           placeholder="Pesquise pelo nome"/>
       </template>
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.$index, scope.row)" type="text" size="small">
+        <el-button @click="redirectProposal(scope.$index, scope.row)" 
+        type="text"
+        title="Visualizar proposta"
+        size="small">
             <i class="fa fa-eye" aria-hidden="true"></i>
         </el-button>
-        <el-button type="text" size="small">
+        <el-button 
+        type="text"
+        size="small"
+        title="Visualizar análise">
             <i class="fa fa-pie-chart" aria-hidden="true"></i>
         </el-button> 
-        <el-button type="text" size="small"  v-if="scope.row.files_id > 0" title="Existe arquivos enviados">
+        <el-button type="text" size="small"  v-if="scope.row.files_id > 0" 
+        title="Existe arquivos enviados">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
         <el-button type="text" 
           size="small"  
           @click="openDeleteAgent(scope.row)"
           style="color: red"
-          title="Excluir Proposta"  
+          title="Excluir Proposta" 
         >
             <i class="fa fa-trash" aria-hidden="true"></i>
         </el-button>
       </template>
     </el-table-column>
+     
   </el-table>
+  <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="this.tableData.length"
+        @current-change="setPage">
+      </el-pagination>
   <el-dialog
   title="Alterar Atendente"
   :visible.sync="dialogVisible"
@@ -123,8 +137,8 @@ export default {
             console.log({ query })
             return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
         },
-        handleClick(index, row) {
-            this.$message('Redirecionando para id = ' + row.proposal_id);
+        redirectProposal(index, row) {
+          window.open(domain_external + "?action=view-proposal&id=" + btoa(row.proposal_id), '_blank');
         },
         updateDropdowns: function (value) {
             // console.log(value);
@@ -165,15 +179,16 @@ export default {
               this.getProposalPF()
             })
             .catch( (error) => {
-              console.log(error.response.data.message)
               this.$message({
                 type: 'error',
                 message: error.response.data.message
               });
             })
           });
-          // COCÔ
-          // 1,00
+        },
+        setPage (val) {
+          console.log({val})
+          this.page = val
         }
     }
 }

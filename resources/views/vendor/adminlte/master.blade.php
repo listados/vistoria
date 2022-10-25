@@ -50,7 +50,7 @@
      domin  =  window.location.protocol + "//" + window.location.hostname+':5050';
      var domain_complet = domin + project_survey; 
      var url = window.location.origin;
-
+    var domain_external = 'https://espindolaimobiliaria.com.br/ea/';
 
     </script>
     <!-- FUNÇÃO -->
