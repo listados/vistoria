@@ -170,8 +170,8 @@ class ProposalPFController extends Controller
 
     public function download($id, $type)
     {
-        $id_survey = $id;
-        return view('proposal.download',compact('files' , 'title', 'proposta' , 'campo', 'type', 'dominio_pdf_externo' , 'id_survey'));
+        
+        return view('proposal.download', compact('id', 'type'));
     }
 
     public function getFilesDonwloadProposalPF($id, $type)
@@ -252,5 +252,11 @@ class ProposalPFController extends Controller
             throw $th;
             return response()->json($th->getMessage());
         }
+    }
+
+    public function getFiles($id, $type)
+    {
+        $files = FunctionAll::getFiles($id, $type);
+        return response()->json($files);
     }
 }

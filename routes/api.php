@@ -30,6 +30,7 @@ Route::prefix('escolha-azul')->group(function(){
     Route::get('getCadastrePF' , 'GuarantorController@getGuarantorDataTable');
     Route::post('alter-agent', 'ProposalPFController@alterAtendent');
     Route::delete('delete-proposal-pf/{id}' , 'ProposalPFController@destroy');
+    Route::get('download/{id}/type/{type}', 'ProposalPFController@getFiles');
 });
 
 /**

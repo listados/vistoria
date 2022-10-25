@@ -51,19 +51,23 @@
           placeholder="Pesquise pelo nome"/>
       </template>
       <template slot-scope="scope">
-        <el-button @click="redirectProposal(scope.$index, scope.row)" 
+        <el-button @click="redirectProposal('proposal', scope.row)" 
         type="text"
         title="Visualizar proposta"
         size="small">
             <i class="fa fa-eye" aria-hidden="true"></i>
         </el-button>
-        <el-button 
+        <el-button @click="redirectProposal('analysis', scope.row)"
         type="text"
         size="small"
         title="Visualizar análise">
             <i class="fa fa-pie-chart" aria-hidden="true"></i>
         </el-button> 
-        <el-button type="text" size="small"  v-if="scope.row.files_id > 0" 
+        <el-button
+        type="text"
+        size="small"
+        v-if="scope.row.files_id > 0"
+        @click="redirectProposal('proposal-pf', scope.row)"
         title="Existe arquivos enviados">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
@@ -138,7 +142,19 @@ export default {
             return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
         },
         redirectProposal(index, row) {
-          window.open(domain_external + "?action=view-proposal&id=" + btoa(row.proposal_id), '_blank');
+          var url = ''
+          switch (index) {
+            case 'proposal':
+              url = domain_external + '?action=view-proposal&id=' + btoa(row.proposal_id)            
+              break;
+            case 'analysis':
+              url = 'view/report/proposal_pf_adm.php?id=' + btoa(row.proposal_id)            
+              break;
+            case 'proposal-pf':
+              url = domain_complet = 'download/' + row.proposal_id +'/'+ index      
+              break;
+          }
+          window.open(url , '_blank');
         },
         updateDropdowns: function (value) {
             // console.log(value);

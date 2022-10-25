@@ -94,7 +94,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('getProposalPF' , 'ProposalPFController@getProposalPF');
         //Route::get('analise-proposta-pf/{id}' , 'ProposalPFController@showReport');   
         Route::get('cadastro-pessoa-fisica'            , 'GuarantorController@index');
-        Route::get('getGuarantorPF', 'GuarantorController@getGuarantorDataTable');  
+        Route::get('getGuarantorPF', 'GuarantorController@getGuarantorDataTable');
     });
     // ROTA PARA EDIÃ‡ÃƒO DO SITE
     Route::prefix('site')->group(function(){    

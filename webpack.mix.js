@@ -56,6 +56,11 @@ mix.scripts([
 	'resources/assets/js/proposal_pf.js'],
 	'public/js/proposal_pf.js');  
 
+//ARQUIVOS PARA PROPOSTAS
+  mix.js([
+	'resources/assets/js/files.js'],
+	'public/js/files.js');  
+
 // mix.scripts([
 //     'public/js/admin.js',
 //     'public/js/dashboard.js'
