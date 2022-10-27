@@ -178,8 +178,8 @@ class ProposalPFController extends Controller
 
     public function download($id, $type)
     {
-        
-        return view('proposal.download', compact('id', 'type'));
+        $files = FunctionAll::getFiles($id, $type);
+        return view('proposal.download', compact('id', 'type', 'files'));
     }
 
     public function getFilesDonwloadProposalPF($id, $type)

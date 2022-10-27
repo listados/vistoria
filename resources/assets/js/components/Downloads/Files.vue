@@ -16,15 +16,24 @@
         <el-table-column
             prop="files_name"
             label="Imagem">
-            <template slot-scope="scope" v-if="scope.row.extension == 'PDF' || scope.row.extension == 'pdf'">
-                <iframe  :src="urlExternalImg + scope.row.files_name" :download="scope.row.files_name">
-                </iframe >    
+            <template slot-scope="scope">
+                <div  v-if="scope.row.extension == 'PDF' || scope.row.extension == 'pdf'">
+                    <iframe  :src="urlExternalImg + scope.row.files_name" :download="scope.row.files_name">
+                    </iframe > 
+                </div>
+                <div v-else>
+                    <a :href="urlExternalImg + scope.row.files_name" :download="scope.row.files_name" target="_blank">
+                        <img :src="urlExternalImg + scope.row.files_name" width="130px" />
+                    </a>   
+                </div>
+                      
+                
             </template>
-            <template slot-scope="scope" v-else>
+            <!-- <template slot-scope="scope">
                 <a :href="urlExternalImg + scope.row.files_name" :download="scope.row.files_name">
                     <img :src="urlExternalImg + scope.row.files_name"/>
                 </a>    
-            </template>
+            </template> -->
         </el-table-column>
         <el-table-column
             fixed="right"

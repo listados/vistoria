@@ -13,56 +13,42 @@
 @stop
 
 @section('content')
-{{-- <div class="col-md-12 box">
-    <div class="box-body">
-        <div class="col-md-3 col-xs-12">
-            <label for="" class="text-danger">Baixar todos os arquivos</label>a
-        </div>
-        <div class="col-md-3 col-xs-12">
-            {{ Form::label('upload','Fazer Upload') }}
-            <!-- Button trigger modal -->
-            <a href="#upload" class="btn btn-default"  title="Fazer upload de novos arquivos" data-toggle="modal">
-            <i class="fa fa-upload" aria-hidden="true"></i>
-            </a>
-        </div>
-        <div class="col-md-3 col-xs-12">
-            {{ Form::label('upload','Atualizar') }}
-            <!-- Button trigger modal -->
-            
-        </div>
-    </div>
-</div> --}}
-
-<div class="col-md-12 box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Ações</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-        </button>
-        <div class="btn-group">
-            <el-dropdown>
-                <span class="el-dropdown-link">
-                  Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 3</el-dropdown-item>
-                  <el-dropdown-item disabled>Action 4</el-dropdown-item>
-                  <el-dropdown-item divided>Action 5</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-        </div>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-        </div>
-    <div class="box-body">
-        <div class="row">
-            <download :id-proposal={{$id}} :type={{  json_encode($type) }}></download>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Encontrado  
+                    <label class="label label-primary" style="margin-left: 5px; margin-right: 5px;">
+                        {{$files->count() }} 
+                    </label>
+                     arquivo(s).</h3>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                            Ações <i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>Incluir arquivos</el-dropdown-item>
+                            <el-dropdown-item>Download dos arquivos</el-dropdown-item>
+                            <el-dropdown-item>Atualizar dados</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>   
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <download :id-proposal={{$id}} :type={{  json_encode($type) }}></download>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 @stop
 
 @section('css')
