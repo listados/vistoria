@@ -67,7 +67,7 @@
         type="text"
         size="small"
         v-if="scope.row.files_id > 0"
-        @click="redirectProposal('proposal-pf', scope.row)"
+        @click="redirectProposal('proposal_pf', scope.row)"
         title="Existe arquivos enviados">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
@@ -150,7 +150,7 @@ export default {
             case 'analysis':
               url = 'view/report/proposal_pf_adm.php?id=' + btoa(row.proposal_id)            
               break;
-            case 'proposal-pf':
+            case 'proposal_pf':
               url = domain_complet = 'download/' + row.proposal_id +'/'+ index      
               break;
           }
