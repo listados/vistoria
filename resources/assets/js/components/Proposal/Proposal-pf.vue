@@ -18,7 +18,7 @@
     <el-table-column
       prop="proposal_name"
       label="Nome"
-      width="220">
+      >
     </el-table-column>
     <el-table-column
       prop="name"
@@ -34,7 +34,7 @@
     <el-table-column
       prop="proposal_email"
       label="E-mail"
-      width="200">
+      >
     </el-table-column>
     <el-table-column
       prop="proposal_status"
