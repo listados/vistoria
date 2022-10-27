@@ -67,9 +67,19 @@ class FunctionAll extends Model
 
 	static public function getFiles($id, $type)
 	{
-		return Files::where([
+		//BUSCANDO TODOS OS ARQUIVOS DE UMA PROPOSTA
+		$files = Files::where([
 			['files_id_proposal', '=', $id],
 			['files_type' , '=', $type]
 		])->get();
+		//FOREACH EM TODOS OS ARQUIVOS
+		foreach ($files as $key => $value) {
+			//RETORNANDO INFORMAÇÕES DO ARQUIVO
+			$file_parts = pathinfo($value->files_name);
+			//ADD UM INDICE NA COLLECTION COM A EXTENSÃO ENCONTRADA
+            $files[$key]['extension'] = $file_parts['extension'];
+        }
+		//RETORNANDO OBJETO
+		return $files;		
 	}
 }
