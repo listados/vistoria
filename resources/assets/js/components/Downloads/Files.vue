@@ -16,9 +16,13 @@
         <el-table-column
             prop="files_name"
             label="Imagem">
-            <template slot-scope="scope">
+            <template slot-scope="scope" v-if="scope.row.extension == 'PDF' || scope.row.extension == 'pdf'">
+                <iframe  :src="urlExternalImg + scope.row.files_name" :download="scope.row.files_name">
+                </iframe >    
+            </template>
+            <template slot-scope="scope" v-else>
                 <a :href="urlExternalImg + scope.row.files_name" :download="scope.row.files_name">
-                <img :src="urlExternalImg + scope.row.files_name"/>
+                    <img :src="urlExternalImg + scope.row.files_name"/>
                 </a>    
             </template>
         </el-table-column>
@@ -44,18 +48,17 @@ export default {
     data() {
         return {
             tableData: [],
-            urlExternalImg: ''
+            urlExternalImg: 'https://espindolaimobiliaria.com.br/escolhaazul/public/img/upload/',
         }
     },
     created() {
         this.getFiles(this.idProposal, this.type);
-        this.urlExternalImg = 'http://172.21.0.2/img/upload/';
     },
     methods: {
         getFiles(id, type ) {
             axios.get(domain_complet + 'api/escolha-azul/download/'+ id + '/type/'+ type)
             .then( (response) =>{
-                console.log({response})
+                console.log(this.urlExternalImg + response.data[1].files_name)
                 this.tableData = response.data
             })
             .catch( (err) => {
