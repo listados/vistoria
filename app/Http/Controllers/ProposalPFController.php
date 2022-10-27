@@ -116,7 +116,7 @@ class ProposalPFController extends Controller
     {
         # code...
         $proposalAll = ProposalPF::join('users' ,'proposal_id_user', '=', 'users.id')
-        ->leftJoin('files', 'proposal_id', '=', 'files.files_id_proposal')
+        ->join('files', 'proposal_id', '=', 'files.files_id_proposal')
         ->select(
             'proposal_id', 
             'proposal_name',
@@ -130,7 +130,15 @@ class ProposalPFController extends Controller
         )
         ->orderBy('proposal_id', 'desc')
         ->get();
-       
+        $idRepeat = 0;
+        //ESTRUTURA PARA REMOÇÃO DE OBJETO DUPLICADO
+        foreach ($proposalAll as $key => $value) {
+            if($idRepeat == $value->proposal_id)
+            {
+                unset($proposalAll[$key]);
+            }
+            $idRepeat = $value->proposal_id;
+        }
         return response()->json($proposalAll);
     }
 
