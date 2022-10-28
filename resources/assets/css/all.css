@@ -8,6 +8,13 @@
 .el-dialog__body {
 	text-align: center;
 }
+.el-dropdown-link {
+	cursor: pointer;
+	color: #409EFF;
+}
+.el-icon-arrow-down {
+	font-size: 12px;
+}
 .margin-5 {
 	margin: 5px !important;
 }

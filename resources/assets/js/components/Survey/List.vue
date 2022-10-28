@@ -86,13 +86,26 @@ export default {
     data() {
       return {
         tableData: [],
-        search: ''
+        search: '',
+        name: 'Foo'
       }
     },
     created() {
-        this.getListSurvey();
+        this.getListSurvey();       
+    },
+    mounted() {
+      this.$eventBus.$on('search-survey', this.searchSurvey);
+    },
+    beforeDestroy() {
+        this.$eventBus.$off('search-survey');
     },
     methods: {
+      searchSurvey(name) 
+            {
+         // name will be automatically transported to the parameter.
+                this.name = name;
+                console.log(this.name)
+            },
       getListSurvey() {
         axios.get(domain_complet + 'api/survey/all')
         .then( (res) => {

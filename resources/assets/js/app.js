@@ -40,9 +40,11 @@ Vue.component('proposal-pf', require('./components/Proposal/Proposal-pf.vue'));
 Vue.component('download', require('./components/Downloads/Files.vue'));
 //VISTORIA
 Vue.component('list-survey', require('./components/Survey/List.vue'));
+Vue.component('search-survey', require('./components/Survey/Search.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
+Vue.prototype.$eventBus = new Vue(); // Global event bus
 
 const app = new Vue({
     el: '#app',

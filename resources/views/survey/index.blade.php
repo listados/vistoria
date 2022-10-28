@@ -19,12 +19,7 @@
 	<div class="col-md-12">
 		<div class="box">
 			<div class="box-header with-border">
-				<a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> 
-					<i class="fa fa-plus"></i>  Nova Vistoria
-				</a>
-				<a href="{{url('vistoria/pesquisar-vistoria')}}" class="btn bg-navy btn-flat pull-left"  tabindex="0" title="Pesquisar mais vistorias" style="margin: 10px;">
-					<i class="fa fa-search"></i> Pesquisa avançada
-				</a>
+				<search-survey></search-survey>
 			</div>
 			<div class="box-body">
 				<list-survey></list-survey>
