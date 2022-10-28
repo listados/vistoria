@@ -116,7 +116,7 @@ class ProposalPFController extends Controller
     {
         # code...
         $proposalAll = ProposalPF::join('users' ,'proposal_id_user', '=', 'users.id')
-        ->join('files', 'proposal_id', '=', 'files.files_id_proposal')
+        ->leftJoin('files', 'proposal_id', '=', 'files.files_id_proposal')
         ->select(
             'proposal_id', 
             'proposal_name',
