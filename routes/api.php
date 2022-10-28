@@ -38,6 +38,8 @@ Route::prefix('escolha-azul')->group(function(){
  */
 Route::prefix('survey')->group(function(){ 
     Route::get('type-immobile'  , 'SurveyController@getTypeImmobile');
+    Route::get('all' , 'SurveyController@allSurvey');
+    Route::delete('destroy/{id}', 'SurveyController@destroy');
 });
 
 

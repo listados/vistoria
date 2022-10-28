@@ -38,6 +38,8 @@ Vue.component('form-contact', require('./components/Contact/FormContact.vue'));
 Vue.component('cadastre-pf', require('./components/Proposal/Cadastre-pf.vue'));
 Vue.component('proposal-pf', require('./components/Proposal/Proposal-pf.vue'));
 Vue.component('download', require('./components/Downloads/Files.vue'));
+//VISTORIA
+Vue.component('list-survey', require('./components/Survey/List.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));

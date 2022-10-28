@@ -2,3 +2,12 @@
 .dataTables_paginate .paginate_button{
 	padding: 3px !important;
 }
+.el-select--large  {
+	width: 100%
+}
+.el-dialog__body {
+	text-align: center;
+}
+.margin-5 {
+	margin: 5px !important;
+}
