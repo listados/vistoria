@@ -1,7 +1,7 @@
 <template>
     <div>
     <el-table
-      :data="tableData"
+      :data="tableData.filter(data => !this.search || data.survey_address_immobile.toLowerCase().includes(this.search.toLowerCase()))"
       style="width: 100%"
       height="400">
       <el-table-column
@@ -34,10 +34,16 @@
         label="Status"
         width="80">
       </el-table-column>
+      
       <el-table-column
         fixed="right"
-        label="Operations"
         width="200">
+        <template slot="header" slot-scope="scope">
+            <el-input
+            v-model="search"
+            size="mini"
+            placeholder="Buscar endereço"/>
+        </template>
         <template slot-scope="scope">
             <el-button
                 @click="editSurvey(scope.row)" circle
@@ -67,7 +73,7 @@
             <el-button 
                 type="danger" size="small"
                 icon="el-icon-delete-solid" title="Excluir Vistoria"
-                @click="openDeleteSurvey(scope.row)"circle>
+                @click="openDeleteSurvey(scope.row)" circle>
             </el-button>
         </template>
       </el-table-column>
@@ -79,7 +85,8 @@
 export default {
     data() {
       return {
-        tableData: []
+        tableData: [],
+        search: ''
       }
     },
     created() {
@@ -132,6 +139,11 @@ export default {
             })
           });
       },
+      searchData(dataTable, query) {
+        console.log({dataTable});
+        console.log({query})
+        return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
+      }
     }
 }
 </script>
