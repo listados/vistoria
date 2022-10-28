@@ -15,34 +15,27 @@
 
 @section('content')
 
-
-<div class="col-md-12 box">
-<a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> 
-	<i class="fa fa-plus"></i>  Nova Vistoria
-</a>
-<a href="{{url('vistoria/pesquisar-vistoria')}}" class="btn bg-navy btn-flat pull-left"  tabindex="0" title="Pesquisar mais vistorias" style="margin: 10px;">
-	<i class="fa fa-search"></i> Pesquisa avançada
-</a>
-@include('modal.modal_load')
-
-<div class="table table-responsive">
-		<table id="table-survey" class="table table-striped table-bordered" style="width:100%;">
-		<thead>
-			<tr>
-				<th>Código</th>
-				<th>Imóvel</th>
-				<th>Data</th>
-				<th>Tipo</th>
-				<th>Vistorador</th>
-				<th>Status</th>
-				<th>Ação</th>
-			</tr>
-		</thead>
-	</table>
-</div>	
-	@include('modal.survey_print')	
-	@include('modal.modal_load')
+<div class="row">
+	<div class="col-md-12">
+		<div class="box">
+			<div class="box-header with-border">
+				<a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> 
+					<i class="fa fa-plus"></i>  Nova Vistoria
+				</a>
+				<a href="{{url('vistoria/pesquisar-vistoria')}}" class="btn bg-navy btn-flat pull-left"  tabindex="0" title="Pesquisar mais vistorias" style="margin: 10px;">
+					<i class="fa fa-search"></i> Pesquisa avançada
+				</a>
+			</div>
+			<div class="box-body">
+				<list-survey></list-survey>
+			</div>
+			<div class="box-footer">
+				Footer
+			</div>
+		</div>
+	</div>
 </div>
+
 @stop
 
 @section('css')

@@ -499,7 +499,13 @@ class SurveyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $survey = Survey::where('survey_id' , $id);
+            $survey->delete();
+            return response()->json(['message' => 'Vistoria Excluída com sucesso'], 200);    
+        } catch (\Throwable $e) {
+            return response()->json(['message' => FunctionAll::error($e)], 400);
+        }
     }
 
     public function getSurvey(Request $request)
@@ -982,5 +988,35 @@ class SurveyController extends Controller
     {
         $survey = Survey::getTypeImmobile();
         return $survey;
+    }
+
+    /**
+     * Retorna uma lista de 50 vistorias com campos ja formatados.
+     *
+     * @return object
+     */
+    public function allSurvey()
+    {
+        $sortBy = null;
+        $survey = Survey::select(
+            'survey_type_immobile',
+            'survey_id',
+            'survey.survey_date',
+            'survey.survey_status',
+            'survey_inspetor_cpf',
+            'survey_inspetor_name',
+            'survey_address_immobile',
+            'survey_code')
+        ->
+        offset(0)->limit(50)->get();
+        //formatando codigo da vistoria e data para formato brasileiro    
+        foreach ($survey as $key => $value) {
+            //formatando datas
+            if(!is_null($survey[$key]['survey_date']))
+            {
+                $survey[$key]['survey_date'] = Carbon::parse($value->survey_date)->format('d/m/Y');
+            }
+        }
+        return response()->json($survey);
     }
 }
