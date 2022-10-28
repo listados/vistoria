@@ -13,77 +13,51 @@
 @stop
 
 @section('content')
-<div class="col-md-12 box">
-    <div class="box-body">
-        <div class="col-md-3 col-xs-12">
-            <label for="" class="text-danger">Baixar todos os arquivos</label>
-        </div>
-        <div class="col-md-3 col-xs-12">
-            {{ Form::label('upload','Fazer Upload') }}
-            <!-- Button trigger modal -->
-            <a href="#upload" class="btn btn-default"  title="Fazer upload de novos arquivos" data-toggle="modal">
-            <i class="fa fa-upload" aria-hidden="true"></i>
-            </a>
-        </div>
-        <div class="col-md-3 col-xs-12">
-            {{ Form::label('upload','Atualizar') }}
-            <!-- Button trigger modal -->
-            
-        </div>
-    </div>
-</div>
-
-<div class="col-md-12 box">
-    <div class="box-body">
-        <div class="row">
-            <div class="col-xs-12 table-responsive">
-                <table class="table table-striped" id="table-download-proposal-pf" >
-                    <thead>
-                        <tr>
-                           
-                            <th>Data Envio</th>
-                            <th>N. Proposta</th>
-                            <th>Imagem</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                   
-                </table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Encontrado  
+                    <label class="label label-primary" style="margin-left: 5px; margin-right: 5px;">
+                        {{$files->count() }} 
+                    </label>
+                     arquivo(s).</h3>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                            Ações <i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>Incluir arquivos</el-dropdown-item>
+                            <el-dropdown-item>Download dos arquivos</el-dropdown-item>
+                            <el-dropdown-item>Atualizar dados</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>   
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <download :id-proposal={{$id}} :type={{  json_encode($type) }}></download>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 @stop
 
 @section('css')
-{{Html::style('https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css')}}
 @stop
 
 @section('js')
-{{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js')}}
-{{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js.map')}}
+{{ Html::script('js/files.js') }}
 {{ Html::script('/js/manifest.js') }}
 {{ Html::script('/js/vendor.js') }}
 <script>
-    $(function() {        
-        
-    });
-    $(document).ready(function() {
-        id_proposal = '{{$id_survey}}';
-        console.log("survey ="+id_proposal);
-        $('#table-download-proposal-pf').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{!! url("escolha-azul/download-proposal-pf/'+id_proposal+'/proposta-pf") !!}',
-            columns: [
-               
-                { data: 'files_date', name: 'files_date' },
-                { data: 'files_id_proposal', name: 'files_id_proposal' },
-                { data: 'files_name', name: 'files_name' },
-                { data: 'action', name: 'action',  orderable: false, searchable: false }
-            ]
-        });
-    });
 </script>
 @stop

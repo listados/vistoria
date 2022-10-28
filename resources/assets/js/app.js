@@ -37,6 +37,7 @@ Vue.component('info-contact', require('./components/Contact/InfoContact.vue'));
 Vue.component('form-contact', require('./components/Contact/FormContact.vue'));
 Vue.component('cadastre-pf', require('./components/Proposal/Cadastre-pf.vue'));
 Vue.component('proposal-pf', require('./components/Proposal/Proposal-pf.vue'));
+Vue.component('download', require('./components/Downloads/Files.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));

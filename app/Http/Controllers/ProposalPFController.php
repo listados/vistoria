@@ -130,7 +130,15 @@ class ProposalPFController extends Controller
         )
         ->orderBy('proposal_id', 'desc')
         ->get();
-       
+        $idRepeat = 0;
+        //ESTRUTURA PARA REMOÇÃO DE OBJETO DUPLICADO
+        foreach ($proposalAll as $key => $value) {
+            if($idRepeat == $value->proposal_id)
+            {
+                unset($proposalAll[$key]);
+            }
+            $idRepeat = $value->proposal_id;
+        }
         return response()->json($proposalAll);
     }
 
@@ -170,8 +178,8 @@ class ProposalPFController extends Controller
 
     public function download($id, $type)
     {
-        $id_survey = $id;
-        return view('proposal.download',compact('files' , 'title', 'proposta' , 'campo', 'type', 'dominio_pdf_externo' , 'id_survey'));
+        $files = FunctionAll::getFiles($id, $type);
+        return view('proposal.download', compact('id', 'type', 'files'));
     }
 
     public function getFilesDonwloadProposalPF($id, $type)
@@ -252,5 +260,45 @@ class ProposalPFController extends Controller
             throw $th;
             return response()->json($th->getMessage());
         }
+    }
+
+    public function getFiles($id, $type)
+    {       
+        $files = FunctionAll::getFiles($id, $type);
+        return response()->json($files);
+    }
+
+    /**
+     * Faz o dowwnload do arquivo
+     * Essa função precisa depois ser refatorado para ter outro parametro, além do nome do arquivo.
+     * @param [type] $file
+     * @return void
+     */
+    public function downloadFile($idProposal, $file)
+    {
+       
+        $nameFile = base64_decode($file);        
+        $url = 'http://172.21.0.2/img/upload/'.$nameFile;
+        dump($url);
+        if(!is_dir(public_path('img/'.$idProposal)))
+        {
+            mkdir(public_path('img/'.$idProposal), 0755);
+           
+        }
+        $file_name = public_path('img/'.$idProposal.'/'.basename($url));
+        dump($file_name);
+        
+        // if(file_put_contents( $file_name,file_get_contents($url)))
+        // {
+        //     return redirect()->back()->with('success' , 'Download realizado');
+        // }else{
+        //     return redirect()->back()->with('error' , 'Arquivo não existe');
+        // }
+        // if(file_exists(dirname(dirname(dirname(dirname(__DIR__)))).'/escolhaazul/public/img/upload/'.$name_file))
+		// {
+		// 	return response()->download(dirname(dirname(dirname(dirname(__DIR__)))).'/escolhaazul/public/img/upload/'.$name_file);
+		// }else{
+		// 	return redirect()->back()->with('success', 'Não Existe arquivo');
+		// }
     }
 }

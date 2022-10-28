@@ -3,7 +3,7 @@
     <el-table
     :data="tableData.filter(data => !this.search || data.proposal_name.toLowerCase().includes(this.search.toLowerCase()))"
     style="width: 100%"
-    :default-sort = "{prop: 'completed', order: 'descending'}">
+    :default-sort = "{prop: 'proposal_id', order: 'descending'}">
     <el-table-column
       prop="proposal_id"
       label="Nº Prop."
@@ -18,7 +18,7 @@
     <el-table-column
       prop="proposal_name"
       label="Nome"
-      width="220">
+      >
     </el-table-column>
     <el-table-column
       prop="name"
@@ -34,7 +34,7 @@
     <el-table-column
       prop="proposal_email"
       label="E-mail"
-      width="200">
+      >
     </el-table-column>
     <el-table-column
       prop="proposal_status"
@@ -51,19 +51,23 @@
           placeholder="Pesquise pelo nome"/>
       </template>
       <template slot-scope="scope">
-        <el-button @click="redirectProposal(scope.$index, scope.row)" 
+        <el-button @click="redirectProposal('proposal', scope.row)" 
         type="text"
         title="Visualizar proposta"
         size="small">
             <i class="fa fa-eye" aria-hidden="true"></i>
         </el-button>
-        <el-button 
+        <el-button @click="redirectProposal('analysis', scope.row)"
         type="text"
         size="small"
         title="Visualizar análise">
             <i class="fa fa-pie-chart" aria-hidden="true"></i>
         </el-button> 
-        <el-button type="text" size="small"  v-if="scope.row.files_id > 0" 
+        <el-button
+        type="text"
+        size="small"
+        v-if="scope.row.files_id > 0"
+        @click="redirectProposal('proposal_pf', scope.row)"
         title="Existe arquivos enviados">
             <i class="fa fa-download" aria-hidden="true"></i>
         </el-button>
@@ -130,7 +134,15 @@ export default {
         getProposalPF() {
             axios.get(domain_complet + 'escolha-azul/getProposalPF')
             .then(response =>{
-                this.tableData = response.data
+              var listProposal = [];//lista de array com as propostas
+              var countProposal = 0;//contador inicial
+                //laço para criar um array de objeto com ordem de index
+                for (const [key, value] of Object.entries(response.data)) {
+                  listProposal[countProposal] = value;//inserindo o objeto no array
+                  countProposal++;//incremento para proximo objeto
+                }
+                console.log(listProposal.sort())
+                this.tableData = listProposal.sort()
             })
         },
         searchData(dataTable, query) {
@@ -138,7 +150,20 @@ export default {
             return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
         },
         redirectProposal(index, row) {
-          window.open(domain_external + "?action=view-proposal&id=" + btoa(row.proposal_id), '_blank');
+          var url = ''
+          switch (index) {
+            case 'proposal':
+              // url = domain_external + '?action=view-proposal&id=' + btoa(row.proposal_id)
+              url = domain_complet + 'escolha-azul/pdf-pf/'+row.proposal_id+'/'+index
+              break;
+            case 'analysis':
+              url = 'view/report/proposal_pf_adm.php?id=' + btoa(row.proposal_id)            
+              break;
+            case 'proposal_pf':
+              url = domain_complet = 'download/' + row.proposal_id +'/'+ index      
+              break;
+          }
+          window.open(url , '_blank');
         },
         updateDropdowns: function (value) {
             // console.log(value);
