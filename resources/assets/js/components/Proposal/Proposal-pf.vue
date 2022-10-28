@@ -3,7 +3,7 @@
     <el-table
     :data="tableData.filter(data => !this.search || data.proposal_name.toLowerCase().includes(this.search.toLowerCase()))"
     style="width: 100%"
-    :default-sort = "{prop: 'completed', order: 'descending'}">
+    :default-sort = "{prop: 'proposal_id', order: 'descending'}">
     <el-table-column
       prop="proposal_id"
       label="Nº Prop."
@@ -134,7 +134,15 @@ export default {
         getProposalPF() {
             axios.get(domain_complet + 'escolha-azul/getProposalPF')
             .then(response =>{
-                this.tableData = response.data
+              var listProposal = [];//lista de array com as propostas
+              var countProposal = 0;//contador inicial
+                //laço para criar um array de objeto com ordem de index
+                for (const [key, value] of Object.entries(response.data)) {
+                  listProposal[countProposal] = value;//inserindo o objeto no array
+                  countProposal++;//incremento para proximo objeto
+                }
+                console.log(listProposal.sort())
+                this.tableData = listProposal.sort()
             })
         },
         searchData(dataTable, query) {
@@ -145,7 +153,8 @@ export default {
           var url = ''
           switch (index) {
             case 'proposal':
-              url = domain_external + '?action=view-proposal&id=' + btoa(row.proposal_id)            
+              // url = domain_external + '?action=view-proposal&id=' + btoa(row.proposal_id)
+              url = domain_complet + 'escolha-azul/pdf-pf/'+row.proposal_id+'/'+index
               break;
             case 'analysis':
               url = 'view/report/proposal_pf_adm.php?id=' + btoa(row.proposal_id)            

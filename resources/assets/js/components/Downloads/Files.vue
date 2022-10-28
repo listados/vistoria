@@ -10,8 +10,7 @@
         </el-table-column>
         <el-table-column
             prop="files_name"
-            label="Nome Arquivo"
-            width="180">
+            label="Nome Arquivo">
         </el-table-column>
         <el-table-column
             prop="files_name"
@@ -26,8 +25,6 @@
                         <img :src="urlExternalImg + scope.row.files_name" width="130px" />
                     </a>   
                 </div>
-                      
-                
             </template>
             <!-- <template slot-scope="scope">
                 <a :href="urlExternalImg + scope.row.files_name" :download="scope.row.files_name">
@@ -40,8 +37,11 @@
             label="Ação"
             width="120">
             <template slot-scope="scope">
-                <el-button  type="text" size="small">Excluir</el-button>
-                <el-button type="text" @click="downloadFile(scope.row)" size="small">Baixar</el-button>
+                <!-- <el-button  type="text" size="small">Excluir</el-button> -->
+                <el-button type="primary" plain @click="downloadFile(scope.row)" 
+                size="small" 
+                icon="el-icon-full-screen"
+                title="Visualizar arquivo ampliado">Ampliar </el-button>
             </template>
         </el-table-column>
         </el-table>
@@ -67,23 +67,24 @@ export default {
         getFiles(id, type ) {
             axios.get(domain_complet + 'api/escolha-azul/download/'+ id + '/type/'+ type)
             .then( (response) =>{
-                console.log(this.urlExternalImg + response.data[1].files_name)
+                console.log(response.data)
                 this.tableData = response.data
             })
             .catch( (err) => {
 
             })
         },
+        //refatorar depois
         downloadFile(row) {
-            console.log({row})
             var crypt = btoa(row.files_name)
-            axios.get(domain_complet + 'escolha-azul/download-file/'+row.files_id_proposal+'/'+crypt)
-            .then( (res) =>{
-                console.log(res)
-            })
-            .catch( (err) => {
-                console.log(err)
-            })
+            window.open(this.urlExternalImg + row.files_name , '_blank');
+            // axios.get(domain_complet + 'escolha-azul/download-file/'+row.files_id_proposal+'/'+crypt)
+            // .then( (res) =>{
+            //     console.log(res)
+            // })
+            // .catch( (err) => {
+            //     console.log(err)
+            // })
         }
     },
 }
