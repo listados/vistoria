@@ -102476,6 +102476,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -102483,7 +102484,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       tableData: [],
       search: '',
-      name: 'Foo'
+      loading: false
     };
   },
   created: function created() {
@@ -102497,16 +102498,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    searchSurvey: function searchSurvey(name) {
-      // name will be automatically transported to the parameter.
-      this.name = name;
-      console.log(this.name);
-    },
-    getListSurvey: function getListSurvey() {
+    searchSurvey: function searchSurvey(params) {
       var _this = this;
 
+      // name will be automatically transported to the parameter.
+      axios.post(domain_complet + 'api/survey/search', params).then(function (res) {
+        _this.tableData = res.data.message;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getListSurvey: function getListSurvey() {
+      var _this2 = this;
+
       axios.get(domain_complet + 'api/survey/all').then(function (res) {
-        _this.tableData = res.data;
+        _this2.tableData = res.data;
       }).catch(function (err) {
         console.log({ err: err });
       });
@@ -102526,7 +102532,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.open(domain_complet + 'vistoria/historico/' + row.survey_id, '_blank');
     },
     openDeleteSurvey: function openDeleteSurvey(row) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$confirm('Deseja realmente excluir essa vistoria?', 'Excluir Vistoria', {
         confirmButtonText: 'Sim, quero excluir',
@@ -102535,13 +102541,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cancelButtonClass: 'margin-5'
       }).then(function (res) {
         axios.delete(domain_complet + 'api/survey/destroy/' + row.survey_id).then(function (response) {
-          _this2.$message({
+          _this3.$message({
             type: 'success',
             message: response.data.message
           });
-          _this2.getListSurvey();
+          _this3.getListSurvey();
         }).catch(function (error) {
-          _this2.$message({
+          _this3.$message({
             type: 'error',
             message: error.response.data.message
           });
@@ -102549,12 +102555,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     searchData: function searchData(dataTable, query) {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log({ dataTable: dataTable });
       console.log({ query: query });
       return dataTable.filter(function (data) {
-        return !_this3.search || 'data.' + query + '.toLowerCase().includes(search.toLowerCase())';
+        return !_this4.search || 'data.' + query + '.toLowerCase().includes(search.toLowerCase())';
       });
     }
   }
@@ -102575,6 +102581,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           staticStyle: { width: "100%" },
           attrs: {
             data: _vm.tableData.filter(function(data) {
@@ -102833,7 +102847,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -102844,6 +102858,16 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -102910,6 +102934,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             infoPlaceholder: 'Escolha uma opção para pesquisar',
             input: '',
             showInput: true,
+            typeInput: 'text',
+            disabledBtnSeach: true,
+            typeSearch: '',
+            loading: false,
             options: [{
                 value: 'Option1',
                 label: 'Option1'
@@ -102928,16 +102956,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         search: function search() {
-            console.log(this.$eventBus);
-            this.$eventBus.$emit('search-survey', this.searchTitle);
+            console.log(this.input);
+            var arrayData = {
+                value: this.input,
+                params: this.typeSearch
+            };
+            this.hideLoading();
+            this.$eventBus.$emit('search-survey', arrayData);
+            //
+        },
+        hideLoading: function hideLoading() {
+            var _this = this;
+
+            this.loading = true;
+            setTimeout(function () {
+                _this.loading = false;
+            }, 1500);
         },
         handleClick: function handleClick(command) {
             // this.$message('click on item ' + command);
+            this.typeSearch = command;
+            // this.hideLoading()
+            this.$message({
+                dangerouslyUseHTMLString: true,
+                message: '<span><i class="el-icon-loading"></i>Aguarde... </span>'
+            });
             switch (command) {
                 case 'codigo':
                     this.infoPlaceholder = 'Digite um código para pesquisa';
                     this.labelBtnSearch = 'Código';
                     this.showInput = true;
+                    this.disabledBtnSeach = false;
+                    this.typeInput = 'number';
                     break;
                 case 'tipo':
                     this.infoPlaceholder = 'Escolha um tipo';
@@ -102958,6 +103008,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.infoPlaceholder = 'Digite um endereço';
                     this.labelBtnSearch = 'Endereço';
                     this.showInput = true;
+                    this.disabledBtnSeach = false;
                     break;
             }
         }
@@ -102972,113 +103023,138 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-md-2" },
-      [
-        _c(
-          "el-dropdown",
-          { on: { command: _vm.handleClick } },
-          [
-            _c("el-button", { staticClass: "btn btn-flat margin" }, [
-              _vm._v("\n           " + _vm._s(_vm.labelBtnSearch) + " "),
-              _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
-            ]),
-            _vm._v(" "),
-            _c(
-              "el-dropdown-menu",
-              { attrs: { slot: "dropdown" }, slot: "dropdown" },
-              [
-                _c("el-dropdown-item", { attrs: { command: "codigo" } }, [
-                  _vm._v("Código")
-                ]),
-                _vm._v(" "),
-                _c("el-dropdown-item", { attrs: { command: "tipo" } }, [
-                  _vm._v("Tipo de Imóvel")
-                ]),
-                _vm._v(" "),
-                _c("el-dropdown-item", { attrs: { command: "status" } }, [
-                  _vm._v("Status da Vistoria")
-                ]),
-                _vm._v(" "),
-                _c("el-dropdown-item", { attrs: { command: "vistoriador" } }, [
-                  _vm._v("Vistoriador")
-                ]),
-                _vm._v(" "),
-                _c("el-dropdown-item", { attrs: { command: "endereco" } }, [
-                  _vm._v("Endereço")
-                ])
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-md-10" },
-      [
-        _vm.showInput
-          ? _c(
-              "el-input",
-              {
-                staticStyle: { width: "100%" },
-                attrs: { placeholder: _vm.infoPlaceholder, clearable: "" },
-                model: {
-                  value: _vm.input,
-                  callback: function($$v) {
-                    _vm.input = $$v
-                  },
-                  expression: "input"
-                }
-              },
-              [
-                _c("el-button", {
-                  staticClass: "btn bg-olive btn-flat",
-                  staticStyle: { width: "100px" },
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2" },
+        [
+          _c(
+            "el-dropdown",
+            { on: { command: _vm.handleClick } },
+            [
+              _c("el-button", { staticClass: "btn btn-flat margin" }, [
+                _vm._v("\n               " + _vm._s(_vm.labelBtnSearch) + " "),
+                _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-dropdown-menu",
+                { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                [
+                  _c("el-dropdown-item", { attrs: { command: "codigo" } }, [
+                    _vm._v("Código")
+                  ]),
+                  _vm._v(" "),
+                  _c("el-dropdown-item", { attrs: { command: "tipo" } }, [
+                    _vm._v("Tipo de Imóvel")
+                  ]),
+                  _vm._v(" "),
+                  _c("el-dropdown-item", { attrs: { command: "status" } }, [
+                    _vm._v("Status da Vistoria")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-dropdown-item",
+                    { attrs: { command: "vistoriador" } },
+                    [_vm._v("Vistoriador")]
+                  ),
+                  _vm._v(" "),
+                  _c("el-dropdown-item", { attrs: { command: "endereco" } }, [
+                    _vm._v("Endereço")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-10" },
+        [
+          _vm.showInput
+            ? _c(
+                "el-input",
+                {
+                  staticStyle: { width: "100%" },
                   attrs: {
-                    slot: "append",
-                    icon: "el-icon-search",
-                    title: "Pesquisar vistoria"
+                    placeholder: _vm.infoPlaceholder,
+                    clearable: "",
+                    type: _vm.typeInput
                   },
-                  slot: "append"
-                })
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.showInput == false
-          ? _c(
-              "el-select",
-              {
-                staticStyle: { width: "100%" },
-                attrs: { placeholder: _vm.infoPlaceholder },
-                model: {
-                  value: _vm.value,
-                  callback: function($$v) {
-                    _vm.value = $$v
-                  },
-                  expression: "value"
-                }
-              },
-              _vm._l(_vm.options, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
-              }),
-              1
-            )
+                  model: {
+                    value: _vm.input,
+                    callback: function($$v) {
+                      _vm.input = $$v
+                    },
+                    expression: "input"
+                  }
+                },
+                [
+                  _c("el-button", {
+                    staticClass: "btn bg-olive btn-flat",
+                    staticStyle: { width: "100px" },
+                    attrs: {
+                      slot: "append",
+                      icon: "el-icon-search",
+                      title: "Pesquisar vistoria",
+                      disabled: _vm.disabledBtnSeach
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.search()
+                      }
+                    },
+                    slot: "append"
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showInput == false
+            ? _c(
+                "el-select",
+                {
+                  staticStyle: { width: "100%" },
+                  attrs: { placeholder: _vm.infoPlaceholder },
+                  model: {
+                    value: _vm.value,
+                    callback: function($$v) {
+                      _vm.value = $$v
+                    },
+                    expression: "value"
+                  }
+                },
+                _vm._l(_vm.options, function(item) {
+                  return _c("el-option", {
+                    key: item.value,
+                    attrs: { label: item.label, value: item.value }
+                  })
+                }),
+                1
+              )
+            : _vm._e()
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 text-center" }, [
+        _vm.loading
+          ? _c("span", [
+              _c("i", { staticClass: "el-icon-loading" }),
+              _vm._v("Aguarde... ")
+            ])
           : _vm._e()
-      ],
-      1
-    )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []

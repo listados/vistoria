@@ -40,6 +40,7 @@ Route::prefix('survey')->group(function(){
     Route::get('type-immobile'  , 'SurveyController@getTypeImmobile');
     Route::get('all' , 'SurveyController@allSurvey');
     Route::delete('destroy/{id}', 'SurveyController@destroy');
+    Route::post('search', 'SurveyController@search');
 });
 
 

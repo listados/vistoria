@@ -2,6 +2,7 @@
     <div>
     <el-table
       :data="tableData.filter(data => !this.search || data.survey_address_immobile.toLowerCase().includes(this.search.toLowerCase()))"
+      v-loading="loading" 
       style="width: 100%"
       height="400">
       <el-table-column
@@ -87,7 +88,7 @@ export default {
       return {
         tableData: [],
         search: '',
-        name: 'Foo'
+        loading: false
       }
     },
     created() {
@@ -100,12 +101,17 @@ export default {
         this.$eventBus.$off('search-survey');
     },
     methods: {
-      searchSurvey(name) 
-            {
-         // name will be automatically transported to the parameter.
-                this.name = name;
-                console.log(this.name)
-            },
+      searchSurvey(params) 
+      {
+    // name will be automatically transported to the parameter.
+          axios.post(domain_complet + 'api/survey/search', params)
+          .then( (res) => {
+            this.tableData = res.data.message
+          })
+          .catch( (err) => {
+            console.log(err)
+          });
+      },
       getListSurvey() {
         axios.get(domain_complet + 'api/survey/all')
         .then( (res) => {

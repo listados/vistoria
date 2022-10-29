@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Input;
 use Dotenv\Validator as DotenvValidator;
 use Illuminate\Support\Facades\Validator;
 use EspindolaAdm\Http\Requests\SurveyRequest;
+use EspindolaAdm\Repository\SurveyRepository;
 
 class SurveyController extends Controller
 {
@@ -589,6 +590,7 @@ class SurveyController extends Controller
     public function searchSurvey() {
         return view('survey.search');
     }
+
     public function delete_user_survey(Request $request)
     {
         # code...
@@ -1013,8 +1015,7 @@ class SurveyController extends Controller
             'survey_inspetor_name',
             'survey_address_immobile',
             'survey_code')
-        ->
-        offset(0)->limit(50)->get();
+        ->offset(0)->limit(50)->get();
         //formatando codigo da vistoria e data para formato brasileiro    
         foreach ($survey as $key => $value) {
             //formatando datas
@@ -1024,5 +1025,15 @@ class SurveyController extends Controller
             }
         }
         return response()->json($survey);
+    }
+
+    /**
+     * 
+     */
+    public function search(Request $request)
+    {
+        $surveys = SurveyRepository::search($request->all());
+
+        return response()->json(['message' => $surveys['message']]);
     }
 }

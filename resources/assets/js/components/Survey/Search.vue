@@ -1,4 +1,5 @@
 <template lang="">
+<div>
     <div class="row">
         <div class="col-md-2">
             <el-dropdown @command="handleClick">
@@ -20,13 +21,16 @@
             v-model="input"
             clearable
             style="width: 100%"
+            :type="typeInput"
             v-if="showInput">
                 <el-button 
                     slot="append" 
                     class="btn bg-olive btn-flat" 
                     icon="el-icon-search"
                     style="width: 100px"
-                    title="Pesquisar vistoria">
+                    title="Pesquisar vistoria"
+                    @click="search()"
+                    :disabled="disabledBtnSeach">
                 </el-button>
             </el-input>
             <el-select 
@@ -51,6 +55,12 @@
         </a> -->
         
     </div>
+    <div class="row">
+        <div class="col-md-12  text-center">
+            <span  v-if="loading"><i class="el-icon-loading"></i>Aguarde... </span>
+        </div>
+    </div>
+</div>
 </template>
 <script>
 export default {
@@ -64,6 +74,10 @@ export default {
             infoPlaceholder: 'Escolha uma opção para pesquisar',
             input: '',
             showInput: true,
+            typeInput: 'text',
+            disabledBtnSeach: true,
+            typeSearch: '',
+            loading: false,
             options: [{
                 value: 'Option1',
                 label: 'Option1'
@@ -81,16 +95,36 @@ export default {
     },
     methods: {
         search() {
-            console.log(this.$eventBus)
-            this.$eventBus.$emit('search-survey', this.searchTitle);
+            console.log(this.input)
+            var arrayData = {
+                value : this.input,
+                params: this.typeSearch
+            }
+            this.hideLoading()  
+            this.$eventBus.$emit('search-survey', arrayData);
+            //
+        },
+        hideLoading(){
+                this.loading = true;
+            setTimeout(() => {
+                this.loading = false
+            }, 1500);
         },
         handleClick(command) {
             // this.$message('click on item ' + command);
+            this.typeSearch = command
+            // this.hideLoading()
+            this.$message({
+                dangerouslyUseHTMLString: true,
+                message: '<span><i class="el-icon-loading"></i>Aguarde... </span>'
+            });
             switch (command) {
                 case 'codigo':
                     this.infoPlaceholder = 'Digite um código para pesquisa'
                     this.labelBtnSearch = 'Código'
                     this.showInput = true
+                    this.disabledBtnSeach = false
+                    this.typeInput = 'number'
                     break;
                 case 'tipo':
                     this.infoPlaceholder = 'Escolha um tipo'
@@ -111,6 +145,7 @@ export default {
                     this.infoPlaceholder = 'Digite um endereço'
                     this.labelBtnSearch = 'Endereço'
                     this.showInput = true
+                    this.disabledBtnSeach = false   
                     break;
             }
         }
