@@ -54,6 +54,9 @@
 </template>
 <script>
 export default {
+    props: {
+        typeImmobile: Array
+    },
     data(){
         return {
             searchTitle: 'Pesquisa avançada',
@@ -72,6 +75,9 @@ export default {
                 label: 'Option3'
                 }],
         }
+    },
+    created() {
+        console.log(this.typeImmobile)
     },
     methods: {
         search() {

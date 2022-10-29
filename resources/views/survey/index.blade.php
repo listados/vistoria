@@ -19,7 +19,8 @@
 	<div class="col-md-12">
 		<div class="box">
 			<div class="box-header with-border">
-				<search-survey></search-survey>
+				
+				<search-survey :type-immobile="{{ json_encode($typeImmobiles) }}"></search-survey>
 			</div>
 			<div class="box-body">
 				<list-survey></list-survey>
