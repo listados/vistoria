@@ -104,15 +104,17 @@ export default {
     methods: {
       searchSurvey(params) 
       {
-        this.loading = true;
-          axios.post(domain_complet + 'api/survey/search', params)
-          .then( (res) => {
-            this.tableData = res.data.message
-            this.loading = false
-          })
-          .catch( (err) => {
-            console.log(err)
-          });
+          this.loading = true;
+          setTimeout(() => {
+            axios.post(domain_complet + 'api/survey/search', params)
+            .then( (res) => {
+              this.tableData = res.data.message
+              this.loading = false
+            })
+            .catch( (err) => {
+              console.log(err)
+            });
+          }, 500);
       },
       getListSurvey() {
         axios.get(domain_complet + 'api/survey/all')
