@@ -82,7 +82,11 @@ export default {
             disabledBtnSeach: true,
             typeSearch: '',
             options: [],
-            valueSelect: ''
+            valueSelect: '',
+            optionStatus : [
+                {value: 'Rascunho', label: 'Rascunho'},
+                {value: 'Finalizada', label: 'Finalizada'},
+            ]
         }
     },
     created() {
@@ -117,6 +121,7 @@ export default {
                     this.infoPlaceholder = 'Escolha um status'
                     this.labelBtnSearch = 'Status de Vistoria'
                     this.showInput = false
+                    this.options = this.optionStatus
                     break;
                 case 'vistoriador':
                     this.infoPlaceholder = 'Digite o nome do vistoriador'

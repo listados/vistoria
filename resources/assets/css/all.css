@@ -18,3 +18,7 @@
 .margin-5 {
 	margin: 5px !important;
 }
+.display-grid {
+	display: grid !important;
+	width: 100%
+}
