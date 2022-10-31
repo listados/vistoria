@@ -11,6 +11,7 @@ class SurveyRepository
 {
     static  function search($request)
     {
+       
         $fieldSearch = '';
         $operation = '';
         switch ($request['params']) {
@@ -20,13 +21,19 @@ class SurveyRepository
                 $value = '%'.$request['value'].'%';
                 break;
             case 'tipo':
-                # code...
+                $fieldSearch = 'survey_type_immobile';
+                $operation  =  'like';
+                $value = '%'.$request['value'];
                 break;
             case 'status':
-                # code...
+                $fieldSearch = 'survey_status';
+                $operation  =  '=';
+                $value = $request['value'];
                 break;
             case 'vistoriador':
-                # code...
+                $fieldSearch = 'survey_inspetor_name';
+                $operation  =  'like';
+                $value = '%'.$request['value'].'%';
                 break;
             case 'endereco':
                 $fieldSearch = 'survey_address_immobile';

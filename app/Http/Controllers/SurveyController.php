@@ -42,9 +42,11 @@ class SurveyController extends Controller
         $typeImmobile->pluck('survey_type_immobile','survey_type_immobile');
         $typeImmobiles = [];
         foreach ($typeImmobile as $key => $value) {
-            array_push($typeImmobiles, ['value' => $key, 'label' => $value->survey_type_immobile]);
+            array_push($typeImmobiles, ['value' => $value->survey_type_immobile, 'label' => $value->survey_type_immobile]);
         };
-        return view('survey.index', compact('typeImmobiles'));
+
+        $inspect = Survey::getInspector();
+        return view('survey.index', compact('typeImmobiles', 'inspect'));
     }
 
     /**
