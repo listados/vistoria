@@ -206,6 +206,7 @@ class Survey extends Model
 
     /**
      * Método para fazer uma pesquisa para retornar o imovel de acordo com a pesquisa
+     * (DEPREATED)
      */
     public static function searchSurvey($request)
     {
@@ -237,4 +238,17 @@ class Survey extends Model
         return $survey;
 
     }
+
+    static function getInspector()
+    {
+        $inspectors = Survey::where('survey_inspetor_name','<>', '')->select('survey_inspetor_name')->distinct()->get();
+        $inspector = [];
+        foreach ($inspectors as $key => $value) {
+            array_push($inspector, ['value' => $value->survey_inspetor_name, 'label' => $value->survey_inspetor_name]);
+        };
+
+        return $inspector;
+    }
+
+
 }
