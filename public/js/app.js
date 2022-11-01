@@ -103259,7 +103259,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-border {\n    border: 0px solid #fff;\n}\n", ""]);
+exports.push([module.i, "\n.hide-border {\n    border: 0px solid #fff;\n}\n.add-users{\n    background-color: #3c8dbc;\n    color: #fff;\n    box-shadow: 0 2px 4px rgb(0 0 0 / 37%);\n    margin-top: 5px;\n    padding-top: 5px;\n}\n", ""]);
 
 // exports
 
@@ -103342,10 +103342,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        users: Array
+        typeSurvey: String,
+        idSurvey: String
     },
     data: function data() {
         return {
@@ -103354,18 +103364,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             survey_inspetor_name: '',
             survey_inspetor_cpf: '',
             survey_inspetor_email: '',
-            showBorder: true
+            showBorder: true,
+            typeSurvey: ''
         };
     },
     created: function created() {
-        this.usersLocator = this.users;
-        console.log(this.users);
+        this.getUsers();
     },
 
     methods: {
+        getUsers: function getUsers() {
+            var _this = this;
+
+            axios.get(domain_complet + 'api/survey/user-survey/' + this.idSurvey + '/' + this.typeSurvey).then(function (res) {
+                _this.usersLocator = res.data;
+            }).catch(function (err) {
+                _this.$message({
+                    showClose: true,
+                    type: 'error',
+                    message: ' Ops! Ocorreu um erro: ' + err.data.message
+                });
+            });
+        },
+        addUserSurvey: function addUserSurvey(survey_inspetor_name, typeSurvey, params) {
+            console.log({ survey_inspetor_name: survey_inspetor_name });
+            console.log({ typeSurvey: typeSurvey });
+            console.log({ params: params });
+            console.log('id ', this.idSurvey);
+            axios.post(domain_complet + 'api/survey/add-user').then(function (res) {
+                console.log({ res: res });
+            }).catch();
+        },
         addLocator: function addLocator() {
             console.log(this.locator);
             this.locator = true;
+        },
+        deleteUserSurvey: function deleteUserSurvey(id) {
+            var _this2 = this;
+
+            console.log({ id: id });
+            this.$confirm('Deseja realmente excluir esse ' + this.typeSurvey + ' ?', 'Excluir  ' + this.typeSurvey, {
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não, desisto',
+                type: 'error'
+            }).then(function () {
+                axios.delete(domain_complet + 'api/survey/delete-user/' + id).then(function (res) {
+                    _this2.getUsers();
+                    _this2.$message({
+                        type: 'success',
+                        message: res.data.message
+                    });
+                }).catch(function (err) {
+                    _this2.$message({
+                        showClose: true,
+                        type: 'error',
+                        message: ' Ops! Ocorreu um erro:'
+                    });
+                });
+            }).catch(function () {
+                _this2.$message({
+                    type: 'info',
+                    message: 'Delete canceled'
+                });
+            });
         },
         addClassInput: function addClassInput() {
             this.showBorder = false;
@@ -103399,7 +103460,7 @@ var render = function() {
             },
             on: { click: _vm.addLocator }
           },
-          [_vm._v("\n            Locador\n        ")]
+          [_vm._v("\n            " + _vm._s(_vm.typeSurvey) + "\n        ")]
         )
       ],
       1
@@ -103412,7 +103473,9 @@ var render = function() {
         return _c("div", { key: item.id }, [
           _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("Nome do locador")]),
+              _c("label", { attrs: { for: "" } }, [
+                _vm._v("Nome do " + _vm._s(_vm.typeSurvey))
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -103441,9 +103504,11 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "col-md-3" }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("CPF do locador")]),
+              _c("label", { attrs: { for: "" } }, [
+                _vm._v("CPF do " + _vm._s(_vm.typeSurvey))
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -103475,7 +103540,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "" } }, [
-                _vm._v("E-mail do locador")
+                _vm._v("E-mail do " + _vm._s(_vm.typeSurvey))
               ]),
               _vm._v(" "),
               _c("input", {
@@ -103503,6 +103568,33 @@ var render = function() {
                 }
               })
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-1 text-center" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                  _vm._v("Remover")
+                ]),
+                _vm._v(" "),
+                _c("el-button", {
+                  attrs: {
+                    type: "danger",
+                    icon: "el-icon-delete",
+                    title: "Excluir esse item",
+                    size: "small"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteUserSurvey(item.relation_survey_user_id)
+                    }
+                  }
+                })
+              ],
+              1
+            )
           ])
         ])
       }),
@@ -103510,141 +103602,152 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.locator
-      ? _c(
-          "div",
-          {
-            staticClass: "col-md-12",
-            staticStyle: {
-              "box-shadow": "0 2px 4px rgb(0 0 0 / 37%)",
-              "margin-top": "5px"
-            }
-          },
-          [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
-                  _vm._v("Nome do Locador")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.survey_inspetor_name,
-                      expression: "survey_inspetor_name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    placeholder: "Nome do Vistoriador",
-                    name: "survey_inspetor_name",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.survey_inspetor_name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.survey_inspetor_name = $event.target.value
-                    }
+      ? _c("div", { staticClass: "col-md-12 add-users" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                _vm._v("Nome do " + _vm._s(_vm.typeSurvey))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.survey_inspetor_name,
+                    expression: "survey_inspetor_name"
                   }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
-                  _vm._v("CPF do Locador")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.survey_inspetor_cpf,
-                      expression: "survey_inspetor_cpf"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    placeholder: "Nome do Vistoriador",
-                    name: "survey_inspetor_name",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.survey_inspetor_cpf },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.survey_inspetor_cpf = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
-                  _vm._v("E-mail do Locador")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.survey_inspetor_email,
-                      expression: "survey_inspetor_email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    placeholder: "Nome do Vistoriador",
-                    name: "survey_inspetor_name",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.survey_inspetor_email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.survey_inspetor_email = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-1 text-center" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { attrs: { for: "survey_inspetor_name" } }, [
-                    _vm._v("Remover")
-                  ]),
-                  _vm._v(" "),
-                  _c("el-button", {
-                    attrs: {
-                      type: "danger",
-                      icon: "el-icon-delete",
-                      title: "Excluir esse item",
-                      size: "small"
-                    }
-                  })
                 ],
-                1
-              )
+                staticClass: "form-control",
+                attrs: {
+                  placeholder: "Nome do Vistoriador",
+                  name: "survey_inspetor_name",
+                  type: "text"
+                },
+                domProps: { value: _vm.survey_inspetor_name },
+                on: {
+                  blur: function($event) {
+                    return _vm.addUserSurvey(
+                      _vm.survey_inspetor_name,
+                      _vm.typeSurvey,
+                      "name"
+                    )
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.survey_inspetor_name = $event.target.value
+                  }
+                }
+              })
             ])
-          ]
-        )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                _vm._v("CPF do " + _vm._s(_vm.typeSurvey))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.survey_inspetor_cpf,
+                    expression: "survey_inspetor_cpf"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  placeholder: "Nome do Vistoriador",
+                  name: "survey_inspetor_name",
+                  type: "text"
+                },
+                domProps: { value: _vm.survey_inspetor_cpf },
+                on: {
+                  blur: function($event) {
+                    return _vm.addUserSurvey(
+                      _vm.survey_inspetor_name,
+                      _vm.typeSurvey,
+                      "cpf"
+                    )
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.survey_inspetor_cpf = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                _vm._v("E-mail do " + _vm._s(_vm.typeSurvey))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.survey_inspetor_email,
+                    expression: "survey_inspetor_email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  placeholder: "Nome do Vistoriador",
+                  name: "survey_inspetor_name",
+                  type: "text"
+                },
+                domProps: { value: _vm.survey_inspetor_email },
+                on: {
+                  blur: function($event) {
+                    return _vm.addUserSurvey(
+                      _vm.survey_inspetor_name,
+                      _vm.typeSurvey,
+                      "email"
+                    )
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.survey_inspetor_email = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-1 text-center" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                  _vm._v("Remover")
+                ]),
+                _vm._v(" "),
+                _c("el-button", {
+                  attrs: {
+                    type: "danger",
+                    icon: "el-icon-delete",
+                    title: "Excluir esse item",
+                    size: "small"
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ])
       : _vm._e()
   ])
 }

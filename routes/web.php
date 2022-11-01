@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('update' , 'SurveyController@update');
         Route::post('upload' , 'SurveyController@upload');
         Route::get('{id}/editar/{action}/acao' , 'SurveyController@edit');
-        Route::post('delete-user' , 'SurveyController@delete_user_survey');
+
         Route::get('imprimir' , 'SurveyController@print_survey');
         Route::get('{id}/download' , 'SurveyController@download');
         Route::get('replicar/{id}' , 'SurveyController@reply_survey');

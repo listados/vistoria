@@ -29,7 +29,9 @@
 			<div class="box-default">
 				<div class="box-body">
 					<!-- ÁREA LOCADOR -->
-					<create-user :users="{{ json_encode($locators) }}"></create-user>
+					<create-user 
+					:type-survey="{{ json_encode('Locador') }}"
+					:id-survey="{{ json_encode($id_survey) }}"></create-user>
 					<!-- FIM ÁREA LOCADOR -->
 					<div class="container" >						
 						<div class='elementOccupant' id='div_1'></div>
