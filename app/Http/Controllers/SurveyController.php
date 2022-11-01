@@ -131,7 +131,8 @@ class SurveyController extends Controller
 
         $title_survey   = $action;
 
-        return view('survey.create', compact('ambience', 'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
+        $locators = self::getUser($id_survey, 'Locador');
+        return view('survey.create', compact('locators', 'ambience', 'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
     }
 
     /**
@@ -1037,5 +1038,20 @@ class SurveyController extends Controller
         $surveys = SurveyRepository::search($request->all());
 
         return response()->json(['message' => $surveys['message']]);
+    }
+
+    /**
+     * 
+    */
+    public function getUser($idSurvey, $type)
+    {
+        return DB::table('relation_survey_user')
+        ->join('users', 'relation_survey_user_id_user' , '=', 'users.id')
+        ->where([
+            ['relation_survey_user_id_survey', $idSurvey],
+            ['relation_survey_user_type', $type]
+        ])
+        ->select('users.id', 'users.name', 'users.email', 'users.cpf')
+        ->get();
     }
 }

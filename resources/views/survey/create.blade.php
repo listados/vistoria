@@ -24,45 +24,13 @@
 			@include('message.message_general')
 		</div>
 	</div>
-	<script type="text/javascript" src="{{ url('js/new_add_survey.js') }}"></script>
-	{{ Form::model($survey, ['url' => '' , 'id' => 'form_survey' ]) }}
 	<div class="row">
-		<div class="col-md-12">
-			<div class="box box-default">
+		<div class="box">
+			<div class="box-default">
 				<div class="box-body">
 					<!-- ÁREA LOCADOR -->
-					<div class="col-md-12">
-						<a href="#container" class="add" id="" onclick="addUserSurvey('elementOccupant', 'div', 'container', 'remove' , 'locator')" data-toggle="tooltip" data-placement="right" title="Adicionar novo locador a vistoria"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Locador</a>
-					</div>
-
-					 @foreach(@$survey_update as $dados)    
-                        @if(@$dados->relation_survey_user_type == 'Locador')    
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                {{ Form::hidden('id_user[]' , $dados->id) }}   
-                                <label for="">Nome do Locador </label>
-                                <input type="text" name="survey_locator_name[]" id="nome_locatario" value="{{ $dados->name }}" placeholder="Nome do Locador" class="form-control">            
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="">CPF ou CNPJ</label>
-                                <input type="text" name="survey_locator_cpf[]"  value="{{ $dados->relation_survey_user_cpf }}" placeholder="CPF ou CNPJ do Locador" class="form-control" id="cpf_locador">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="">E-mail do Locador</label>
-                                <div class="input-group">
-                                    <input type="text"  name="survey_locator_email[]" id="survey_locator_email" value="{{$dados->email }}" class="form-control">
-                                    <span class="input-group-btn">
-                                        <button type="button"  onclick="deleteUserSurvey({{ $dados->id }},  {{ $id_survey }})" class="btn btn-primary btn-flat"  data-toggle="tooltip" data-placement="top" title="Exclui esse usuário"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                        @endforeach
+					<create-user :users="{{ json_encode($locators) }}"></create-user>
+					<!-- FIM ÁREA LOCADOR -->
 					<div class="container" >						
 						<div class='elementOccupant' id='div_1'></div>
 					</div>
@@ -479,7 +447,7 @@
 	</div>
 </div>
 <!-- /.row Upload do ambiente-->
-{{ Form::close() }}
+
 <!-- /.row -->
 @include('modal.survey_ambience_upload')
 @include('modal.modal_load')

@@ -41,6 +41,7 @@ Vue.component('download', require('./components/Downloads/Files.vue'));
 //VISTORIA
 Vue.component('list-survey', require('./components/Survey/List.vue'));
 Vue.component('search-survey', require('./components/Survey/Search.vue'));
+Vue.component('create-user', require('./components/Survey/CreateUser.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));

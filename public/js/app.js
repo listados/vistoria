@@ -7557,6 +7557,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('download', __webpack_requ
 //VISTORIA
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('list-survey', __webpack_require__(241));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('search-survey', __webpack_require__(246));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('create-user', __webpack_require__(258));
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$eventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a(); // Global event bus
@@ -102477,6 +102478,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -102501,9 +102503,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     searchSurvey: function searchSurvey(params) {
       var _this = this;
 
-      // name will be automatically transported to the parameter.
+      this.loading = true;
       axios.post(domain_complet + 'api/survey/search', params).then(function (res) {
         _this.tableData = res.data.message;
+        _this.loading = false;
       }).catch(function (err) {
         console.log(err);
       });
@@ -102599,7 +102602,8 @@ var render = function() {
                   .includes(this$1.search.toLowerCase())
               )
             }),
-            height: "400"
+            height: "600",
+            "empty-text": "Nenhum registro encontrado"
           }
         },
         [
@@ -102847,7 +102851,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.el-dropdown {\n        display: grid !important;\n}\n.btn-primary {\n    background-color: #3c8dbc;\n    border-color: #367fa9;\n}\n.btn-primary:hover {\n    color: #fff;\n    background-color: #286090;\n    border-color: #204d74;\n}\n", ""]);
 
 // exports
 
@@ -102922,10 +102926,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        typeImmobile: Array
+        typeImmobile: Array,
+        typeInspector: Array
     },
     data: function data() {
         return {
@@ -102937,72 +102945,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             typeInput: 'text',
             disabledBtnSeach: true,
             typeSearch: '',
-            loading: false,
-            options: [{
-                value: 'Option1',
-                label: 'Option1'
-            }, {
-                value: 'Option2',
-                label: 'Option2'
-            }, {
-                value: 'Option3',
-                label: 'Option3'
-            }]
+            options: [],
+            valueSelect: '',
+            optionStatus: [{ value: 'Rascunho', label: 'Rascunho' }, { value: 'Finalizada', label: 'Finalizada' }]
         };
     },
-    created: function created() {
-        console.log(this.typeImmobile);
-    },
+    created: function created() {},
 
     methods: {
-        search: function search() {
-            console.log(this.input);
+        search: function search(value) {
             var arrayData = {
-                value: this.input,
+                value: value,
                 params: this.typeSearch
-            };
-            this.hideLoading();
-            this.$eventBus.$emit('search-survey', arrayData);
-            //
-        },
-        hideLoading: function hideLoading() {
-            var _this = this;
-
-            this.loading = true;
-            setTimeout(function () {
-                _this.loading = false;
-            }, 1500);
+                //Enviando dados para outro componente
+            };this.$eventBus.$emit('search-survey', arrayData);
         },
         handleClick: function handleClick(command) {
-            // this.$message('click on item ' + command);
+            //Recebendo valor selecionado
             this.typeSearch = command;
-            // this.hideLoading()
-            this.$message({
-                dangerouslyUseHTMLString: true,
-                message: '<span><i class="el-icon-loading"></i>Aguarde... </span>'
-            });
             switch (command) {
                 case 'codigo':
-                    this.infoPlaceholder = 'Digite um código para pesquisa';
+                    this.infoPlaceholder = 'Digite um código para pesquisa e aperte ENTER';
                     this.labelBtnSearch = 'Código';
                     this.showInput = true;
                     this.disabledBtnSeach = false;
-                    this.typeInput = 'number';
                     break;
                 case 'tipo':
                     this.infoPlaceholder = 'Escolha um tipo';
                     this.labelBtnSearch = 'Tipo de Imóvel';
                     this.showInput = false;
+                    this.options = this.typeImmobile;
                     break;
                 case 'status':
                     this.infoPlaceholder = 'Escolha um status';
                     this.labelBtnSearch = 'Status de Vistoria';
                     this.showInput = false;
+                    this.options = this.optionStatus;
                     break;
                 case 'vistoriador':
                     this.infoPlaceholder = 'Digite o nome do vistoriador';
                     this.labelBtnSearch = 'Vistoriador';
                     this.showInput = false;
+                    this.showType = true;
+                    this.options = this.typeInspector;
                     break;
                 case 'endereco':
                     this.infoPlaceholder = 'Digite um endereço';
@@ -103034,7 +103019,7 @@ var render = function() {
             { on: { command: _vm.handleClick } },
             [
               _c("el-button", { staticClass: "btn btn-flat margin" }, [
-                _vm._v("\n               " + _vm._s(_vm.labelBtnSearch) + " "),
+                _vm._v("\n                " + _vm._s(_vm.labelBtnSearch) + " "),
                 _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
               ]),
               _vm._v(" "),
@@ -103075,7 +103060,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-10" },
+        { staticClass: "col-md-8" },
         [
           _vm.showInput
             ? _c(
@@ -103086,6 +103071,11 @@ var render = function() {
                     placeholder: _vm.infoPlaceholder,
                     clearable: "",
                     type: _vm.typeInput
+                  },
+                  on: {
+                    change: function($event) {
+                      return _vm.search(_vm.input)
+                    }
                   },
                   model: {
                     value: _vm.input,
@@ -103117,43 +103107,59 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.showInput == false
-            ? _c(
-                "el-select",
+          _c(
+            "el-select",
+            {
+              directives: [
                 {
-                  staticStyle: { width: "100%" },
-                  attrs: { placeholder: _vm.infoPlaceholder },
-                  model: {
-                    value: _vm.value,
-                    callback: function($$v) {
-                      _vm.value = $$v
-                    },
-                    expression: "value"
-                  }
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showInput == false,
+                  expression: "showInput == false"
+                }
+              ],
+              staticStyle: { width: "100%" },
+              attrs: { placeholder: _vm.infoPlaceholder },
+              on: {
+                change: function($event) {
+                  return _vm.search(_vm.valueSelect)
+                }
+              },
+              model: {
+                value: _vm.valueSelect,
+                callback: function($$v) {
+                  _vm.valueSelect = $$v
                 },
-                _vm._l(_vm.options, function(item) {
-                  return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.label, value: item.value }
-                  })
-                }),
-                1
-              )
-            : _vm._e()
+                expression: "valueSelect"
+              }
+            },
+            _vm._l(_vm.options, function(item) {
+              return _c("el-option", {
+                key: item.value,
+                attrs: { label: item.label, value: item.value }
+              })
+            }),
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2" },
+        [
+          _c(
+            "el-button",
+            {
+              staticClass: "btn btn-block btn-primary",
+              attrs: { type: "primary" }
+            },
+            [_vm._v("\n                Criar Vistoria\n            ")]
+          )
         ],
         1
       )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12 text-center" }, [
-        _vm.loading
-          ? _c("span", [
-              _c("i", { staticClass: "el-icon-loading" }),
-              _vm._v("Aguarde... ")
-            ])
-          : _vm._e()
-      ])
     ])
   ])
 }
@@ -103164,6 +103170,453 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-e5415a14", module.exports)
+  }
+}
+
+/***/ }),
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(259)
+}
+var normalizeComponent = __webpack_require__(8)
+/* script */
+var __vue_script__ = __webpack_require__(261)
+/* template */
+var __vue_template__ = __webpack_require__(262)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Survey/CreateUser.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-27810db5", Component.options)
+  } else {
+    hotAPI.reload("data-v-27810db5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(260);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(13)("6df0c6e4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27810db5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateUser.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27810db5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateUser.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 261 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        users: Array
+    },
+    data: function data() {
+        return {
+            locator: true,
+            usersLocator: [],
+            survey_inspetor_name: '',
+            survey_inspetor_cpf: '',
+            survey_inspetor_email: ''
+        };
+    },
+    created: function created() {
+        this.usersLocator = this.users;
+        console.log(this.users);
+    },
+
+    methods: {
+        addLocator: function addLocator() {
+            console.log(this.locator);
+            this.locator = true;
+        }
+    }
+});
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "col-md-12" },
+      [
+        _c(
+          "el-link",
+          {
+            attrs: {
+              icon: "el-icon-circle-plus",
+              title: "Criar novo usuário",
+              type: "primary"
+            },
+            on: { click: _vm.addLocator }
+          },
+          [_vm._v("\n            Locador\n        ")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-md-12" },
+      _vm._l(_vm.usersLocator, function(item) {
+        return _c("div", { key: item.id }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: item.name,
+                  expression: "item.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "" },
+              domProps: { value: item.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(item, "name", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: item.cpf,
+                  expression: "item.cpf"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "" },
+              domProps: { value: item.cpf },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(item, "cpf", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: item.email,
+                  expression: "item.email"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "" },
+              domProps: { value: item.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(item, "email", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _vm.locator
+      ? _c(
+          "div",
+          {
+            staticClass: "col-md-12",
+            staticStyle: {
+              "box-shadow": "0 2px 4px rgb(0 0 0 / 37%)",
+              "margin-top": "5px"
+            }
+          },
+          [
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                  _vm._v("Nome do Locador")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.survey_inspetor_name,
+                      expression: "survey_inspetor_name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    placeholder: "Nome do Vistoriador",
+                    name: "survey_inspetor_name",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.survey_inspetor_name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.survey_inspetor_name = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                  _vm._v("CPF do Locador")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.survey_inspetor_cpf,
+                      expression: "survey_inspetor_cpf"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    placeholder: "Nome do Vistoriador",
+                    name: "survey_inspetor_name",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.survey_inspetor_cpf },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.survey_inspetor_cpf = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                  _vm._v("E-mail do Locador")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.survey_inspetor_email,
+                      expression: "survey_inspetor_email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    placeholder: "Nome do Vistoriador",
+                    name: "survey_inspetor_name",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.survey_inspetor_email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.survey_inspetor_email = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1 text-center" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { attrs: { for: "survey_inspetor_name" } }, [
+                    _vm._v("Remover")
+                  ]),
+                  _vm._v(" "),
+                  _c("el-button", {
+                    attrs: {
+                      type: "danger",
+                      icon: "el-icon-delete",
+                      title: "Excluir esse item",
+                      size: "small"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ]
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-27810db5", module.exports)
   }
 }
 
