@@ -9,13 +9,28 @@
         <div class="col-md-12">
            <div v-for="item in usersLocator" :key="item.id">
                 <div class="col-md-4">
-                    <input type="text" name="" class="form-control" v-model="item.name">
+                    <div class="form-group">
+                        <label for="">Nome do locador</label>
+                        <input type="text" class="form-control" 
+                        :class="{'hide-border': showBorder}" v-model="item.name"
+                        @focus="addClassInput" @blur="hideClassInput">
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" name="" class="form-control" v-model="item.cpf"></input>
+                    <div class="form-group">
+                        <label for="">CPF do locador</label>
+                        <input type="text" class="form-control" 
+                        :class="{'hide-border': showBorder}" v-model="item.cpf"
+                        @focus="addClassInput" @blur="hideClassInput">
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" name="" class="form-control" v-model="item.email"></input>
+                    <div class="form-group">
+                        <label for="">E-mail do locador</label>
+                        <input type="text" class="form-control" 
+                        :class="{'hide-border': showBorder}" v-model="item.email"
+                        @focus="addClassInput" @blur="hideClassInput">
+                    </div>
                 </div>
            </div>
         </div>
@@ -66,7 +81,8 @@ export default {
             usersLocator: [],
             survey_inspetor_name: '',
             survey_inspetor_cpf: '',
-            survey_inspetor_email: ''
+            survey_inspetor_email: '',
+            showBorder : true
         }
     },
     created() {
@@ -77,10 +93,18 @@ export default {
         addLocator() {
             console.log(this.locator)
             this.locator = true
+        },
+        addClassInput() {
+            this.showBorder = false
+        },
+        hideClassInput() {
+            this.showBorder = true
         }
     }
 }
 </script>
 <style lang="">
-    
+    .hide-border {
+        border: 0px solid #fff;
+    }
 </style>
