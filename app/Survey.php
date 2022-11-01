@@ -21,27 +21,54 @@ class Survey extends Model
 
 
     //OBRIGATORIAMENTE O PRIMEIRO CAMPO DO ARRAY TEM QUE SER O NOME DO USUARIO E O SEGUNDO O EMAIL
-    public static function cadastra_usuario($campo_user, $id_survey, $cpf, $type_relation)
+    public static function cadastra_usuario($campo_user, $id_survey, $type_relation, $params)
     {
-
+        dump($params);
+        $user = [
+            'name' => null, 
+            'email' => null,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            'adm' => 0,
+            'status' => 0,
+            'id_profile' => 14  ,
+            'password' => bcrypt(Carbon::now()),
+            'cpf' => null
+        ];
+        switch ($params) {
+            case 'name':
+                $user['name'] = $campo_user;
+                break;
+            case 'cpf':
+                # code...
+                break;
+            case 'email':
+                # code...
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        dd($user);
           //CADASTRANDO USUARIO
-        $user_locator = User::create(
-            [
-                'name' =>  $campo_user[0],
-                'email' =>  $campo_user[1]  ,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-                'adm' => 0,
-                'status' => 0,
-                'id_profile' => 14  ,
-                'password' => bcrypt($cpf),
-                'cpf' => $cpf,
-            ]
-        );
+        // $user_locator = User::create(
+        //     [
+        //         'name' =>  $campo_user[0],
+        //         'email' =>  $campo_user[1]  ,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now(),
+        //         'adm' => 0,
+        //         'status' => 0,
+        //         'id_profile' => 14  ,
+        //         'password' => bcrypt($cpf),
+        //         'cpf' => $cpf,
+        //     ]
+        // );
         //GRAVANDO DADOS NA TABELA DE RELACIONAMENTO
         $relation_locador = DB::table('relation_survey_user')->insert(['relation_survey_user_id_survey' => $id_survey, 'relation_survey_user_id_user' => $user_locator->id , 'relation_survey_user_cpf' => $cpf , 'relation_survey_user_type' => $type_relation , 'created_at' => Carbon::now(), 'updated_at' => Carbon::now() ]);
 
-        return $user_locator;
+        // return $user_locator;
     }
 
 
