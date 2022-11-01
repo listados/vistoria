@@ -132,7 +132,8 @@ class SurveyController extends Controller
         $title_survey   = $action;
 
         $locators = self::getUser($id_survey, 'Locador');
-        return view('survey.create', compact('locators', 'ambience', 'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
+        return view('survey.create', compact('locators', 'ambience', 
+        'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
     }
 
     /**
@@ -594,17 +595,18 @@ class SurveyController extends Controller
         return view('survey.search');
     }
 
-    public function delete_user_survey(Request $request)
+    public function delete_user_survey($id)
     {
         # code...
 
         //$id_user, $id_survey
         try {
-            User::destroy($request['id']);
-            DB::table('relation_survey_user')->where('relation_survey_user_id_user', '=', $request['id'])->delete();
-            return response()->json(['messagem' => 'success']);
+            $user = DB::table('relation_survey_user')
+            ->where('relation_survey_user_id', '=', $id);
+            $user->delete();
+            return response()->json(['message' => 'Excluído com sucesso'], 200);
         } catch (Exception $e) {
-            return redirect()->back()->with(['error' => 'Erro: ' . $g->getMessage()]);
+            return response()->json(['message' => FunctionAll::error($e)], 400);
         }
     }
 
@@ -1051,7 +1053,29 @@ class SurveyController extends Controller
             ['relation_survey_user_id_survey', $idSurvey],
             ['relation_survey_user_type', $type]
         ])
-        ->select('users.id', 'users.name', 'users.email', 'users.cpf')
+        ->select('users.id', 'users.name', 'users.email', 'users.cpf','relation_survey_user_id')
         ->get();
+    }
+
+    /**
+     * 
+     */
+    public function addUserSurvey(Request $request)
+    {
+        dump($request->all());
+            $verify = Survey::consulta_relacao_usuario(
+                $request->relation_survey_user_id_survey, 
+                $request->relation_survey_user_type);
+
+            if(count($verify) == 0){
+                dump('verify');
+                Survey::cadastra_usuario(
+                    $request->survey_inspetor_name, 
+                    $request->relation_survey_user_id_survey, 
+                    $request->relation_survey_user_type,
+                    $request->params
+                );
+            }    
+        // Survey::cadastra_usuario($campo_user, $id_survey, $type_relation);
     }
 }
