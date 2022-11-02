@@ -13,7 +13,7 @@
                         <label for="">Nome do {{typeSurvey}}</label>
                         <input type="text" class="form-control" 
                         :class="{'hide-border': showBorder}" v-model="item.name"
-                        @focus="addClassInput" @blur="hideClassInput">
+                        @focus="addClassInput" @blur="addUserSurvey($event, 'name')">
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -21,7 +21,7 @@
                         <label for="">CPF do {{typeSurvey}}</label>
                         <input type="text" class="form-control" 
                         :class="{'hide-border': showBorder}" v-model="item.cpf"
-                        @focus="addClassInput" @blur="hideClassInput">
+                        @focus="addClassInput" @blur="addUserSurvey($event, 'cpf')"">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -29,7 +29,8 @@
                         <label for="">E-mail do {{typeSurvey}}</label>
                         <input type="text" class="form-control" 
                         :class="{'hide-border': showBorder}" v-model="item.email"
-                        @focus="addClassInput" @blur="hideClassInput">
+                        name="survey_inspetor_email" 
+                        @focus="addClassInput" @blur="addUserSurvey($event, 'email')">
                     </div>
                 </div>
                 <div class="col-md-1 text-center">
@@ -50,23 +51,23 @@
                     <label for="survey_inspetor_name">Nome do {{typeSurvey}}</label>
                         <input v-model="survey_inspetor_name" placeholder="Nome do Vistoriador" 
                         name="survey_inspetor_name" type="text" 
-                        @blur="addUserSurvey(survey_inspetor_name, typeSurvey, 'name')" class="form-control"  />
+                        @blur="addUserSurvey($event, 'name')" class="form-control"  />
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="survey_inspetor_name">CPF do {{typeSurvey}}</label>
                         <input v-model="survey_inspetor_cpf" placeholder="Nome do Vistoriador" 
-                        name="survey_inspetor_name" type="text" 
-                        @blur="addUserSurvey(survey_inspetor_name, typeSurvey, 'cpf')"class="form-control" />
+                        name="survey_inspetor_cpf" type="text" 
+                        @blur="addUserSurvey($event, 'cpf')" class="form-control" />
                 </div>                
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="survey_inspetor_name">E-mail do {{typeSurvey}}</label>
+                    <label>E-mail do {{typeSurvey}}</label>
                         <input v-model="survey_inspetor_email" placeholder="Nome do Vistoriador" 
-                        name="survey_inspetor_name" type="text" 
-                        @blur="addUserSurvey(survey_inspetor_name, typeSurvey, 'email')" class="form-control" />
+                        name="survey_inspetor_email" type="text" 
+                        @blur="addUserSurvey($event, 'email')" class="form-control" />
                 </div>
             </div>
             <div class="col-md-1 text-center">
@@ -87,7 +88,7 @@ export default {
     },
     data() {
         return {
-            locator: true,
+            locator: false,
             usersLocator: [],
             survey_inspetor_name: '',
             survey_inspetor_cpf: '',
@@ -114,16 +115,23 @@ export default {
             })
 
         },
-        addUserSurvey(survey_inspetor_name, typeSurvey, params) {
-            console.log({survey_inspetor_name})
-            console.log({typeSurvey})
-            console.log({params})
-            console.log('id ', this.idSurvey)
-            axios.post(domain_complet  + 'api/survey/add-user')
+        addUserSurvey(event, params) {
+            var createUser = {
+                relation_survey_user_id_survey: this.idSurvey,
+                relation_survey_user_type: this.typeSurvey,
+                params: params
+            }
+            createUser[event.target.name] = event.target._value
+
+            axios.post(domain_complet  + 'api/survey/add-user', createUser)
             .then( (res) => {
                 console.log({res})
+                this.locator = false
+                this.getUsers()
             })
-            .catch()
+            .catch( (erro) =>{
+                console.log({res})
+            })
         },
         addLocator() {
             console.log(this.locator)
@@ -173,8 +181,8 @@ export default {
         border: 0px solid #fff;
     }
     .add-users{
-        background-color: #3c8dbc;
-        color: #fff;
+        /* background-color: #3c8dbc; */
+        color: #211f1f;
         box-shadow: 0 2px 4px rgb(0 0 0 / 37%);
         margin-top: 5px;
         padding-top: 5px;

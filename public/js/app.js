@@ -103259,7 +103259,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-border {\n    border: 0px solid #fff;\n}\n.add-users{\n    background-color: #3c8dbc;\n    color: #fff;\n    box-shadow: 0 2px 4px rgb(0 0 0 / 37%);\n    margin-top: 5px;\n    padding-top: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.hide-border {\n    border: 0px solid #fff;\n}\n.add-users{\n    /* background-color: #3c8dbc; */\n    color: #211f1f;\n    box-shadow: 0 2px 4px rgb(0 0 0 / 37%);\n    margin-top: 5px;\n    padding-top: 5px;\n}\n", ""]);
 
 // exports
 
@@ -103351,6 +103351,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -103359,7 +103360,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            locator: true,
+            locator: false,
             usersLocator: [],
             survey_inspetor_name: '',
             survey_inspetor_cpf: '',
@@ -103386,21 +103387,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        addUserSurvey: function addUserSurvey(survey_inspetor_name, typeSurvey, params) {
-            console.log({ survey_inspetor_name: survey_inspetor_name });
-            console.log({ typeSurvey: typeSurvey });
-            console.log({ params: params });
-            console.log('id ', this.idSurvey);
-            axios.post(domain_complet + 'api/survey/add-user').then(function (res) {
+        addUserSurvey: function addUserSurvey(event, params) {
+            var _this2 = this;
+
+            var createUser = {
+                relation_survey_user_id_survey: this.idSurvey,
+                relation_survey_user_type: this.typeSurvey,
+                params: params
+            };
+            createUser[event.target.name] = event.target._value;
+
+            axios.post(domain_complet + 'api/survey/add-user', createUser).then(function (res) {
                 console.log({ res: res });
-            }).catch();
+                _this2.locator = false;
+                _this2.getUsers();
+            }).catch(function (erro) {
+                console.log({ res: res });
+            });
         },
         addLocator: function addLocator() {
             console.log(this.locator);
             this.locator = true;
         },
         deleteUserSurvey: function deleteUserSurvey(id) {
-            var _this2 = this;
+            var _this3 = this;
 
             console.log({ id: id });
             this.$confirm('Deseja realmente excluir esse ' + this.typeSurvey + ' ?', 'Excluir  ' + this.typeSurvey, {
@@ -103409,20 +103419,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 type: 'error'
             }).then(function () {
                 axios.delete(domain_complet + 'api/survey/delete-user/' + id).then(function (res) {
-                    _this2.getUsers();
-                    _this2.$message({
+                    _this3.getUsers();
+                    _this3.$message({
                         type: 'success',
                         message: res.data.message
                     });
                 }).catch(function (err) {
-                    _this2.$message({
+                    _this3.$message({
                         showClose: true,
                         type: 'error',
                         message: ' Ops! Ocorreu um erro:'
                     });
                 });
             }).catch(function () {
-                _this2.$message({
+                _this3.$message({
                     type: 'info',
                     message: 'Delete canceled'
                 });
@@ -103492,7 +103502,9 @@ var render = function() {
                 domProps: { value: item.name },
                 on: {
                   focus: _vm.addClassInput,
-                  blur: _vm.hideClassInput,
+                  blur: function($event) {
+                    return _vm.addUserSurvey($event, "name")
+                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -103525,7 +103537,9 @@ var render = function() {
                 domProps: { value: item.cpf },
                 on: {
                   focus: _vm.addClassInput,
-                  blur: _vm.hideClassInput,
+                  blur: function($event) {
+                    return _vm.addUserSurvey($event, "cpf")
+                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -103554,11 +103568,13 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "hide-border": _vm.showBorder },
-                attrs: { type: "text" },
+                attrs: { type: "text", name: "survey_inspetor_email" },
                 domProps: { value: item.email },
                 on: {
                   focus: _vm.addClassInput,
-                  blur: _vm.hideClassInput,
+                  blur: function($event) {
+                    return _vm.addUserSurvey($event, "email")
+                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -103627,11 +103643,7 @@ var render = function() {
                 domProps: { value: _vm.survey_inspetor_name },
                 on: {
                   blur: function($event) {
-                    return _vm.addUserSurvey(
-                      _vm.survey_inspetor_name,
-                      _vm.typeSurvey,
-                      "name"
-                    )
+                    return _vm.addUserSurvey($event, "name")
                   },
                   input: function($event) {
                     if ($event.target.composing) {
@@ -103662,17 +103674,13 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   placeholder: "Nome do Vistoriador",
-                  name: "survey_inspetor_name",
+                  name: "survey_inspetor_cpf",
                   type: "text"
                 },
                 domProps: { value: _vm.survey_inspetor_cpf },
                 on: {
                   blur: function($event) {
-                    return _vm.addUserSurvey(
-                      _vm.survey_inspetor_name,
-                      _vm.typeSurvey,
-                      "cpf"
-                    )
+                    return _vm.addUserSurvey($event, "cpf")
                   },
                   input: function($event) {
                     if ($event.target.composing) {
@@ -103687,9 +103695,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "survey_inspetor_name" } }, [
-                _vm._v("E-mail do " + _vm._s(_vm.typeSurvey))
-              ]),
+              _c("label", [_vm._v("E-mail do " + _vm._s(_vm.typeSurvey))]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -103703,17 +103709,13 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   placeholder: "Nome do Vistoriador",
-                  name: "survey_inspetor_name",
+                  name: "survey_inspetor_email",
                   type: "text"
                 },
                 domProps: { value: _vm.survey_inspetor_email },
                 on: {
                   blur: function($event) {
-                    return _vm.addUserSurvey(
-                      _vm.survey_inspetor_name,
-                      _vm.typeSurvey,
-                      "email"
-                    )
+                    return _vm.addUserSurvey($event, "email")
                   },
                   input: function($event) {
                     if ($event.target.composing) {

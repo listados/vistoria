@@ -1062,19 +1062,15 @@ class SurveyController extends Controller
      */
     public function addUserSurvey(Request $request)
     {
-        dump($request->all());
+        // dump($request->all());
             $verify = Survey::consulta_relacao_usuario(
                 $request->relation_survey_user_id_survey, 
                 $request->relation_survey_user_type);
 
             if(count($verify) == 0){
-                dump('verify');
-                Survey::cadastra_usuario(
-                    $request->survey_inspetor_name, 
-                    $request->relation_survey_user_id_survey, 
-                    $request->relation_survey_user_type,
-                    $request->params
-                );
+                Survey::cadastra_usuario($request->all());
+            }else{
+               Survey::atualiza_usuario_vistoria($request->all(), $verify->first());
             }    
         // Survey::cadastra_usuario($campo_user, $id_survey, $type_relation);
     }
