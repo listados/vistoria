@@ -96,8 +96,6 @@
     </div>
 </template>
 <script>
-import { runInThisContext } from 'vm'
-
 export default {
     props: {
         typeSurvey: String,
@@ -129,7 +127,7 @@ export default {
                     type: 'error',
                     message: ' Ops! Ocorreu um erro: '+ err.data.message
                 });
-            })\te
+            })
         },
         removeElement() {
             this. clearFields()
@@ -154,8 +152,13 @@ export default {
                 this.getUsers()
                 this. clearFields()
             })
-            .catch( (erro) =>{
-                console.log({res})
+            .catch( (err) =>{
+                console.log({err})
+                this.$message({
+                    showClose: true,
+                    type: 'error',
+                    message: err.response.data.message
+                });
             })
         },
         addUserSurvey(event, params, idUser) {
@@ -169,7 +172,6 @@ export default {
 
             axios.post(domain_complet  + 'api/survey/up-user', upUser)
             .then( (res) => {
-                console.log({res})
                 // this.locator = false
                 this.getUsers()
             })
