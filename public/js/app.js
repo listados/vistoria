@@ -103270,6 +103270,8 @@ exports.push([module.i, "\n.hide-border {\n    border: 0px solid #fff;\n}\n.add-
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vm__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vm__);
 //
 //
 //
@@ -103352,6 +103354,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -103387,52 +103406,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        addUserSurvey: function addUserSurvey(event, params) {
+        removeElement: function removeElement() {
+            this.clearFields();
+            this.locator = false;
+        },
+        clearFields: function clearFields() {
+            this.survey_inspetor_name = '';
+            this.survey_inspetor_cpf = '';
+            this.survey_inspetor_email = '';
+        },
+        addUser: function addUser() {
             var _this2 = this;
 
             var createUser = {
                 relation_survey_user_id_survey: this.idSurvey,
                 relation_survey_user_type: this.typeSurvey,
-                params: params
+                survey_inspetor_name: this.survey_inspetor_name,
+                survey_inspetor_cpf: this.survey_inspetor_cpf,
+                survey_inspetor_email: this.survey_inspetor_email
             };
-            createUser[event.target.name] = event.target._value;
-
             axios.post(domain_complet + 'api/survey/add-user', createUser).then(function (res) {
-                console.log({ res: res });
                 _this2.locator = false;
                 _this2.getUsers();
+                _this2.clearFields();
             }).catch(function (erro) {
                 console.log({ res: res });
             });
         },
+        addUserSurvey: function addUserSurvey(event, params, idUser) {
+            var _this3 = this;
+
+            var upUser = {
+                relation_survey_user_id_survey: this.idSurvey,
+                relation_survey_user_type: this.typeSurvey,
+                params: params,
+                relation_survey_user_id_user: idUser
+            };
+            upUser[event.target.name] = event.target._value;
+
+            axios.post(domain_complet + 'api/survey/up-user', upUser).then(function (res) {
+                console.log({ res: res });
+                // this.locator = false
+                _this3.getUsers();
+            }).catch(function (erro) {
+                _this3.$message({
+                    type: 'error',
+                    message: res.data.message
+                });
+            });
+        },
         addLocator: function addLocator() {
-            console.log(this.locator);
             this.locator = true;
         },
         deleteUserSurvey: function deleteUserSurvey(id) {
-            var _this3 = this;
+            var _this4 = this;
 
-            console.log({ id: id });
             this.$confirm('Deseja realmente excluir esse ' + this.typeSurvey + ' ?', 'Excluir  ' + this.typeSurvey, {
                 confirmButtonText: 'Sim',
                 cancelButtonText: 'Não, desisto',
                 type: 'error'
             }).then(function () {
                 axios.delete(domain_complet + 'api/survey/delete-user/' + id).then(function (res) {
-                    _this3.getUsers();
-                    _this3.$message({
+                    _this4.getUsers();
+                    _this4.$message({
                         type: 'success',
                         message: res.data.message
                     });
                 }).catch(function (err) {
-                    _this3.$message({
+                    _this4.$message({
                         showClose: true,
                         type: 'error',
                         message: ' Ops! Ocorreu um erro:'
                     });
                 });
             }).catch(function () {
-                _this3.$message({
+                _this4.$message({
                     type: 'info',
                     message: 'Delete canceled'
                 });
@@ -103498,12 +103546,12 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "hide-border": _vm.showBorder },
-                attrs: { type: "text" },
+                attrs: { type: "text", name: "survey_inspetor_name" },
                 domProps: { value: item.name },
                 on: {
                   focus: _vm.addClassInput,
                   blur: function($event) {
-                    return _vm.addUserSurvey($event, "name")
+                    return _vm.addUserSurvey($event, "name", item.id)
                   },
                   input: function($event) {
                     if ($event.target.composing) {
@@ -103533,12 +103581,12 @@ var render = function() {
                 ],
                 staticClass: "form-control",
                 class: { "hide-border": _vm.showBorder },
-                attrs: { type: "text" },
+                attrs: { type: "text", name: "survey_inspetor_cpf" },
                 domProps: { value: item.cpf },
                 on: {
                   focus: _vm.addClassInput,
                   blur: function($event) {
-                    return _vm.addUserSurvey($event, "cpf")
+                    return _vm.addUserSurvey($event, "cpf", item.id)
                   },
                   input: function($event) {
                     if ($event.target.composing) {
@@ -103573,7 +103621,7 @@ var render = function() {
                 on: {
                   focus: _vm.addClassInput,
                   blur: function($event) {
-                    return _vm.addUserSurvey($event, "email")
+                    return _vm.addUserSurvey($event, "email", item.id)
                   },
                   input: function($event) {
                     if ($event.target.composing) {
@@ -103642,9 +103690,6 @@ var render = function() {
                 },
                 domProps: { value: _vm.survey_inspetor_name },
                 on: {
-                  blur: function($event) {
-                    return _vm.addUserSurvey($event, "name")
-                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -103656,7 +103701,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" }, [
+          _c("div", { staticClass: "col-md-2" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "survey_inspetor_name" } }, [
                 _vm._v("CPF do " + _vm._s(_vm.typeSurvey))
@@ -103679,9 +103724,6 @@ var render = function() {
                 },
                 domProps: { value: _vm.survey_inspetor_cpf },
                 on: {
-                  blur: function($event) {
-                    return _vm.addUserSurvey($event, "cpf")
-                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -103714,9 +103756,6 @@ var render = function() {
                 },
                 domProps: { value: _vm.survey_inspetor_email },
                 on: {
-                  blur: function($event) {
-                    return _vm.addUserSurvey($event, "email")
-                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -103728,14 +103767,22 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-1 text-center" }, [
+          _c("div", { staticClass: "col-md-2" }, [
             _c(
               "div",
-              { staticClass: "form-group" },
+              { staticClass: "form-group text-center" },
               [
-                _c("label", { attrs: { for: "survey_inspetor_name" } }, [
-                  _vm._v("Remover")
-                ]),
+                _vm._m(0),
+                _vm._v(" "),
+                _c("el-button", {
+                  attrs: {
+                    type: "default",
+                    icon: "el-icon-circle-plus",
+                    title: "Criar usuário",
+                    size: "small"
+                  },
+                  on: { click: _vm.addUser }
+                }),
                 _vm._v(" "),
                 _c("el-button", {
                   attrs: {
@@ -103743,7 +103790,8 @@ var render = function() {
                     icon: "el-icon-delete",
                     title: "Excluir esse item",
                     size: "small"
-                  }
+                  },
+                  on: { click: _vm.removeElement }
                 })
               ],
               1
@@ -103753,7 +103801,16 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("label", [_vm._v("Ação")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -103762,6 +103819,168 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-27810db5", module.exports)
   }
 }
+
+/***/ }),
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */
+/***/ (function(module, exports) {
+
+var indexOf = function (xs, item) {
+    if (xs.indexOf) return xs.indexOf(item);
+    else for (var i = 0; i < xs.length; i++) {
+        if (xs[i] === item) return i;
+    }
+    return -1;
+};
+var Object_keys = function (obj) {
+    if (Object.keys) return Object.keys(obj)
+    else {
+        var res = [];
+        for (var key in obj) res.push(key)
+        return res;
+    }
+};
+
+var forEach = function (xs, fn) {
+    if (xs.forEach) return xs.forEach(fn)
+    else for (var i = 0; i < xs.length; i++) {
+        fn(xs[i], i, xs);
+    }
+};
+
+var defineProp = (function() {
+    try {
+        Object.defineProperty({}, '_', {});
+        return function(obj, name, value) {
+            Object.defineProperty(obj, name, {
+                writable: true,
+                enumerable: false,
+                configurable: true,
+                value: value
+            })
+        };
+    } catch(e) {
+        return function(obj, name, value) {
+            obj[name] = value;
+        };
+    }
+}());
+
+var globals = ['Array', 'Boolean', 'Date', 'Error', 'EvalError', 'Function',
+'Infinity', 'JSON', 'Math', 'NaN', 'Number', 'Object', 'RangeError',
+'ReferenceError', 'RegExp', 'String', 'SyntaxError', 'TypeError', 'URIError',
+'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape',
+'eval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'undefined', 'unescape'];
+
+function Context() {}
+Context.prototype = {};
+
+var Script = exports.Script = function NodeScript (code) {
+    if (!(this instanceof Script)) return new Script(code);
+    this.code = code;
+};
+
+Script.prototype.runInContext = function (context) {
+    if (!(context instanceof Context)) {
+        throw new TypeError("needs a 'context' argument.");
+    }
+    
+    var iframe = document.createElement('iframe');
+    if (!iframe.style) iframe.style = {};
+    iframe.style.display = 'none';
+    
+    document.body.appendChild(iframe);
+    
+    var win = iframe.contentWindow;
+    var wEval = win.eval, wExecScript = win.execScript;
+
+    if (!wEval && wExecScript) {
+        // win.eval() magically appears when this is called in IE:
+        wExecScript.call(win, 'null');
+        wEval = win.eval;
+    }
+    
+    forEach(Object_keys(context), function (key) {
+        win[key] = context[key];
+    });
+    forEach(globals, function (key) {
+        if (context[key]) {
+            win[key] = context[key];
+        }
+    });
+    
+    var winKeys = Object_keys(win);
+
+    var res = wEval.call(win, this.code);
+    
+    forEach(Object_keys(win), function (key) {
+        // Avoid copying circular objects like `top` and `window` by only
+        // updating existing context properties or new properties in the `win`
+        // that was only introduced after the eval.
+        if (key in context || indexOf(winKeys, key) === -1) {
+            context[key] = win[key];
+        }
+    });
+
+    forEach(globals, function (key) {
+        if (!(key in context)) {
+            defineProp(context, key, win[key]);
+        }
+    });
+    
+    document.body.removeChild(iframe);
+    
+    return res;
+};
+
+Script.prototype.runInThisContext = function () {
+    return eval(this.code); // maybe...
+};
+
+Script.prototype.runInNewContext = function (context) {
+    var ctx = Script.createContext(context);
+    var res = this.runInContext(ctx);
+
+    if (context) {
+        forEach(Object_keys(ctx), function (key) {
+            context[key] = ctx[key];
+        });
+    }
+
+    return res;
+};
+
+forEach(Object_keys(Script.prototype), function (name) {
+    exports[name] = Script[name] = function (code) {
+        var s = Script(code);
+        return s[name].apply(s, [].slice.call(arguments, 1));
+    };
+});
+
+exports.isContext = function (context) {
+    return context instanceof Context;
+};
+
+exports.createScript = function (code) {
+    return exports.Script(code);
+};
+
+exports.createContext = Script.createContext = function (context) {
+    var copy = new Context();
+    if(typeof context === 'object') {
+        forEach(Object_keys(context), function (key) {
+            copy[key] = context[key];
+        });
+    }
+    return copy;
+};
+
 
 /***/ })
 ],[84]);

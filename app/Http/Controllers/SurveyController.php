@@ -1065,7 +1065,7 @@ class SurveyController extends Controller
         // dump($request->all());
             $verify = Survey::consulta_relacao_usuario(
                 $request->relation_survey_user_id_survey, 
-                $request->relation_survey_user_type);
+                $request->relation_survey_user_id_user);
 
             if(count($verify) == 0){
                 Survey::cadastra_usuario($request->all());
@@ -1073,5 +1073,15 @@ class SurveyController extends Controller
                Survey::atualiza_usuario_vistoria($request->all(), $verify->first());
             }    
         // Survey::cadastra_usuario($campo_user, $id_survey, $type_relation);
+    }
+
+    public function addUser(Request $request)
+    {
+        try {
+            Survey::cadastra_usuario($request->all());
+            return response()->json(['message' => 'Cadastrado'],200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)],400);
+        }
     }
 }

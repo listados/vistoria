@@ -43,7 +43,8 @@ Route::prefix('survey')->group(function(){
     Route::post('search', 'SurveyController@search');
     Route::get('user-survey/{id}/{type}', 'SurveyController@getUser');
     Route::delete('delete-user/{id}' , 'SurveyController@delete_user_survey');
-    Route::post('add-user' , 'SurveyController@addUserSurvey');
+    Route::post('up-user' , 'SurveyController@addUserSurvey');
+    Route::post('add-user' , 'SurveyController@addUser');
 });
 
 

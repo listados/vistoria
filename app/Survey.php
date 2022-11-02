@@ -23,29 +23,33 @@ class Survey extends Model
     //OBRIGATORIAMENTE O PRIMEIRO CAMPO DO ARRAY TEM QUE SER O NOME DO USUARIO E O SEGUNDO O EMAIL
     public static function cadastra_usuario($request)
     {
+        // dd($request);
         //criando array com valores de criação
         $user = [
             'name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : 'user', 
-            'email' => isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : str_replace(' ','',Carbon::now()).'@mail.com',
+            'email' => isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : str_replace(' ','',substr(md5(microtime()),rand(0,26),10)).'@mail.com',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'adm' => 0,
             'status' => 0,
             'id_profile' => 14  ,
             'password' => bcrypt(Carbon::now()),
-            'cpf' => null
+            'cpf' => isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : null
         ];
         //verifica o parametro para add o valor 
-        switch ($request['params']) {
-            case 'name':
-                $user[$request['params']] = $request['survey_inspetor_name'];
-                break;
-            case 'cpf':
-                $user[$request['params']] = $request['survey_inspetor_cpf'];
-                break;
-            case 'email':
-                $user[$request['params']] = $request['survey_inspetor_email'];
-                break;
+        if(isset($request['params']))
+        {
+            switch ($request['params']) {
+                case 'name':
+                    $user[$request['params']] = $request['survey_inspetor_name'];
+                    break;
+                case 'cpf':
+                    $user[$request['params']] = $request['survey_inspetor_cpf'];
+                    break;
+                case 'email':
+                    $user[$request['params']] = $request['survey_inspetor_email'];
+                    break;
+            }
         }
           try {
             //CADASTRANDO USUARIO
@@ -77,8 +81,9 @@ class Survey extends Model
         // ->where($relation->relation_survey_user_id)
         // ->first();
         // dd($relation);
+        // dd($relation->relation_survey_user_id_user);
         try {
-            $up_user = DB::table('users')
+        DB::table('users')
         ->where('id', $relation->relation_survey_user_id_user)
         ->update(['name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : $relation->name, 
                 'email' =>  isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : $relation->email, 
@@ -101,7 +106,7 @@ class Survey extends Model
                         ->join('users', 'users.id', '=', 'relation_survey_user.relation_survey_user_id_user')
                         ->where([
                             ['relation_survey_user.relation_survey_user_id_survey' , '=', $id_survey],
-                            ['relation_survey_user.relation_survey_user_type' , '=' , $type]
+                            ['relation_survey_user.relation_survey_user_id_user' , '=' , $type]
                         ])->get();
 
         return $survey_relation_user;
