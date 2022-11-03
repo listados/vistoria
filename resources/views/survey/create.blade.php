@@ -26,12 +26,13 @@
 	</div>
 	<div class="row">
 		<div class="box">
-			<div class="box-default">
+			<div class="box box-primary">
 				<div class="box-body">
 					<!-- ÁREA LOCADOR -->
 					<create-user 
-					:type-survey="{{ json_encode('Locador') }}"
-					:id-survey="{{ json_encode($id_survey) }}"></create-user>
+						:type-survey="{{ json_encode('Locador') }}"
+						:id-survey="{{ json_encode($id_survey) }}">
+					</create-user>
 					<!-- FIM ÁREA LOCADOR -->
 					<div class="container" >						
 						<div class='elementOccupant' id='div_1'></div>
@@ -40,84 +41,26 @@
 					<!-- ÁREA LOCATÁRIO -->
 					<div class="col-md-12">
 						<hr>
-						<a href="#containerLocatario" class="add" id="" onclick="addLocatarioSurvey('elementLocatario', 'divLocatario', 'containerLocatario', 'removeLocatario' , 'occupant')" data-toggle="tooltip" data-placement="right" title="Adicionar novo locatário a vistoria"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Locatário</a>
+						{{-- <a href="#containerLocatario" class="add" id="" onclick="addLocatarioSurvey('elementLocatario', 'divLocatario', 'containerLocatario', 'removeLocatario' , 'occupant')" data-toggle="tooltip" data-placement="right" title="Adicionar novo locatário a vistoria"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Locatário</a> --}}
 					</div>
-					@foreach(@$survey_update as $dados)  
-                    @if(@$dados->relation_survey_user_type == 'Locatário')    
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Nome do Locatário </label>
-                            {{ Form::hidden('id_user_occupant[]' , $dados->id) }}   
-                            <input type="text" name="survey_occupant_name[]" id="survey_occupant_name" value="{{ $dados->name }}"  placeholder="Nome do locatário" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="">CPF ou CNPJ do Locatário</label>
-                            <input type="text" name="survey_occupant_cpf[]" value="{{ $dados->relation_survey_user_cpf }}"  placeholder="CPF ou CNPJ do locatário" class="form-control" id="cpf_locatario" >
-                        </div>
-                    </div>
-
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label for="">E-mail do Locatário</label>
-                            <div class="input-group">
-                                <input type="text"  name="survey_occupant_email[]" id="survey_occupant_email" value="{{$dados->email }}" class="form-control">
-                                <span class="input-group-btn">
-                                    <button type="button"  onclick="deleteUserSurvey({{ $dados->id }},  {{ $id_survey }})" class="btn btn-primary btn-flat"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    @endif
-                    @endforeach
-					
+					<!-- ÁREA LOCATÁRIO -->
+					<create-user 
+						:type-survey="{{ json_encode('Locatario') }}"
+						:id-survey="{{ json_encode($id_survey) }}">
+					</create-user>
 					<div class="containerLocatario" >
 						<div class='elementLocatario' id='divLocatario_1'></div>
 					</div>
-
 					<!--FIM ÁREA LOCATÁRIO-->
+
 					<!-- ÁREA FIADOR -->
 					<div class="col-md-12">
 						<hr>
-						<a href="#containerFiador" class="add" id="" onclick="addLocatarioSurvey('elementFiador', 'divFiador', 'containerFiador', 'removeFiador' , 'guarantor')" data-toggle="tooltip" data-placement="right" title="Adicionar novo fiador a vistoria"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Fiador</a>
 					</div>
-
-					 @foreach($survey_update as $dados)    
-                @if($dados->relation_survey_user_type == 'Fiador')   
-               
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="">Nome do Fiador</label>
-                        {{ Form::hidden('id_user_guarantor[]' , $dados->id) }}    
-                        <input type="text" name="survey_guarantor_name[]" value="{{ $dados->name }}" id="survey_guarantor_name" placeholder="Nome do locatário" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="">CPF ou CNPJ do Fiador</label>
-                        <input type="text" name="survey_guarantor_cpf[]" value="{{ $dados->relation_survey_user_cpf }}" id="survey_guarantor_cpf" placeholder="CPF ou CNPJ do Fiador" class="form-control" id="cpf_locatario">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="">E-mail do Fiador</label>
-                        <input type="text" name="survey_guarantor_email[]" value="{{ $dados->email }}" id="survey_guarantor_email" placeholder="E-mail do locatário" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <label for="">Excluir</label>
-                        <a href="#" onclick="deleteUserSurvey({{ $dados->id }},  {{ $id_survey }})">
-                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                        </a> 
-                    </div>
-                </div>
-                @endif
-
-                @endforeach
+					<create-user 
+					:type-survey="{{ json_encode('Fiador') }}"
+					:id-survey="{{ json_encode($id_survey) }}">
+					</create-user>
 					<div class="containerFiador" >
 						<div class='elementFiador' id='divFiador_1'>
 						</div>

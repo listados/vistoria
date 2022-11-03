@@ -1,12 +1,15 @@
 <template lang="">
     <div>
         <div class="col-md-12">
-            <el-link icon="el-icon-circle-plus" title="Criar novo usuário"
-            @click="addLocator" type="primary">
-                {{typeSurvey}}
-            </el-link>
+            <div class="box-header with-border">
+                <el-link icon="el-icon-circle-plus" title="Criar novo usuário"
+                @click="addLocator" type="primary">
+                    {{typeSurvey}}
+                </el-link>
+            </div>         
+            
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 box-body">
            <div v-for="item in usersLocator" :key="item.id">
                 <div class="col-md-4">
                     <div class="form-group">
