@@ -1084,4 +1084,11 @@ class SurveyController extends Controller
             return response()->json(['message' => FunctionAll::error($th)],400);
         }
     }
+
+    public function content($idSurvey, $content)
+    {
+        $survey = Survey::where('survey_id', $idSurvey)
+        ->select('survey_id', $content)->get();
+        dd($survey);
+    }
 }
