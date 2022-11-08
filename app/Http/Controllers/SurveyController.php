@@ -1089,6 +1089,16 @@ class SurveyController extends Controller
     {
         $survey = Survey::where('survey_id', $idSurvey)
         ->select('survey_id', $content)->get();
-        dd($survey);
+        return response()->json($survey[0], 200);
+    }
+
+    public function alterContent(Request $request)
+    {
+        try {
+            Survey::where('survey_id', $request['survey_id'])->first()->update([$request->all()]);
+            return response()->json(['message' => 'Sucesso'], 200);
+    } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)], 400);
+        }
     }
 }

@@ -152,7 +152,7 @@
 					</h3>
 				</div>
 				<div class="box-body pad">
-					<survey-content></survey-content>
+					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_provisions') }}"></survey-content>
 				</div>	
 			</div>
 

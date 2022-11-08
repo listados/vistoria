@@ -1,46 +1,60 @@
 <template lang="">
     <div>
-        <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>
+        <ckeditor v-model="editorData" :config="editorConfig" @blur="alterField"></ckeditor>
     </div>
 </template>
 <script>
-import VueCkeditor from 'vue-ckeditor2';    
 export default {
-    components: { VueCkeditor },
+    props: {
+        idSurvey : String,
+        context: String
+    },
     data() {
         return {
-            content: '',
-            config: {
-                toolbar: [
-                ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript']
-                ],
-                height: 300
-            },
-            editorData: '<p>Content of the editor.</p>',
+            editorData: '',
             editorConfig: {
                 // The configuration of the editor.
             }
         }
     },
+    created() {
+        this.getContext();
+    },
+    mounted() {
+
+    },
     methods: {
-        onBlur(evt) {
-        console.log(evt);
+        getContext() {
+            axios.get(domain_complet + 'api/survey/content/id/'+this.idSurvey+'/field/'+this.context)
+            .then( (res) => {
+                console.log({res})
+                this.editorData = res.data.survey_provisions
+            })
+            .catch( (err) =>{
+                console.log({err})
+            })
         },
-        onFocus(evt) {
-        console.log(evt);
+        alterField(evt) {
+            // console.log(evt);
+            // console.log(this.editorData)
+            var dataField = {survey_id : this.idSurvey }
+            dataField[this.context] = this.editorData
+            console.log({dataField})
+            axios.put(domain_complet + 'api/survey/content', dataField)
+            .then( (res) => {
+                console.log({res})
+                this.$message({
+                    message: 'Valor foi salvo.',
+                    type: 'success'
+                });
+
+            })
+            .catch( (err) =>  {
+                console.log({err})
+            })
+            
         },
-        onContentDom(evt) {
-        console.log(evt);
-        },
-        onDialogDefinition(evt) {
-        console.log(evt);
-        },
-        onFileUploadRequest(evt) {
-        console.log(evt);
-        },
-        onFileUploadResponse(evt) {
-        console.log(evt);
-        }
+        
     }
 }
 </script>
