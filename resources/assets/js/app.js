@@ -12,7 +12,7 @@ import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
-import CKEditor from '@ckeditor/ckeditor5-vue2';
+import CKEditor from 'ckeditor4-vue';
 
 // import vue2Dropzone from 'vue2-dropzone'
 
@@ -42,6 +42,7 @@ Vue.component('download', require('./components/Downloads/Files.vue'));
 Vue.component('list-survey', require('./components/Survey/List.vue'));
 Vue.component('search-survey', require('./components/Survey/Search.vue'));
 Vue.component('create-user', require('./components/Survey/CreateUser.vue'));
+Vue.component('survey-content', require('./components/Survey/Content.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));

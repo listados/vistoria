@@ -1084,4 +1084,22 @@ class SurveyController extends Controller
             return response()->json(['message' => FunctionAll::error($th)],400);
         }
     }
+
+    public function content($idSurvey, $content)
+    {
+        $survey = Survey::where('survey_id', $idSurvey)
+        ->select('survey_id', $content)->get();
+        return response()->json($survey[0], 200);
+    }
+
+    public function alterContent(Request $request)
+    {
+        try {
+            $survey = Survey::where('survey_id', $request['survey_id'])->first();
+            $survey->update($request->all());
+            return response()->json(['message' => 'Sucesso'], 200);
+    } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)], 400);
+        }
+    }
 }
