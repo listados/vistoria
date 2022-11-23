@@ -1095,7 +1095,8 @@ class SurveyController extends Controller
     public function alterContent(Request $request)
     {
         try {
-            Survey::where('survey_id', $request['survey_id'])->first()->update([$request->all()]);
+            $survey = Survey::where('survey_id', $request['survey_id'])->first();
+            $survey->update($request->all());
             return response()->json(['message' => 'Sucesso'], 200);
     } catch (\Throwable $th) {
             return response()->json(['message' => FunctionAll::error($th)], 400);
