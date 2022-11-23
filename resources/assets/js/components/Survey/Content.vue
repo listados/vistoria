@@ -28,7 +28,7 @@ export default {
             axios.get(domain_complet + 'api/survey/content/id/'+this.idSurvey+'/field/'+this.context)
             .then( (res) => {
                 console.log({res})
-                this.editorData = res.data.survey_provisions
+                this.editorData = res.data[this.context]
             })
             .catch( (err) =>{
                 console.log({err})
@@ -36,7 +36,7 @@ export default {
         },
         alterField(evt) {
             // console.log(evt);
-            // console.log(this.editorData)
+            console.log(this.context)
             var dataField = {survey_id : this.idSurvey }
             dataField[this.context] = this.editorData
             console.log({dataField})
@@ -44,7 +44,7 @@ export default {
             .then( (res) => {
                 console.log({res})
                 this.$message({
-                    message: 'Valor foi salvo.',
+                    message: 'O Rascunho foi salvo.',
                     type: 'success'
                 });
 

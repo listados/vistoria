@@ -152,7 +152,36 @@
 					</h3>
 				</div>
 				<div class="box-body pad">
+					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_general_aspects') }}"></survey-content>
+				</div>	
+			</div>			
+			
+			<div class="box box-primary">
+				<div class="box-header">
+					<h3 class="box-title">Ressalvas por Ambientes / Cômodos</h3>
+				</div>
+				<div class="box-body pad">
 					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_provisions') }}"></survey-content>
+				</div>	
+			</div>
+
+			<div class="box box-primary">
+				<div class="box-header">
+					<h3 class="box-title">Disposições Gerais</h3>
+				</div>
+				<div class="box-body pad">
+					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_reservation') }}"></survey-content>
+				</div>	
+			</div>
+
+			<div class="box box-primary">
+				<div class="box-header">
+					<h3 class="box-title">Chaves
+						<small>(e outros itens móveis)</small>
+					</h3>
+				</div>
+				<div class="box-body pad">
+					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_keys') }}"></survey-content>
 				</div>	
 			</div>
 
