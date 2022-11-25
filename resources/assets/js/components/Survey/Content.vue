@@ -27,22 +27,22 @@ export default {
         getContext() {
             axios.get(domain_complet + 'api/survey/content/id/'+this.idSurvey+'/field/'+this.context)
             .then( (res) => {
-                console.log({res})
                 this.editorData = res.data[this.context]
             })
             .catch( (err) =>{
                 console.log({err})
+                this.$message({
+                    message: 'Aconteceu um erro inesperado.',
+                    type: 'error'
+                });
             })
         },
         alterField(evt) {
             // console.log(evt);
-            console.log(this.context)
             var dataField = {survey_id : this.idSurvey }
             dataField[this.context] = this.editorData
-            console.log({dataField})
             axios.put(domain_complet + 'api/survey/content', dataField)
             .then( (res) => {
-                console.log({res})
                 this.$message({
                     message: 'O Rascunho foi salvo.',
                     type: 'success'
@@ -51,6 +51,10 @@ export default {
             })
             .catch( (err) =>  {
                 console.log({err})
+                this.$message({
+                    message: 'Aconteceu um erro inesperado.',
+                    type: 'error'
+                });
             })
             
         },

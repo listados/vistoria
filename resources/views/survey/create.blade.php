@@ -196,7 +196,8 @@
 							data-target="#modal_ambience">
 							<i class="fa fa-upload" aria-hidden="true">
 							</i> Fotos Gerais 
-						</button>
+							</button>
+							@include('modal.survey_ambience_upload')
 					</div>
 				<div class="col-md-12">
 					<hr>
@@ -212,7 +213,7 @@
 @stop
 
 <!-- /Main content -->
-@include('modal.survey_ambience_upload')
+
 @include('modal.modal_load')
 </section>
 
