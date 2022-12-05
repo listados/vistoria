@@ -12,12 +12,11 @@ import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
+import CKEditor from 'ckeditor4-vue';
 
 // import vue2Dropzone from 'vue2-dropzone'
 
 import 'sweetalert2/dist/sweetalert2.min.css';
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(VueSweetalert2);
@@ -25,6 +24,7 @@ Vue.use(VueSweetalert2);
 Vue.use(VModal);
 Vue.use(VueMask);
 Vue.use(ElementUI);
+Vue.use( CKEditor );
 // Vue.use(AgGridVue);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -41,6 +41,8 @@ Vue.component('download', require('./components/Downloads/Files.vue'));
 //VISTORIA
 Vue.component('list-survey', require('./components/Survey/List.vue'));
 Vue.component('search-survey', require('./components/Survey/Search.vue'));
+Vue.component('create-user', require('./components/Survey/CreateUser.vue'));
+Vue.component('survey-content', require('./components/Survey/Content.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));

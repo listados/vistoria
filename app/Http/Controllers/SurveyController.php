@@ -131,7 +131,9 @@ class SurveyController extends Controller
 
         $title_survey   = $action;
 
-        return view('survey.create', compact('ambience', 'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
+        $locators = self::getUser($id_survey, 'Locador');
+        return view('survey.create', compact('locators', 'ambience', 
+        'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
     }
 
     /**
@@ -593,17 +595,18 @@ class SurveyController extends Controller
         return view('survey.search');
     }
 
-    public function delete_user_survey(Request $request)
+    public function delete_user_survey($id)
     {
         # code...
 
         //$id_user, $id_survey
         try {
-            User::destroy($request['id']);
-            DB::table('relation_survey_user')->where('relation_survey_user_id_user', '=', $request['id'])->delete();
-            return response()->json(['messagem' => 'success']);
+            $user = DB::table('relation_survey_user')
+            ->where('relation_survey_user_id', '=', $id);
+            $user->delete();
+            return response()->json(['message' => 'Excluído com sucesso'], 200);
         } catch (Exception $e) {
-            return redirect()->back()->with(['error' => 'Erro: ' . $g->getMessage()]);
+            return response()->json(['message' => FunctionAll::error($e)], 400);
         }
     }
 
@@ -1037,5 +1040,66 @@ class SurveyController extends Controller
         $surveys = SurveyRepository::search($request->all());
 
         return response()->json(['message' => $surveys['message']]);
+    }
+
+    /**
+     * 
+    */
+    public function getUser($idSurvey, $type)
+    {
+        return DB::table('relation_survey_user')
+        ->join('users', 'relation_survey_user_id_user' , '=', 'users.id')
+        ->where([
+            ['relation_survey_user_id_survey', $idSurvey],
+            ['relation_survey_user_type', $type]
+        ])
+        ->select('users.id', 'users.name', 'users.email', 'users.cpf','relation_survey_user_id')
+        ->get();
+    }
+
+    /**
+     * 
+     */
+    public function addUserSurvey(Request $request)
+    {
+        // dump($request->all());
+            $verify = Survey::consulta_relacao_usuario(
+                $request->relation_survey_user_id_survey, 
+                $request->relation_survey_user_id_user);
+
+            if(count($verify) == 0){
+                Survey::cadastra_usuario($request->all());
+            }else{
+               Survey::atualiza_usuario_vistoria($request->all(), $verify->first());
+            }    
+        // Survey::cadastra_usuario($campo_user, $id_survey, $type_relation);
+    }
+
+    public function addUser(Request $request)
+    {
+        try {
+            Survey::cadastra_usuario($request->all());
+            return response()->json(['message' => 'Cadastrado'],200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)],400);
+        }
+    }
+
+    public function content($idSurvey, $content)
+    {
+        $survey = Survey::where('survey_id', $idSurvey)
+        ->select('survey_id', $content)->get();
+        return response()->json($survey[0], 200);
+    }
+
+    public function alterContent(Request $request)
+    {
+        try {
+            $survey = Survey::where('survey_id', $request['survey_id'])->first();
+            $survey->update($request->all());
+            return response()->json(['message' => 'Sucesso'], 200);
+    } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)], 400);
+        }
     }
 }

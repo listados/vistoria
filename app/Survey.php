@@ -16,32 +16,61 @@ class Survey extends Model
 
     protected $fillable =
     [
-        'survey_date', 'survey_type', 'survey_address_immobile' , 'survey_type_immobile' , 'survey_energy_meter' , 'survey_energy_load' , 'survey_water_meter',  'survey_water_load' , 'survey_gas_meter' , 'survey_gas_load', 'survey_keys', 'survey_code', 'survey_link_tour', 'survey_provisions', 'survey_date_register' , 'survey_inspetor_cpf' , 'survey_inspetor_name'
+        'survey_date', 'survey_type', 'survey_address_immobile' , 
+        'survey_type_immobile' , 'survey_energy_meter' , 'survey_energy_load' , 
+        'survey_water_meter',  'survey_water_load' , 'survey_gas_meter' , 
+        'survey_gas_load', 'survey_keys', 'survey_code', 
+        'survey_link_tour', 'survey_provisions', 'survey_date_register' , 
+        'survey_inspetor_cpf' , 'survey_inspetor_name', 'survey_reservation', 'survey_general_aspects'
     ];
 
 
     //OBRIGATORIAMENTE O PRIMEIRO CAMPO DO ARRAY TEM QUE SER O NOME DO USUARIO E O SEGUNDO O EMAIL
-    public static function cadastra_usuario($campo_user, $id_survey, $cpf, $type_relation)
+    public static function cadastra_usuario($request)
     {
-
-          //CADASTRANDO USUARIO
-        $user_locator = User::create(
-            [
-                'name' =>  $campo_user[0],
-                'email' =>  $campo_user[1]  ,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-                'adm' => 0,
-                'status' => 0,
-                'id_profile' => 14  ,
-                'password' => bcrypt($cpf),
-                'cpf' => $cpf,
-            ]
-        );
-        //GRAVANDO DADOS NA TABELA DE RELACIONAMENTO
-        $relation_locador = DB::table('relation_survey_user')->insert(['relation_survey_user_id_survey' => $id_survey, 'relation_survey_user_id_user' => $user_locator->id , 'relation_survey_user_cpf' => $cpf , 'relation_survey_user_type' => $type_relation , 'created_at' => Carbon::now(), 'updated_at' => Carbon::now() ]);
-
-        return $user_locator;
+        // dd($request);
+        //criando array com valores de criação
+        $user = [
+            'name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : 'user', 
+            'email' => isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : str_replace(' ','',substr(md5(microtime()),rand(0,26),10)).'@mail.com',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            'adm' => 0,
+            'status' => 0,
+            'id_profile' => 14  ,
+            'password' => bcrypt(Carbon::now()),
+            'cpf' => isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : null
+        ];
+        //verifica o parametro para add o valor 
+        if(isset($request['params']))
+        {
+            switch ($request['params']) {
+                case 'name':
+                    $user[$request['params']] = $request['survey_inspetor_name'];
+                    break;
+                case 'cpf':
+                    $user[$request['params']] = $request['survey_inspetor_cpf'];
+                    break;
+                case 'email':
+                    $user[$request['params']] = $request['survey_inspetor_email'];
+                    break;
+            }
+        }
+          try {
+            //CADASTRANDO USUARIO
+            $user_locator = User::create($user);
+            //GRAVANDO DADOS NA TABELA DE RELACIONAMENTO
+            DB::table('relation_survey_user')->insert(
+                ['relation_survey_user_id_survey' => $request['relation_survey_user_id_survey'], 
+                'relation_survey_user_id_user' => $user_locator->id , 
+                'relation_survey_user_type' => $request['relation_survey_user_type'] , 
+                'created_at' => Carbon::now(), 
+                'updated_at' => Carbon::now() ]
+            );
+                return response()->json(['message' => 'Usuário cadastrado'],200);
+          } catch (\Throwable $th) {
+                return response()->json(['message' => FunctionAll::error($th)],400);
+          }
     }
 
 
@@ -49,26 +78,28 @@ class Survey extends Model
         Created in 2016-07-28 10:11 by Junior Oliveira
         alterado em 17/08/2016
     */
-    public static function atualiza_usuario_vistoria($type_relation, $id_survey, $campo = array())
+    public static function atualiza_usuario_vistoria($request, $relation)
     {
+    //$type_relation, $id_survey, $campo = array()
         //BUSCANDO ID DO USUÁRIO
-        $usuario = DB::table('relation_survey_user')->where([
-                                    ['relation_survey_user_type' , '=' , $type_relation],
-                                    ['relation_survey_user_id_survey' , '=' , $id_survey]
-                            ])->get();
-
-        if (empty($usuario)) {
-        } else {
-            $up_user = DB::table('users')
-        ->where('id', $usuario[0]->relation_survey_user_id_user)
-        ->update([ 'name' => $campo[0] , 'email' =>  $campo[1] , 'updated_at' => Carbon::now()]);
+        // $usuario = DB::table('relation_survey_user')
+        // ->where($relation->relation_survey_user_id)
+        // ->first();
+        // dd($relation);
+        // dd($relation->relation_survey_user_id_user);
+        try {
+        DB::table('users')
+        ->where('id', $relation->relation_survey_user_id_user)
+        ->update(['name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : $relation->name, 
+                'email' =>  isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : $relation->email, 
+                'cpf' =>  isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : $relation->cpf, 
+                'updated_at' => Carbon::now()
+        ]);
+        return response()->json(['message' => 'Usuario criado'],200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => FunctionAll::error($th)],400);
         }
-
-        if ($up_user) {
-            return true;
-        } else {
-            return false;
-        }
+        
     }
 
 
@@ -80,7 +111,7 @@ class Survey extends Model
                         ->join('users', 'users.id', '=', 'relation_survey_user.relation_survey_user_id_user')
                         ->where([
                             ['relation_survey_user.relation_survey_user_id_survey' , '=', $id_survey],
-                            ['relation_survey_user.relation_survey_user_type' , '=' , $type]
+                            ['relation_survey_user.relation_survey_user_id_user' , '=' , $type]
                         ])->get();
 
         return $survey_relation_user;
