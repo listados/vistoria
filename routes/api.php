@@ -47,6 +47,7 @@ Route::prefix('survey')->group(function(){
     Route::post('add-user' , 'SurveyController@addUser');
     Route::get('content/id/{id}/field/{content}' , 'SurveyController@content');
     Route::put('content', 'SurveyController@alterContent');
+    Route::put('alter-field', 'SurveyController@alterSurveyor');
 });
 
 

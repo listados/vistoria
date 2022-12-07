@@ -24,6 +24,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Input;
 use Dotenv\Validator as DotenvValidator;
 use Illuminate\Support\Facades\Validator;
+use EspindolaAdm\Http\Requests\SurveyFields;
 use EspindolaAdm\Http\Requests\SurveyRequest;
 use EspindolaAdm\Repository\SurveyRepository;
 
@@ -499,8 +500,6 @@ class SurveyController extends Controller
             }
         }
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -1100,6 +1099,18 @@ class SurveyController extends Controller
             return response()->json(['message' => 'Sucesso'], 200);
     } catch (\Throwable $th) {
             return response()->json(['message' => FunctionAll::error($th)], 400);
+        }
+    }
+
+    public function alterSurveyor(SurveyFields $request)
+    {
+        dump($request->all());
+        try {
+            $survey = Survey::where('survey_id', $request->survey_id)->first();
+            $survey->update($request->all());
+            return response()->json(['message' => 'success']);
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 }

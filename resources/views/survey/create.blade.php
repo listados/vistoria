@@ -54,7 +54,11 @@
 					<!-- FIM ÁREA FIADOR -->
 					<div class="col-md-12">
 						<hr>
+						<survey-surveyor
+							:id-survey="{{ json_encode($id_survey) }}"
+						></survey-surveyor>
 					</div>
+					
 					<div class="col-md-3">
 						<div class="form-group">
 							{{ Form::label('survey_inspetor_name', 'Nome do vistoriador') }}

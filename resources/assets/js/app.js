@@ -13,11 +13,13 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
 import CKEditor from 'ckeditor4-vue';
-
+import DatePicker from 'vue2-datepicker';
 // import vue2Dropzone from 'vue2-dropzone'
 
+// IMPORT DE FOLHA DE ESTILO
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'vue2-datepicker/index.css';
 
 Vue.use(VueSweetalert2);
 // Vue.use(vue2Dropzone);
@@ -25,6 +27,7 @@ Vue.use(VModal);
 Vue.use(VueMask);
 Vue.use(ElementUI);
 Vue.use( CKEditor );
+Vue.use( DatePicker );
 // Vue.use(AgGridVue);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -43,6 +46,7 @@ Vue.component('list-survey', require('./components/Survey/List.vue'));
 Vue.component('search-survey', require('./components/Survey/Search.vue'));
 Vue.component('create-user', require('./components/Survey/CreateUser.vue'));
 Vue.component('survey-content', require('./components/Survey/Content.vue'));
+Vue.component('survey-surveyor', require('./components/Survey/Surveyor.vue'));
 
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
