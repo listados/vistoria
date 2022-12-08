@@ -28,6 +28,7 @@ Vue.use(VueMask);
 Vue.use(ElementUI);
 Vue.use( CKEditor );
 Vue.use( DatePicker );
+Vue.use(require('vue-moment'));
 // Vue.use(AgGridVue);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

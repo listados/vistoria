@@ -24,7 +24,7 @@ class SurveyFields extends FormRequest
     public function rules()
     {
         return [
-            'survey_inspetor_name' => 'required|max:50',
+            'survey_inspetor_name' => 'min:3|max:50|nullable',
             'survey_inspetor_cpf' => 'max:30',
             'survey_date' => 'max:30',
             'survey_address_immobile' => 'string|nullable|max:100',
