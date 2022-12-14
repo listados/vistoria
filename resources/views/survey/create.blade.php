@@ -54,36 +54,12 @@
 					<!-- FIM ÁREA FIADOR -->
 					<div class="col-md-12">
 						<hr>
+						
 						<survey-surveyor
 							:id-survey="{{ json_encode($id_survey) }}"
+							:survey="{{ json_encode($survey)  }}"
 						></survey-surveyor>
 					</div>
-					
-					<div class="col-md-3">
-						<div class="form-group">
-							{{ Form::label('survey_inspetor_name', 'Nome do vistoriador') }}
-							{{ Form::text('survey_inspetor_name' , (!empty( $survey[0]->survey_inspetor_name) ) ? $survey[0]->survey_inspetor_name : $survey->survey_inspetor_name , ['id' => 'survey_inspetor_name' , 'placeholder' => 'Nome do Vistoriador' , 'class' => 'form-control']) }}
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							{{ Form::label('survey_inspetor_cpf', 'CPF ou CNPJ do vistoriador') }}
-							{{ Form::text('survey_inspetor_cpf' , (!empty($survey[0]->survey_inspetor_cpf) ) ? $survey[0]->survey_inspetor_cpf : $survey->survey_inspetor_cpf , ['id' => 'cpf_vistoriador' , 'placeholder' => 'CPF do Vistoriador' , 'class' => 'form-control']) }}
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							{{ Form::label('survey_date', 'Data da vistoria') }}
-							{{ Form::text('survey_date' , (!empty($survey[0]->survey_date)) ? date('d/m/Y' , strtotime($survey[0]->survey_date)) : date('d/m/Y' , strtotime($survey->survey_date)) , ['id' => 'data_vistoria' , 'class' => 'form-control']) }}
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							{{ Form::label('survey_type' , 'Tipo') }}
-							{{ Form::select('survey_type', ['Alteração' => 'Alteração', 'Entrada' => 'Entrada' , 'Saída' => 'Saída'], (!empty($survey[0]->survey_type)) ? $survey[0]->survey_type : $survey->survey_type , ['class' => 'form-control' , 'id' => 'survey_type']) }}
-						</div>
-					</div>
-
 					<div class="col-md-12">
 						<div class="box-header with-border">
 							<h3 class="box-title">Dados do imóvel</h3>

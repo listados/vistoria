@@ -133,6 +133,7 @@ class SurveyController extends Controller
         $title_survey   = $action;
 
         $locators = self::getUser($id_survey, 'Locador');
+      
         return view('survey.create', compact('locators', 'ambience', 
         'title_survey', 'survey', 'survey_update', 'id_survey', 'tit_small_survey'));
     }
@@ -1104,7 +1105,6 @@ class SurveyController extends Controller
 
     public function alterSurveyor(SurveyFields $request)
     {
-        dump($request->all());
         try {
             $survey = Survey::where('survey_id', $request->survey_id)->first();
             $survey->update($request->all());
