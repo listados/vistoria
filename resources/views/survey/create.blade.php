@@ -60,68 +60,7 @@
 							:survey="{{ json_encode($survey)  }}"
 						></survey-surveyor>
 					</div>
-					<div class="col-md-12">
-						<div class="box-header with-border">
-							<h3 class="box-title">Dados do imóvel</h3>
-						</div>		
-					</div>
-					<div class="col-md-9">
-						<div class="form-group">
-							{{ Form::label('survey_address_immobile' , 'Endereço do imóvel') }}
-							{{ Form::text('survey_address_immobile', (!empty($survey[0]->survey_address_immobile)) ? $survey[0]->survey_address_immobile : $survey->survey_address_immobile, ['class' => 'form-control' , 'id' => 'survey_address_immobile' , 'placeholder' => 'Endereço do imóvel'])  }} 
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							{{ Form::label('survey_type_immobile' , 'Tipo do imóvel') }}
-							<select class="form-control" name="survey_type_immobile" id="survey_type_immobile">                 
-								@if(empty($survey->survey_type_immobile))
-								<option value="Não informado" selected="selected">--Selecione-- </option>
-								@include('survey.type_immobile')
-								@else
-								<option value="{{ $survey->survey_type_immobile }}">{{ $survey->survey_type_immobile }}</option>
-								@include('survey.type_immobile')
-								@endif	
-							</select>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							
-							{{ Form::label('survey_energy_meter' , 'Medidor de energia') }}
-							{{ Form::text('survey_energy_meter', (!empty($survey[0]->survey_energy_meter)) ? $survey[0]->survey_energy_meter :$survey->survey_energy_meter, ['class' => 'form-control' , 'id' => 'survey_energy_meter' , 'placeholder' => 'Medidor de energia'])  }}
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							{{ Form::label('survey_energy_load' , 'Leitura de Energia') }}
-							{{ Form::text('survey_energy_load', (!empty($survey[0]->survey_energy_load)) ? $survey[0]->survey_energy_load: $survey->survey_energy_load, ['class' => 'form-control' , 'id' => 'survey_energy_load' , 'placeholder' => 'Leitura de Energia'])  }} 
-							</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							{{ Form::label('survey_water_meter' , 'Medidor de água') }}
-							{{ Form::text('survey_water_meter', (!empty($survey[0]->survey_water_meter)) ? $survey[0]->survey_water_meter: $survey->survey_water_meter, ['class' => 'form-control' , 'id' => 'survey_water_meter' , 'placeholder' => 'Medidor de água'])  }} 
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							{{ Form::label('survey_water_load' , 'Leitura de água') }}
-							{{ Form::text('survey_water_load', (!empty($survey[0]->survey_water_load)) ? $survey[0]->survey_water_load:$survey->survey_water_load, ['class' => 'form-control' , 'id' => 'survey_water_load' , 'placeholder' => 'Leitura de água'])  }} 
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							{{ Form::label('survey_gas_meter' , 'Medidor de gás') }}
-							{{ Form::text('survey_gas_meter', (!empty($survey[0]->survey_gas_meter)) ? $survey[0]->survey_gas_meter : $survey->survey_gas_meter, ['class' => 'form-control' , 'id' => 'survey_gas_meter' , 'placeholder' => 'Medidor de gás'])  }} 
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							{{ Form::label('survey_gas_load' , 'Leitura do gás') }}
-							{{ Form::text('survey_gas_load', (!empty($survey[0]->survey_gas_load)) ? $survey[0]->survey_gas_load : $survey->survey_gas_load, ['class' => 'form-control' , 'id' => 'survey_gas_load' , 'placeholder' => 'Leitura do gás'])  }} 
-						</div>
-					</div>
+
 				</div>
 			</div>
 

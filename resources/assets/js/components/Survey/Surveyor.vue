@@ -58,6 +58,124 @@
                 </el-select>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="box-header with-border">
+                <h3 class="box-title">Dados do imóvel</h3>
+            </div>		
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                <label for="">Endereço do imóvel</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_inspetor_name"
+                    class="form-control"
+                    placeholder="Endereço do imóvel"
+                    id="survey_address_immobile"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="">Tipo do imóvel</label>
+                <el-select 
+                    v-model="survey.survey_type_immobile"
+                    placeholder="Selecione o tipo"
+                    size="large"
+                    id="survey_type_immobile"
+                    filterable
+                    @change="alterValueField('select', 'survey_type_immobile')"
+                >
+                    <el-option
+                    v-for="item in optionsTypeImmobile"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="survey_energy_meter">Medidor de energia</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_energy_meter"
+                    class="form-control"
+                    placeholder="---"
+                    id="survey_energy_meter"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="survey_energy_load">Leitura de energia</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_energy_load"
+                    class="form-control"
+                    placeholder="---"
+                    id="survey_energy_load"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="survey_water_meter">Medidor de água</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_water_meter"
+                    class="form-control"
+                    placeholder="---"
+                    id="survey_water_meter"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="survey_water_load">Leitura de água</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_water_load"
+                    class="form-control"
+                    placeholder="---"
+                    id="survey_water_load"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="survey_gas_meter">Medidor de gás</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_gas_meter"
+                    class="form-control"
+                    placeholder="---"
+                    id="survey_gas_meter"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="survey_gas_load">Leitura do gás</label>
+                <input
+                    type="text"
+                    v-model="survey.survey_gas_load"
+                    class="form-control"
+                    placeholder="---"
+                    id="survey_gas_load"
+                    @blur="alterValueField('input')"
+                >
+            </div>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -81,7 +199,110 @@ export default {
                 value: 'Saída',
                 label: 'Saída'
             }],
-            valueType: ''
+            optionsTypeImmobile: [{
+                value: 'Andar Corporativo',
+                label: 'Andar Corporativo'
+                },{
+                value: 'Apartamento',
+                label: 'Apartamento'
+                },{
+                value: 'Apartamento Duplex',
+                label: 'Apartamento Duplex'
+                },{
+                value: 'Apartamento Garden',
+                label: 'Apartamento Garden'
+                },{
+                value: 'Apartamento Triplex',
+                label: 'Apartamento Triplex'
+                },{
+                value: 'Área',
+                label: 'Área'
+                },{
+                value: 'Barracão',
+                label: 'Barracão'
+                },{
+                value: 'Box/Garagem',
+                label: 'Box/Garagem'
+                },{
+                value: 'Casa',
+                label: 'Casa'
+                },{
+                value: 'Chácara',
+                label: 'Chácara'
+                },{
+                value: 'Cobertura',
+                label: 'Cobertura'
+                },{
+                value: 'Conjunto',
+                label: 'Conjunto'
+                },{
+                value: 'Fazenda',
+                label: 'Fazenda'
+                },{
+                value: 'Flat',
+                label: 'Flat'
+                },{
+                value: 'Galpão',
+                label: 'Galpão'
+                },{
+                value: 'Ilha',
+                label: 'Ilha'
+                },{
+                value: 'Kitnet',
+                label: 'Kitnet'
+                },{
+                value: 'Laje',
+                label: 'Laje'
+                },{
+                value: 'Loft',
+                label: 'Loft'
+                },{
+                value: 'Hotel',
+                label: 'Hotel'
+                },{
+                value: 'Loja',
+                label: 'Loja'
+                },{
+                value: 'Ponto',
+                label: 'Ponto'
+                },{
+                value: 'Pousada',
+                label: 'Pousada'
+                },{
+                value: 'Prédio',
+                label: 'Prédio'
+                },{
+                value: 'Rancho',
+                label: 'Rancho'
+                },{
+                value: 'Resort',
+                label: 'Resort'
+                },{
+                value: 'Sala',
+                label: 'Sala'
+                },{
+                value: 'Salão',
+                label: 'Salão'
+                },{
+                value: 'Pavilhão',
+                label: 'Pavilhão'
+                },{
+                value: 'Sítio',
+                label: 'Sítio'
+                },{
+                value: 'Sobrado',
+                label: 'Sobrado'
+                },{
+                value: 'Studio',
+                label: 'Studio'
+                },{
+                value: 'Terreno',
+                label: 'Terreno'
+                },{
+                value: 'Village',
+                label: 'Village'
+                }
+            ]
         }
     },
     created() {
