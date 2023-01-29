@@ -25,7 +25,7 @@ class CreateEvaluations extends Migration
             $table->string('evaluations_name_friend',50)->nullable();
             $table->string('evaluations_phone_friend',50)->nullable();
             $table->string('evaluations_email_friend',50)->nullable();          
-            $table->foreign('evaluations_id_key')->references('keys_id')->on('keys');
+            // $table->foreign('evaluations_id_key')->references('keys_id')->on('keys');
             $table->timestamps();
         });
     }
