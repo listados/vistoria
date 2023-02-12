@@ -27,8 +27,9 @@ mix.styles([
 	'public/js/all.js').extract(['vue']);
 
 //  mix.js([
-// 	'resources/assets/js/survey.js'],
-// 	'public/js/survey.js').extract(['vue']);
+// 	'resources/assets/js/helpers.js',
+// 	'resources/assets/js/newSurvey.js'
+// 	],'public/js/newSurvey.js').extract(['vue']);
 
 //TEAM
 mix.scripts([
