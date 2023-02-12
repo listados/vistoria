@@ -58,6 +58,7 @@
 						<survey-surveyor
 							:id-survey="{{ json_encode($id_survey) }}"
 							:survey="{{ json_encode($survey)  }}"
+							
 						></survey-surveyor>
 					</div>
 
@@ -118,14 +119,7 @@
 							</button>
 							@include('modal.survey_ambience_upload')
 					</div>
-				<div class="col-md-12">
-					<hr>
-					<div class="form-group">
-						<label for="">Link do tour
-						</label>
-						<input type="text" name="survey_link_tour" value="{!! $survey_update[0]->survey_link_tour !!}" placeholder="Digite o link do tour virtual já feito" class="form-control">
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>

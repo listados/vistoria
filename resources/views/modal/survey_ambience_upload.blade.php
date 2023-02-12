@@ -31,13 +31,13 @@
         <h4 id="info_ambience_upload" class="label-danger"></h4>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="display: none">
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-primary active">
-            <input type="radio" name="foto" value="normal" id="option1" autocomplete="off" checked>   Fotos Padrão
+            <input type="radio" hidden name="foto" value="normal" id="option1" autocomplete="off" checked>   Fotos Padrão
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="foto" value="360" id="option2" autocomplete="off"> Fotos 360
+            <input type="radio" hidden name="foto" value="360" id="option2" autocomplete="off"> Fotos 360
           </label>
 
         </div>

@@ -1,5 +1,7 @@
 <template lang="">
     <div>
+        <div>
+        <div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="">Nome do Vistoriador</label>
@@ -175,7 +177,22 @@
                 >
             </div>
         </div>
-        
+        </div>
+        </div>
+        <div class="col-md-12">
+        <div class="form-group">
+            <label for="">Link do tour</label>
+            <input 
+                type="text" 
+                name="survey_link_tour" 
+                v-model="survey.survey_link_tour"
+                placeholder="Digite o link do tour virtual já feito" 
+                class="form-control"
+                id="survey_link_tour"
+                @blur="alterValueField('input')"
+            >
+        </div>
+        </div>
     </div>
 </template>
 <script>
@@ -302,12 +319,12 @@ export default {
                 value: 'Village',
                 label: 'Village'
                 }
-            ]
+            ],          
         }
     },
     created() {
         console.log(Vue.moment().format('YYYY-MM-DD')) //es
-        console.log(this.survey)
+        console.log(this.tour)
     },
     methods: {
         alterValueField(type, name = null) {
