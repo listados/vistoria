@@ -3,7 +3,6 @@
 namespace EspindolaAdm\Http\Controllers;
 
 use DB;
-
 use PDF;
 use Auth;
 use Carbon\Carbon;
@@ -27,6 +26,7 @@ use Illuminate\Support\Facades\Validator;
 use EspindolaAdm\Http\Requests\SurveyFields;
 use EspindolaAdm\Http\Requests\SurveyRequest;
 use EspindolaAdm\Repository\SurveyRepository;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class SurveyController extends Controller
 {
@@ -1112,5 +1112,25 @@ class SurveyController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function newSurvey(){
+        $setting = DB::table('settings')->first();
+       
+        $nova = DB::table('survey')->insertGetId([
+            'survey_inspetor_name' => Auth::user()->name,
+            'survey_inspetor_cpf' =>  isset(Auth::user()->cpf) ? Auth::user()->cpf : '',
+            'survey_date_register' => Carbon::now(),
+            'survey_date' => Carbon::now(),
+            'survey_status' => 'Rascunho',
+            'survey_link_tour' => '',
+            'survey_general_aspects' => $setting->settings_aspect_general,
+            'survey_reservation' => $setting->settings_reservation,
+            'survey_provisions' => $setting->settings_provisions,
+            'survey_keys' => $setting->settings_keys
+        ]);
+        Survey::addOrderAmbienceSurvey($nova);
+        return redirect('vistoria/' . base64_encode($nova) . '/editar/Nova-Vistoria/acao');
+
     }
 }
