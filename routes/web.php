@@ -41,6 +41,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('historico/{id}' , 'SurveyController@history');
         Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
         Route::post('orderBy', 'SurveyController@alter_order_ambience_survey');
+        //ROTA VIA VUEJS
+        Route::get('nova-vistoria', 'SurveyController@newSurvey');
     });
     
     /*  ----- ROTA PARA CADASTRO DE IMÃ“VEIS -----  */
