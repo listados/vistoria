@@ -49,10 +49,14 @@
             </el-select>
         </div>
         <div class="col-md-2">
-            <el-button type="primary"
+            
+            <el-button   @click="open" type="primary"
             class="btn btn-block btn-primary">
-                Criar Vistoria
+           
+                Criar Vistorias
+           
             </el-button>
+            
         </div>
 
         <!-- <a href="{{ 'vistoria/create' }}" class="btn bg-olive btn-flat pull-right load-modal"  tabindex="0"  data-toggle="popover" data-trigger="hover" data-content="Você criará uma nova vistoria" data-placement="left" style="margin: 10px;"> 
@@ -86,11 +90,11 @@ export default {
             optionStatus : [
                 {value: 'Rascunho', label: 'Rascunho'},
                 {value: 'Finalizada', label: 'Finalizada'},
-            ]
+            ],
+            urlCreate: domain_complet + 'vistoria/nova-vistoria'
         }
     },
     created() {
-        
     },
     methods: {
         search(value) {
@@ -137,6 +141,14 @@ export default {
                     this.disabledBtnSeach = false   
                     break;
             }
+        },
+        open() {
+            this.$alert('Criando sua vistoria . . . ', 'Aguarde!', {
+                showConfirmButton: false,    
+            });
+            setTimeout(() => {
+                window.location.href= this.urlCreate
+            }, 2000);
         }
     },
 }
