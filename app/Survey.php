@@ -21,7 +21,8 @@ class Survey extends Model
         'survey_water_meter',  'survey_water_load' , 'survey_gas_meter' , 
         'survey_gas_load', 'survey_keys', 'survey_code', 
         'survey_link_tour', 'survey_provisions', 'survey_date_register' , 
-        'survey_inspetor_cpf' , 'survey_inspetor_name', 'survey_reservation', 'survey_general_aspects'
+        'survey_inspetor_cpf' , 'survey_inspetor_name', 'survey_reservation',
+        'survey_general_aspects', 'survey_keys'
     ];
 
 
