@@ -71,6 +71,7 @@ class SurveyController extends Controller
                 'survey_status' => 'Rascunho',
                 'survey_link_tour' => ''
             ]);
+            
             // $history                = DB::table('history_survey')->insert(
             //                             ['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => 'Criou essa vistoria', 'history_survey_created' => Carbon::now(), 'history_survey_id_survey' => $nova]);
             Survey::addOrderAmbienceSurvey($nova);
@@ -493,7 +494,8 @@ class SurveyController extends Controller
                 //  //notificando a todos os usuarios
                 //Helpers::reg_not_all(null, Auth::user()->nick. $content_not .$id);
 
-                DB::table('history_survey')->insert(['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => $content_not, 'history_survey_id_survey' => $id, 'history_survey_date' => Carbon::now(), 'history_survey_updated' => Carbon::now(), 'history_survey_created' => Carbon::now()]);
+                DB::table('history_survey')->insert(['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => $content_not, 'history_survey_id_survey' => $id, 
+                'history_survey_date' => Carbon::now(), 'history_survey_updated' => Carbon::now(), 'history_survey_created' => Carbon::now()]);
 
                 return response()->json(['mensagem' => 'success']);
             } catch (Exception $e) {
@@ -1098,13 +1100,20 @@ class SurveyController extends Controller
             $survey = Survey::where('survey_id', $request['survey_id'])->first();
             $survey->update($request->all());
             return response()->json(['message' => 'Sucesso'], 200);
-    } catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return response()->json(['message' => FunctionAll::error($th)], 400);
         }
     }
 
     public function alterSurveyor(SurveyFields $request)
     {
+        $dtSurvey = "";
+        //ADD DATA STRING PARA DATE
+        if (array_key_exists("survey_date", $request->all())) {
+            $dtSurvey = Carbon::parse($request->survey_date);
+            $request['survey_date'] = $dtSurvey;
+        }
+
         try {
             $survey = Survey::where('survey_id', $request->survey_id)->first();
             $survey->update($request->all());
@@ -1129,8 +1138,18 @@ class SurveyController extends Controller
             'survey_provisions' => $setting->settings_provisions,
             'survey_keys' => $setting->settings_keys
         ]);
+        
         Survey::addOrderAmbienceSurvey($nova);
+        //data atual
+        $year = Carbon::now();
+        //passando somente o ano e obtendo os 2 ultimos numeros
+        $strYear = substr($year->year, 2, 4);
+        //convertendo para string
+        $code =  strval($nova);
+        //instancia da vistoria criada
+        $surveyCreate = Survey::findOrfail($nova);
+        //atualizando com codigo da vistoria
+        $surveyCreate->update(['survey_code' => $code.'/'.$strYear ]);
         return redirect('vistoria/' . base64_encode($nova) . '/editar/Nova-Vistoria/acao');
-
     }
 }

@@ -121,6 +121,20 @@
 					</div>
 				
 			</div>
+		
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="container">
+				<div class="box box-primary" style="display: flex;justify-content: center;">					
+					<div class="box-body">
+						<div class="form-group">
+							<div class="btn btn-success">FINALIZAR VISTORIA</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 @stop

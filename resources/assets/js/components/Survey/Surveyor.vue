@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="">Data da vistoria</label>
                 <date-picker
-                    v-model="survey.survey_date"
+                    v-model="dtSurvey"
                     format="DD/MM/YYYY"
                     type="date"
                     placeholder="Seleciona um data"
@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="">Tipo</label>
                 <el-select 
-                    v-model="survey.survey_type"
+                    v-model="typeSurvey"
                     placeholder="Selecione o tipo"
                     size="large"
                     id="survey_type"
@@ -70,7 +70,7 @@
                 <label for="">Endereço do imóvel</label>
                 <input
                     type="text"
-                    v-model="survey.survey_inspetor_name"
+                    v-model="survey.survey_address_immobile"
                     class="form-control"
                     placeholder="Endereço do imóvel"
                     id="survey_address_immobile"
@@ -82,7 +82,7 @@
             <div class="form-group">
                 <label for="">Tipo do imóvel</label>
                 <el-select 
-                    v-model="survey.survey_type_immobile"
+                    v-model="typeImmobile"
                     placeholder="Selecione o tipo"
                     size="large"
                     id="survey_type_immobile"
@@ -204,7 +204,9 @@ export default {
     },
     data() {
         return {
-            dtSurvey: new Date(),
+            dtSurvey: this.survey.survey_date,
+            typeImmobile: this.survey.survey_type_immobile,
+            typeSurvey: this.survey.survey_type,
             cpf_inspector: '',
             options: [{
                 value: 'Alteração',
@@ -337,9 +339,10 @@ export default {
                     dataUp[name] = this.dtSurvey;
                     break;
                 case "select":
-                    dataUp[name] = this.valueType;
+                    dataUp[name] = event.target.innerText;
                     break;
             }
+            console.log({dataUp})
             axios.put('http://localhost:5050/api/survey/alter-field', dataUp)
             .then( (res) => {
                 this.$message({
