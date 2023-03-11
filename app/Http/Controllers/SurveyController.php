@@ -1022,6 +1022,7 @@ class SurveyController extends Controller
             'survey_inspetor_name',
             'survey_address_immobile',
             'survey_code')
+        ->orderBy('survey_code', 'desc')
         ->offset(0)->limit(50)->get();
         //formatando codigo da vistoria e data para formato brasileiro    
         foreach ($survey as $key => $value) {
