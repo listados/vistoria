@@ -30,7 +30,7 @@
 		myDropzone = this; // closure
 
 		submitButton.addEventListener("click", function() {
-		  myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+		//   myDropzone.processQueue(); // Tell Dropzone to process all queued files.
 		});
 		 // this.on('error', function(file, response) {
    //          // (assuming your response object has an errorMessage property...)
