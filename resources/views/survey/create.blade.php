@@ -118,19 +118,35 @@
 							</i> Fotos Gerais 
 							</button>
 							@include('modal.survey_ambience_upload')
-					</div>
-				
+					</div>				
+				</div>
 			</div>
+
+			
 		
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="container">
-				<div class="box box-primary" style="display: flex;justify-content: center;">					
-					<div class="box-body">
-						<div class="form-group">
-							<div class="btn btn-success">FINALIZAR VISTORIA</div>
+			<div class="box box-primary">
+				<div class="box-header">
+					<h3 class="box-title">Finalizar						
+				</div>					
+				<div class="box-body">
+					<div class="col-md-6">
+						<div class="form-group pull-left">
+							<button class="btn btn-success" title="Finaliza a vistoria sem a possibilidade de edição">
+								CONLUIR VISTORIA
+								<i class="fa fa-check-circle" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group pull-right">
+							<a href="{{url('vistoria')}}" class="btn btn-default" title="Sairá dessa vistoria e irá para lista de vistorias">
+								<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+								SAIR DA VISTORIA
+							</a>
 						</div>
 					</div>
 				</div>
@@ -163,7 +179,7 @@
 
 {{ Html::script('/js/manifest.js') }}
 {{ Html::script('/js/vendor.js') }}
-{{ Html::script('/js/all.js') }}
+
 {{ Html::script('/js/survey.js') }}
 {{ Html::script('/js/plugins/dropzone.js') }}
 {{ Html::script('/js/upload_ambience.js') }}
