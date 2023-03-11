@@ -87,8 +87,8 @@
 {{-- <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> --}}
 {{-- <script src="https://www.jqueryscript.net/demo/Rich-Text-Editor-jQuery-RichText/jquery.richtext.js"></script> --}}
 <!-- NOTIFICAÇÃO -->
-{{ Html::script('/js/plugins/pnotify/pnotify.custom.min.js') }}
-
+{{ Html::script('/js/all.js') }}
+{{ Html::script('js/plugins.js') }}
 @yield('adminlte_js')
 <script type="text/javascript">
         $.ajaxSetup({

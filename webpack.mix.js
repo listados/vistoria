@@ -62,7 +62,5 @@ mix.scripts([
 	'resources/assets/js/files.js'],
 	'public/js/files.js');  
 
-// mix.scripts([
-//     'public/js/admin.js',
-//     'public/js/dashboard.js'
-// ], 'public/js/all.js');
+//PLUGINS
+mix.copy('node_modules/pnotify/dist/pnotify.js', 'public/js/plugins.js');
