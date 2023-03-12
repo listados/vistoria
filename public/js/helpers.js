@@ -1,4 +1,4 @@
-var Admin = (function(){
+const Admin = (function(){
     function domainComplet()
     {
         var project_survey = '/';
@@ -11,3 +11,5 @@ var Admin = (function(){
         baseUrl: domainComplet
     }
 }());
+
+export {Admin}

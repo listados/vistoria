@@ -28,8 +28,8 @@ mix.styles([
 
 //  mix.js([
 // 	'resources/assets/js/helpers.js',
-// 	'resources/assets/js/newSurvey.js'
-// 	],'public/js/newSurvey.js').extract(['vue']);
+
+// 	],'public/js/helpers.js').extract(['vue']);
 
 //TEAM
 mix.scripts([
