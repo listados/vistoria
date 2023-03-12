@@ -49,7 +49,8 @@
         <template slot-scope="scope">
             <el-button
                 @click="editSurvey(scope.row)" circle
-                type="default" size="small" 
+                type="default" size="small"
+                :disabled="scope.row.survey_status === 'Finalizada'"
                 icon="el-icon-edit-outline" title="Editar Vistoria">
             </el-button>
             <el-button 
