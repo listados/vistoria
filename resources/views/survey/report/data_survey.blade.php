@@ -15,7 +15,10 @@
             @if($user->relation_survey_user_type == 'Locatário')
             <tr>
                 <td colspan="3" class="participantes" >
-                    <strong> Locatário(a): </strong>{{$user->name }}, inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}                    
+                    <strong> Locatário(a): </strong>{{$user->name }}
+                    @if ($user->relation_survey_user_cpf)
+                        , inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}
+                    @endif
                 </td>
             </tr>
             @endif
@@ -25,7 +28,10 @@
             @if($user->relation_survey_user_type == 'Fiador')
             <tr>
                 <td colspan="3" class="participantes" >
-                    <strong> Fiador(a): </strong>{{$user->name }}, inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}                         
+                    <strong> Fiador(a): </strong>{{$user->name }},
+                    @if ($user->relation_survey_user_cpf)
+                        , inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}
+                    @endif                      
                 </td>
             </tr>
             @endif
