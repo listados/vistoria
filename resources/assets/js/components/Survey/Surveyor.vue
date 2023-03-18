@@ -22,8 +22,8 @@
                     type="text"
                     v-model="survey.survey_inspetor_cpf"
                     class="form-control"
-                    placeholder="Nome do Vistoriador"
-                    id="cpf_vistoriador"
+                    placeholder="CPF do Vistoriador"
+                    id="survey_inspetor_cpf"
                     @blur="alterValueField('input')"
                 >
             </div>
@@ -35,7 +35,7 @@
                     v-model="dtSurvey"
                     format="DD/MM/YYYY"
                     type="date"
-                    placeholder="Seleciona um data"
+                    placeholder="Selecione uma data"
                     input-class="form-control"
                     @change="alterValueField('datepicker', 'survey_date')"
                 ></date-picker>
@@ -196,7 +196,7 @@
     </div>
 </template>
 <script>
-const moment = require('moment')
+import  {Admin}  from "../../../../../public/js/helpers.js";
 export default {    
     props: {
         idSurvey: String,
@@ -204,7 +204,7 @@ export default {
     },
     data() {
         return {
-            dtSurvey: this.survey.survey_date,
+            dtSurvey: Vue.moment( this.survey.survey_date).format('DD/MM/YYYY'),
             typeImmobile: this.survey.survey_type_immobile,
             typeSurvey: this.survey.survey_type,
             cpf_inspector: '',
@@ -325,7 +325,7 @@ export default {
         }
     },
     created() {
-        console.log(Vue.moment().format('YYYY-MM-DD')) //es
+        console.log(Vue.moment(this.dtSurvey).format('YYYY-MM-DD')) //es
         console.log(this.tour)
     },
     methods: {
@@ -343,7 +343,7 @@ export default {
                     break;
             }
             console.log({dataUp})
-            axios.put('http://localhost:5050/api/survey/alter-field', dataUp)
+            axios.put(Admin.baseUrl() + '/api/survey/alter-field', dataUp)
             .then( (res) => {
                 this.$message({
                     showClose: true,
