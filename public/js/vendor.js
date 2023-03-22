@@ -1,51 +1,23 @@
 webpackJsonp([1],{
 
-/***/ 10:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 2:
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 if (false) {
   module.exports = require('./vue.common.prod.js')
 } else {
-  module.exports = __webpack_require__(249)
+  module.exports = __webpack_require__(114)
 }
 
 
 /***/ }),
 
-/***/ 249:
+/***/ 114:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.7.14
+ * Vue.js v2.7.13
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
@@ -884,6 +856,77 @@ methodsToPatch.forEach(function (method) {
     });
 });
 
+const rawMap = new WeakMap();
+function reactive(target) {
+    makeReactive(target, false);
+    return target;
+}
+/**
+ * Return a shallowly-reactive copy of the original object, where only the root
+ * level properties are reactive. It also does not auto-unwrap refs (even at the
+ * root level).
+ */
+function shallowReactive(target) {
+    makeReactive(target, true);
+    def(target, "__v_isShallow" /* ReactiveFlags.IS_SHALLOW */, true);
+    return target;
+}
+function makeReactive(target, shallow) {
+    // if trying to observe a readonly proxy, return the readonly version.
+    if (!isReadonly(target)) {
+        {
+            if (isArray(target)) {
+                warn$2(`Avoid using Array as root value for ${shallow ? `shallowReactive()` : `reactive()`} as it cannot be tracked in watch() or watchEffect(). Use ${shallow ? `shallowRef()` : `ref()`} instead. This is a Vue-2-only limitation.`);
+            }
+            const existingOb = target && target.__ob__;
+            if (existingOb && existingOb.shallow !== shallow) {
+                warn$2(`Target is already a ${existingOb.shallow ? `` : `non-`}shallow reactive object, and cannot be converted to ${shallow ? `` : `non-`}shallow.`);
+            }
+        }
+        const ob = observe(target, shallow, isServerRendering() /* ssr mock reactivity */);
+        if (!ob) {
+            if (target == null || isPrimitive(target)) {
+                warn$2(`value cannot be made reactive: ${String(target)}`);
+            }
+            if (isCollectionType(target)) {
+                warn$2(`Vue 2 does not support reactive collection types such as Map or Set.`);
+            }
+        }
+    }
+}
+function isReactive(value) {
+    if (isReadonly(value)) {
+        return isReactive(value["__v_raw" /* ReactiveFlags.RAW */]);
+    }
+    return !!(value && value.__ob__);
+}
+function isShallow(value) {
+    return !!(value && value.__v_isShallow);
+}
+function isReadonly(value) {
+    return !!(value && value.__v_isReadonly);
+}
+function isProxy(value) {
+    return isReactive(value) || isReadonly(value);
+}
+function toRaw(observed) {
+    const raw = observed && observed["__v_raw" /* ReactiveFlags.RAW */];
+    return raw ? toRaw(raw) : observed;
+}
+function markRaw(value) {
+    if (isObject(value)) {
+        rawMap.set(value, true);
+    }
+    return value;
+}
+/**
+ * @internal
+ */
+function isCollectionType(value) {
+    const type = toRawType(value);
+    return (type === 'Map' || type === 'WeakMap' || type === 'Set' || type === 'WeakSet');
+}
+
 const arrayKeys = Object.getOwnPropertyNames(arrayMethods);
 const NO_INIITIAL_VALUE = {};
 /**
@@ -970,6 +1013,7 @@ function observe(value, shallow, ssrMockReactivity) {
         (isArray(value) || isPlainObject(value)) &&
         Object.isExtensible(value) &&
         !value.__v_skip /* ReactiveFlags.SKIP */ &&
+        !rawMap.has(value) &&
         !isRef(value) &&
         !(value instanceof VNode)) {
         return new Observer(value, shallow, ssrMockReactivity);
@@ -1142,77 +1186,6 @@ function dependArray(value) {
     }
 }
 
-function reactive(target) {
-    makeReactive(target, false);
-    return target;
-}
-/**
- * Return a shallowly-reactive copy of the original object, where only the root
- * level properties are reactive. It also does not auto-unwrap refs (even at the
- * root level).
- */
-function shallowReactive(target) {
-    makeReactive(target, true);
-    def(target, "__v_isShallow" /* ReactiveFlags.IS_SHALLOW */, true);
-    return target;
-}
-function makeReactive(target, shallow) {
-    // if trying to observe a readonly proxy, return the readonly version.
-    if (!isReadonly(target)) {
-        {
-            if (isArray(target)) {
-                warn$2(`Avoid using Array as root value for ${shallow ? `shallowReactive()` : `reactive()`} as it cannot be tracked in watch() or watchEffect(). Use ${shallow ? `shallowRef()` : `ref()`} instead. This is a Vue-2-only limitation.`);
-            }
-            const existingOb = target && target.__ob__;
-            if (existingOb && existingOb.shallow !== shallow) {
-                warn$2(`Target is already a ${existingOb.shallow ? `` : `non-`}shallow reactive object, and cannot be converted to ${shallow ? `` : `non-`}shallow.`);
-            }
-        }
-        const ob = observe(target, shallow, isServerRendering() /* ssr mock reactivity */);
-        if (!ob) {
-            if (target == null || isPrimitive(target)) {
-                warn$2(`value cannot be made reactive: ${String(target)}`);
-            }
-            if (isCollectionType(target)) {
-                warn$2(`Vue 2 does not support reactive collection types such as Map or Set.`);
-            }
-        }
-    }
-}
-function isReactive(value) {
-    if (isReadonly(value)) {
-        return isReactive(value["__v_raw" /* ReactiveFlags.RAW */]);
-    }
-    return !!(value && value.__ob__);
-}
-function isShallow(value) {
-    return !!(value && value.__v_isShallow);
-}
-function isReadonly(value) {
-    return !!(value && value.__v_isReadonly);
-}
-function isProxy(value) {
-    return isReactive(value) || isReadonly(value);
-}
-function toRaw(observed) {
-    const raw = observed && observed["__v_raw" /* ReactiveFlags.RAW */];
-    return raw ? toRaw(raw) : observed;
-}
-function markRaw(value) {
-    // non-extensible objects won't be observed anyway
-    if (Object.isExtensible(value)) {
-        def(value, "__v_skip" /* ReactiveFlags.SKIP */, true);
-    }
-    return value;
-}
-/**
- * @internal
- */
-function isCollectionType(value) {
-    const type = toRawType(value);
-    return (type === 'Map' || type === 'WeakMap' || type === 'Set' || type === 'WeakSet');
-}
-
 /**
  * @internal
  */
@@ -1348,8 +1321,8 @@ function toRef(object, key, defaultValue) {
     return ref;
 }
 
-const rawToReadonlyFlag = `__v_rawToReadonly`;
-const rawToShallowReadonlyFlag = `__v_rawToShallowReadonly`;
+const rawToReadonlyMap = new WeakMap();
+const rawToShallowReadonlyMap = new WeakMap();
 function readonly(target) {
     return createReadonly(target, false);
 }
@@ -1368,21 +1341,18 @@ function createReadonly(target, shallow) {
         }
         return target;
     }
-    if (!Object.isExtensible(target)) {
-        warn$2(`Vue 2 does not support creating readonly proxy for non-extensible object.`);
-    }
     // already a readonly object
     if (isReadonly(target)) {
         return target;
     }
     // already has a readonly proxy
-    const existingFlag = shallow ? rawToShallowReadonlyFlag : rawToReadonlyFlag;
-    const existingProxy = target[existingFlag];
+    const map = shallow ? rawToShallowReadonlyMap : rawToReadonlyMap;
+    const existingProxy = map.get(target);
     if (existingProxy) {
         return existingProxy;
     }
     const proxy = Object.create(Object.getPrototypeOf(target));
-    def(target, existingFlag, proxy);
+    map.set(target, proxy);
     def(proxy, "__v_isReadonly" /* ReactiveFlags.IS_READONLY */, true);
     def(proxy, "__v_raw" /* ReactiveFlags.RAW */, target);
     if (isRef(target)) {
@@ -3981,7 +3951,7 @@ function onErrorCaptured(hook, target = currentInstance) {
 /**
  * Note: also update dist/vue.runtime.mjs when adding new exports to this file.
  */
-const version = '2.7.14';
+const version = '2.7.13';
 /**
  * @internal type is manually declared in <root>/types/v3-define-component.d.ts
  */
@@ -5171,7 +5141,7 @@ const strats = config.optionMergeStrategies;
 /**
  * Helper that recursively merges two data objects together.
  */
-function mergeData(to, from, recursive = true) {
+function mergeData(to, from) {
     if (!from)
         return to;
     let key, toVal, fromVal;
@@ -5185,7 +5155,7 @@ function mergeData(to, from, recursive = true) {
             continue;
         toVal = to[key];
         fromVal = from[key];
-        if (!recursive || !hasOwn(to, key)) {
+        if (!hasOwn(to, key)) {
             set(to, key, fromVal);
         }
         else if (toVal !== fromVal &&
@@ -5345,19 +5315,7 @@ strats.props =
                         extend(ret, childVal);
                     return ret;
                 };
-strats.provide = function (parentVal, childVal) {
-    if (!parentVal)
-        return childVal;
-    return function () {
-        const ret = Object.create(null);
-        mergeData(ret, isFunction(parentVal) ? parentVal.call(this) : parentVal);
-        if (childVal) {
-            mergeData(ret, isFunction(childVal) ? childVal.call(this) : childVal, false // non-recursive
-            );
-        }
-        return ret;
-    };
-};
+strats.provide = mergeDataOrFn;
 /**
  * Default strategy.
  */
@@ -11082,7 +11040,7 @@ function genFor(el, state, altGen, altHelper) {
         !el.key) {
         state.warn(`<${el.tag} v-for="${alias} in ${exp}">: component lists rendered with ` +
             `v-for should have explicit keys. ` +
-            `See https://v2.vuejs.org/v2/guide/list.html#key for more info.`, el.rawAttrsMap['v-for'], true /* tip */);
+            `See https://vuejs.org/guide/list.html#key for more info.`, el.rawAttrsMap['v-for'], true /* tip */);
     }
     el.forProcessed = true; // avoid recursion
     return (`${altHelper || '_l'}((${exp}),` +
@@ -11844,11 +11802,11 @@ Vue.effect = effect;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(250).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(115).setImmediate))
 
 /***/ }),
 
-/***/ 250:
+/***/ 115:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -11904,7 +11862,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(251);
+__webpack_require__(116);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -11915,11 +11873,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 
-/***/ 251:
+/***/ 116:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -12109,19 +12067,19 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(62)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(59)))
 
 /***/ }),
 
-/***/ 415:
+/***/ 284:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(2);
+module.exports = __webpack_require__(1);
 
 
 /***/ }),
 
-/***/ 62:
+/***/ 59:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -12310,6 +12268,34 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
 /***/ })
 
-},[415]);
+},[284]);

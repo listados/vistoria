@@ -71,6 +71,7 @@ class SurveyController extends Controller
                 'survey_status' => 'Rascunho',
                 'survey_link_tour' => ''
             ]);
+            
             // $history                = DB::table('history_survey')->insert(
             //                             ['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => 'Criou essa vistoria', 'history_survey_created' => Carbon::now(), 'history_survey_id_survey' => $nova]);
             Survey::addOrderAmbienceSurvey($nova);
@@ -493,7 +494,8 @@ class SurveyController extends Controller
                 //  //notificando a todos os usuarios
                 //Helpers::reg_not_all(null, Auth::user()->nick. $content_not .$id);
 
-                DB::table('history_survey')->insert(['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => $content_not, 'history_survey_id_survey' => $id, 'history_survey_date' => Carbon::now(), 'history_survey_updated' => Carbon::now(), 'history_survey_created' => Carbon::now()]);
+                DB::table('history_survey')->insert(['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => $content_not, 'history_survey_id_survey' => $id, 
+                'history_survey_date' => Carbon::now(), 'history_survey_updated' => Carbon::now(), 'history_survey_created' => Carbon::now()]);
 
                 return response()->json(['mensagem' => 'success']);
             } catch (Exception $e) {
@@ -701,6 +703,7 @@ class SurveyController extends Controller
             ->join('survey', 'survey.survey_id', '=', 'relation_survey_user.relation_survey_user_id_survey')
             ->join('users', 'users.id', '=', 'relation_survey_user.relation_survey_user_id_user')
             ->where('relation_survey_user.relation_survey_user_id_survey', $id)->get();
+            // dd($users   );
         //PARA AS RUBRICAS DO LOCADOR(S)
         $countLocador = 0;
         foreach ($users as $userLocador) {
@@ -708,7 +711,7 @@ class SurveyController extends Controller
             if ($userLocador->relation_survey_user_type == 'Locador') {
                 $countLocador++;
             }
-        }         //PARA AS RUBRICAS DOS LOCATÁRIOS
+        }         //PARA AS RUBRICAS DOS LOCATÃRIOS
         $countLocatario = 0;
         foreach ($users as $userLocatario) {
             # code...
@@ -724,7 +727,6 @@ class SurveyController extends Controller
                 $countFiador++;
             }
         }
-
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
         //DATA POR EXTENSO
@@ -737,58 +739,19 @@ class SurveyController extends Controller
         }
         $settings = DB::table('settings')->get();
 
-
-        //FILTRANDO O ARRAY COM TIPO 360
-        //     $survey_type = FALSE;
-        //     foreach ($survey as $key => $value) {
-        //         //echo "key ".$key.' - '.$value;
-        //         if(isset($value->files_ambience_id))
-        //         {
-        //             $survey_type = TRUE;
-        //         }
-        //     }//fim
-        //    dump($survey_type);
-        //    dd($survey->count());
-        //     if($survey_type == TRUE)
-        //     {
-
-        //        $survey_360 = array_filter(
-        //             $survey,
-        //             function($item)
-        //             {
-        //                 if ( $item->files_ambience_type == '360' )
-        //                     return TRUE;
-
-        //                 return FALSE;
-        //             }
-        //         );
-        //     }else{
-        //         $survey_360 = [];
-        //     }
-
-        //VARIÁVEIS COM AS FOTOS NORMAIS
+        //VARIÃVEIS COM AS FOTOS NORMAIS
         $survey_normal = $survey;
-        //LOOP RETIRANDO OS INDICES COM O TIPO 360
-        // foreach ($survey_360 as $key => $value)
-        // {
-        //     unset( $survey_normal[$key] );
-        // }
-        //$survey_normal ESTÁ NESSE MOMENTO COM AS FOTOS CONVENCIONAIS
+
+        //$survey_normal ESTÃ NESSE MOMENTO COM AS FOTOS CONVENCIONAIS
         $survey_update = [];
         foreach ($survey_normal as $item) {
             //$suvey_update = $survey ALTERADO SOM OS INDICES 360
-            //SERÁ FEITO O LOOP DELE PRIMEIRAMENTE MOSTRANDO AS FOTOS
-            //ESTÁ PREENCHENDO O INDICE CONCATENENDO O ITEM
+            //SERÃ FEITO O LOOP DELE PRIMEIRAMENTE MOSTRANDO AS FOTOS
+            //ESTÃ PREENCHENDO O INDICE CONCATENENDO O ITEM
             $survey_update[$item->ambience_id][] = $item;
         }
 
         $survey_update_360 = [];
-        // foreach ( $survey_360 as $item )
-        // {
-        //     $survey_update_360[ $item->ambience_id ][] = $item;
-        // }
-        //dd($survey);
-        // return view('survey.report.view_survey',['survey' => $survey , 'survey_update' => $survey_update , 'survey_update_360' => $survey_update_360 , 'settings' => $settings , 'users' => $users, 'data_extenso' => $data_extenso , 'photo_ambience' => $photo_ambience ]);
         $pdf = PDF::loadView(
             'survey.report.view_survey',
             [
@@ -1020,6 +983,7 @@ class SurveyController extends Controller
             'survey_inspetor_name',
             'survey_address_immobile',
             'survey_code')
+        ->orderBy('survey_code', 'desc')
         ->offset(0)->limit(50)->get();
         //formatando codigo da vistoria e data para formato brasileiro    
         foreach ($survey as $key => $value) {
@@ -1098,13 +1062,20 @@ class SurveyController extends Controller
             $survey = Survey::where('survey_id', $request['survey_id'])->first();
             $survey->update($request->all());
             return response()->json(['message' => 'Sucesso'], 200);
-    } catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return response()->json(['message' => FunctionAll::error($th)], 400);
         }
     }
 
     public function alterSurveyor(SurveyFields $request)
     {
+        $dtSurvey = "";
+        //ADD DATA STRING PARA DATE
+        if (array_key_exists("survey_date", $request->all())) {
+            $dtSurvey = Carbon::parse($request->survey_date);
+            $request['survey_date'] = $dtSurvey;
+        }
+
         try {
             $survey = Survey::where('survey_id', $request->survey_id)->first();
             $survey->update($request->all());
@@ -1129,8 +1100,18 @@ class SurveyController extends Controller
             'survey_provisions' => $setting->settings_provisions,
             'survey_keys' => $setting->settings_keys
         ]);
+        
         Survey::addOrderAmbienceSurvey($nova);
+        //data atual
+        $year = Carbon::now();
+        //passando somente o ano e obtendo os 2 ultimos numeros
+        $strYear = substr($year->year, 2, 4);
+        //convertendo para string
+        $code =  strval($nova);
+        //instancia da vistoria criada
+        $surveyCreate = Survey::findOrfail($nova);
+        //atualizando com codigo da vistoria
+        $surveyCreate->update(['survey_code' => $code.'/'.$strYear ]);
         return redirect('vistoria/' . base64_encode($nova) . '/editar/Nova-Vistoria/acao');
-
     }
 }

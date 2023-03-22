@@ -7,5 +7,6 @@
     "/js/manifest.js": "/js/manifest.js",
     "/css/survey.css": "/css/survey.css",
     "/css/all.min.css": "/css/all.min.css",
-    "/js/teamSite.js": "/js/teamSite.js"
+    "/js/teamSite.js": "/js/teamSite.js",
+    "/js/plugins.js": "/js/plugins.js"
 }

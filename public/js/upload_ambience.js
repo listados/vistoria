@@ -32,20 +32,6 @@
 		submitButton.addEventListener("click", function() {
 		  myDropzone.processQueue(); // Tell Dropzone to process all queued files.
 		});
-		 // this.on('error', function(file, response) {
-   //          // (assuming your response object has an errorMessage property...)
-   //         new PNotify({
-			// 	title: 'Erro',
-			// 	text: 'Upload realizado com sucesso',
-			// 	styling: 'fontawesome',       
-			// 	type: 'error',
-			// 	icon: 'true',
-			// 	animation: 'fade',
-			// 	delay: 5000,
-			// 	animate_speed: "slow"
-			// });
-
-   //      });
 	}
 
 }).on("complete", function(file) {
@@ -60,6 +46,5 @@
 		delay: 5000,
 		animate_speed: "slow"
 	});
-
 });
 

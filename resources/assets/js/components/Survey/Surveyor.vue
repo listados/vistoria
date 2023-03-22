@@ -1,5 +1,7 @@
 <template lang="">
     <div>
+        <div>
+        <div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="">Nome do Vistoriador</label>
@@ -20,8 +22,8 @@
                     type="text"
                     v-model="survey.survey_inspetor_cpf"
                     class="form-control"
-                    placeholder="Nome do Vistoriador"
-                    id="cpf_vistoriador"
+                    placeholder="CPF do Vistoriador"
+                    id="survey_inspetor_cpf"
                     @blur="alterValueField('input')"
                 >
             </div>
@@ -30,10 +32,10 @@
             <div class="form-group">
                 <label for="">Data da vistoria</label>
                 <date-picker
-                    v-model="survey.survey_date"
+                    v-model="dtSurvey"
                     format="DD/MM/YYYY"
                     type="date"
-                    placeholder="Seleciona um data"
+                    placeholder="Selecione uma data"
                     input-class="form-control"
                     @change="alterValueField('datepicker', 'survey_date')"
                 ></date-picker>
@@ -43,7 +45,7 @@
             <div class="form-group">
                 <label for="">Tipo</label>
                 <el-select 
-                    v-model="survey.survey_type"
+                    v-model="typeSurvey"
                     placeholder="Selecione o tipo"
                     size="large"
                     id="survey_type"
@@ -68,7 +70,7 @@
                 <label for="">Endereço do imóvel</label>
                 <input
                     type="text"
-                    v-model="survey.survey_inspetor_name"
+                    v-model="survey.survey_address_immobile"
                     class="form-control"
                     placeholder="Endereço do imóvel"
                     id="survey_address_immobile"
@@ -80,7 +82,7 @@
             <div class="form-group">
                 <label for="">Tipo do imóvel</label>
                 <el-select 
-                    v-model="survey.survey_type_immobile"
+                    v-model="typeImmobile"
                     placeholder="Selecione o tipo"
                     size="large"
                     id="survey_type_immobile"
@@ -175,11 +177,26 @@
                 >
             </div>
         </div>
-        
+        </div>
+        </div>
+        <div class="col-md-12">
+        <div class="form-group">
+            <label for="">Link do tour</label>
+            <input 
+                type="text" 
+                name="survey_link_tour" 
+                v-model="survey.survey_link_tour"
+                placeholder="Digite o link do tour virtual já feito" 
+                class="form-control"
+                id="survey_link_tour"
+                @blur="alterValueField('input')"
+            >
+        </div>
+        </div>
     </div>
 </template>
 <script>
-const moment = require('moment')
+import  {Admin}  from "../../../../../public/js/helpers.js";
 export default {    
     props: {
         idSurvey: String,
@@ -187,7 +204,9 @@ export default {
     },
     data() {
         return {
-            dtSurvey: new Date(),
+            dtSurvey: Vue.moment( this.survey.survey_date).format('DD/MM/YYYY'),
+            typeImmobile: this.survey.survey_type_immobile,
+            typeSurvey: this.survey.survey_type,
             cpf_inspector: '',
             options: [{
                 value: 'Alteração',
@@ -302,12 +321,12 @@ export default {
                 value: 'Village',
                 label: 'Village'
                 }
-            ]
+            ],          
         }
     },
     created() {
-        console.log(Vue.moment().format('YYYY-MM-DD')) //es
-        console.log(this.survey)
+        console.log(Vue.moment(this.dtSurvey).format('YYYY-MM-DD')) //es
+        console.log(this.tour)
     },
     methods: {
         alterValueField(type, name = null) {
@@ -320,10 +339,11 @@ export default {
                     dataUp[name] = this.dtSurvey;
                     break;
                 case "select":
-                    dataUp[name] = this.valueType;
+                    dataUp[name] = event.target.innerText;
                     break;
             }
-            axios.put('http://localhost:5050/api/survey/alter-field', dataUp)
+            console.log({dataUp})
+            axios.put(Admin.baseUrl() + '/api/survey/alter-field', dataUp)
             .then( (res) => {
                 this.$message({
                     showClose: true,

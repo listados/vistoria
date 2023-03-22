@@ -56,7 +56,7 @@
         </footer>
         <table>
             <tr>
-                <td style="width:30%;"><img src="{{ url('dist/img/logo_grande.jpg') }}" alt="" height="64"></td>
+                <td style="width:30%;"><img src="{{ public_path('dist/img/logo_grande.jpg') }}" alt="" height="64"></td>
                 <td>
                     <h3>Termo de Vistoria
                         @if($survey[0]->survey_status == "Rascunho")
@@ -132,17 +132,17 @@
             @if($ambience->files_ambience_description_file == "")
             @php $img = ""; @endphp
             @else
-            <img src="{{ url('dist/img/upload/vistoria/'.$ambience->files_ambience_description_file)}}" class="img-ambience" >
+            <img src="{{ public_path('dist/img/upload/vistoria/'.$ambience->files_ambience_description_file)}}" class="img-ambience" >
             @endif
             @if($ambience->ambience_name == "Planta Baixa")
-            <img src="{{ url('dist/img/upload/vistoria/'.$ambience->files_ambience_description_file) }}" class="img-ambience-planta">
+            <img src="{{ public_path('dist/img/upload/vistoria/'.$ambience->files_ambience_description_file) }}" class="img-ambience-planta">
             @endif
             @endforeach
             @endforeach
             @foreach($survey_update_360 as $surveys)
             <h3 style="border-top: 2px solid #c3c3c3;"> {{ $surveys[0]->ambience_name }}</h3>
             @foreach($surveys as $ambience)
-            <img src="{{ url('dist/img/upload/vistoria/'.$ambience->files_ambience_description_file) }}" class="img-ambience">
+            <img src="{{ public_path('dist/img/upload/vistoria/'.$ambience->files_ambience_description_file) }}" class="img-ambience">
             @endforeach
             @endforeach
             </p>
