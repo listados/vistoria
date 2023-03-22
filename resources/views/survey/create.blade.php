@@ -38,7 +38,7 @@
 					</div>
 					<!-- ÁREA LOCATÁRIO -->
 					<create-user 
-						:type-survey="{{ json_encode('Locatario') }}"
+						:type-survey="{{ json_encode('Locatário') }}"
 						:id-survey="{{ json_encode($id_survey) }}">
 					</create-user>
 					<!--FIM ÁREA LOCATÁRIO-->
