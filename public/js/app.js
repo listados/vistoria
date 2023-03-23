@@ -7588,24 +7588,38 @@ var locale = {
 
 /***/ }),
 /* 86 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Admin; });
-var Admin = function () {
-    function domainComplet() {
-        var project_survey = '/';
-        domin = window.location.protocol + "//" + window.location.hostname + ':';
-        domin + project_survey;
-        var url = window.location.origin;
-        return url;
+webpackJsonp([4], {
+
+    /***/286:
+    /***/function _(module, exports, __webpack_require__) {
+
+        module.exports = __webpack_require__(287);
+
+        /***/
+    },
+
+    /***/287:
+    /***/function _(module, exports) {
+
+        var Admin = function () {
+            function domainComplet() {
+                var project_survey = '/';
+                domin = window.location.protocol + "//" + window.location.hostname + ':';
+                domin + project_survey;
+                var url = window.location.origin;
+                return url;
+            }
+            return {
+                baseUrl: domainComplet
+            };
+        }();
+
+        /***/
     }
-    return {
-        baseUrl: domainComplet
-    };
-}();
 
-
+}, [286]);
 
 /***/ }),
 /* 87 */
@@ -113759,6 +113773,7 @@ exports.push([module.i, "\n.mx-datepicker {\n    position: relative;\n    displa
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__);
 //
 //
 //
@@ -114108,7 +114123,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     break;
             }
             console.log({ dataUp: dataUp });
-            axios.put(__WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__["a" /* Admin */].baseUrl() + '/api/survey/alter-field', dataUp).then(function (res) {
+            axios.put(__WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__["Admin"].baseUrl() + '/api/survey/alter-field', dataUp).then(function (res) {
                 _this.$message({
                     showClose: true,
                     type: 'success',
@@ -114767,6 +114782,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__);
 //
 //
 //
@@ -114837,7 +114853,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       }).then(function () {
         var dataUp = { survey_id: _this.idSurvey, survey_status: 'Finalizada' };
-        axios.put(__WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__["a" /* Admin */].baseUrl() + '/api/survey/alter-field', dataUp).then(function (res) {
+        axios.put(__WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__["Admin"].baseUrl() + '/api/survey/alter-field', dataUp).then(function (res) {
           _this.$message({
             showClose: true,
             type: 'success',
@@ -114845,7 +114861,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             duration: 1000
           });
           setTimeout(function () {
-            window.location.href = __WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__["a" /* Admin */].baseUrl() + "/vistoria";
+            window.location.href = __WEBPACK_IMPORTED_MODULE_0__public_js_helpers_js__["Admin"].baseUrl() + "/vistoria";
           }, 2000);
         }).catch(function (erro) {
           _this.$message({

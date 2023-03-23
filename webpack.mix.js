@@ -21,15 +21,12 @@ mix.styles([
     'resources/assets/css/all.css'
 ], 'public/css/all.min.css');
 
+mix.js('resources/assets/js/survey.js',	'public/js');
 
  mix.js([
 	'resources/assets/js/all.js'],
 	'public/js/all.js').extract(['vue']);
 
-//  mix.js([
-// 	'resources/assets/js/helpers.js',
-
-// 	],'public/js/helpers.js').extract(['vue']);
 
 //TEAM
 mix.scripts([
@@ -62,5 +59,6 @@ mix.scripts([
 	'resources/assets/js/files.js'],
 	'public/js/files.js');  
 
+mix.js(['resources/assets/js/helpers.js'], 'public/js/helpers.js');
 //PLUGINS
 mix.copy('node_modules/pnotify/dist/pnotify.js', 'public/js/plugins.js');

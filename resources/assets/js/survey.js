@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+  console.log(Admin.baseUrl());
   $("#send_file_upload").hide();
     PNotify.prototype.options.styling = "bootstrap3";
     PNotify.prototype.options.styling = "fontawesome";

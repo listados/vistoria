@@ -1,7 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/vendor.js": "/js/vendor.js",
+    "/js/survey.js": "/js/survey.js",
     "/js/proposal_pf.js": "/js/proposal_pf.js",
+    "/js/helpers.js": "/js/helpers.js",
     "/js/files.js": "/js/files.js",
     "/js/all.js": "/js/all.js",
     "/js/manifest.js": "/js/manifest.js",

@@ -790,7 +790,7 @@ class SurveyController extends Controller
         $disabled       = 'disabled';
         $files_ambience = FilesAmbience::where('files_ambience_id_survey', $id_survey)->get();
         //RECEBENDO TODOS OS ARQUIVOS
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
         $list = FilesAmbience::where('files_ambience_id_survey', $id_survey)->distinct()->get(['files_ambience_id_ambience']);
         $list->sortByDesc('files_ambience_id');
         if (count($list) > 0) {

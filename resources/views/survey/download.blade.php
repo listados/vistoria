@@ -114,8 +114,6 @@
 
 @stop
 @section('js')
-{{ Html::script('/js/manifest.js') }}
-{{ Html::script('/js/vendor.js') }}
 {{ Html::script('/js/survey.js') }}
 {{ Html::script('/js/plugins/dropzone.js') }}
 {{ Html::script('/js/upload_ambience.js') }}
@@ -158,6 +156,5 @@
 
        
     });
-    console.log(domain_complet + "/files_ambience/show/" + $("#id_survey_ambience").val());
 </script>
 @stop
