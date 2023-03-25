@@ -17,13 +17,22 @@
     @include('message.message_general')
     <div class="row">
         <div class="col-md-12">
-            <div class="pull-left">
+            <div class="pull-left col-md-6">
                 <button type="button" class="btn btn-primary" data-toggle="modal" title="Adiciona novas imagens a essa vistoria" 
                     data-target="#modal_ambience">
                 <i class="fa fa-upload" aria-hidden="true">
                 </i> Adicionar novas imagens 
                 </button>
             </div>
+            <div class="col-md-6">
+                <a href="{{url('vistoria/'.base64_encode($id_survey).'/editar/Editar-Vistoria/acao')}}" class="btn btn-default"
+                    title="Continuar editando a vistoria" 
+                >
+                <i class="fa fa-edit" aria-hidden="true">
+                </i> Ir para a vistoria
+            </a>
+            </div>
+            
         </div>
     </div>
     <div class="row">
@@ -37,8 +46,8 @@
                     <div class="col-md-12">
                     </div>
                     <div class="col-md-8">
+                        {{ Form::open(['url' => 'vistoria/alter-delete-ambience', 'id' => 'form_alter_delete_ambience']) }}
                         <div class="table-responsive box">
-                            {{ Form::open(['url' => 'vistoria/alter-delete-ambience', 'id' => 'form_alter_delete_ambience']) }}
                             <table class="table table-bordered" id="table-ambience-survey">
                                 <thead>
                                     <tr>
