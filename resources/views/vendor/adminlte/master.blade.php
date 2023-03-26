@@ -87,7 +87,7 @@
 {{-- <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> --}}
 {{-- <script src="https://www.jqueryscript.net/demo/Rich-Text-Editor-jQuery-RichText/jquery.richtext.js"></script> --}}
 
-{{ Html::script('/js/helpers.js') }}
+
 {{ Html::script('/js/all.js') }}
 <!-- NOTIFICAÇÃO -->
 {{ Html::script('js/plugins.js') }}
