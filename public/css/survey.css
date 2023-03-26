@@ -1,16 +1,1 @@
-/*MARCA O TOTAL DE IMAGENS DE CADA VISTORIA */
-.badge-noti {
-    display: inline-block;
-    min-width: 10px;
-    padding: 1px 5px;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    background-color: #2196f3;
-    border-radius: 10px;
-    float: right;
-}
+.badge-noti{display:inline-block;min-width:10px;padding:1px 5px;font-size:10px;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:middle;background-color:#2196f3;border-radius:10px;float:right}
