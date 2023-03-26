@@ -18,15 +18,24 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-left col-md-6">
-                <button type="button" class="btn btn-primary" data-toggle="modal" title="Adiciona novas imagens a essa vistoria" 
+                <button type="button" class="btn btn-primary" 
+                data-toggle="modal"
+                @if ($status == 'Finalizada')
+                    {{'disabled'}}
+                @endif
+                title="Adiciona novas imagens a essa vistoria" 
                     data-target="#modal_ambience">
                 <i class="fa fa-upload" aria-hidden="true">
                 </i> Adicionar novas imagens 
                 </button>
             </div>
             <div class="col-md-6">
-                <a href="{{url('vistoria/'.base64_encode($id_survey).'/editar/Editar-Vistoria/acao')}}" class="btn btn-default"
+                <a href="{{url('vistoria/'.base64_encode($id_survey).'/editar/Editar-Vistoria/acao')}}" 
+                    class="btn btn-default"
                     title="Continuar editando a vistoria" 
+                    @if ($status == 'Finalizada')
+                        {{'disabled'}}
+                    @endif
                 >
                 <i class="fa fa-edit" aria-hidden="true">
                 </i> Ir para a vistoria
@@ -120,6 +129,7 @@
 @section('css')
 {{ Html::style('css/survey.css') }}
 {{ Html::style('css/plugins/dropzone/dropzone.css') }}
+{{ Html::style('css/pnotify.buttons.css') }}
 
 @stop
 @section('js')
