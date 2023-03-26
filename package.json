@@ -22,7 +22,6 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "ckeditor4": "^4.20.0",
         "ckeditor4-vue": "^2.2.0",
         "element-ui": "^2.15.10",
         "pnotify": "^3.2.1",

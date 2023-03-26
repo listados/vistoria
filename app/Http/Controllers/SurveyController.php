@@ -790,7 +790,7 @@ class SurveyController extends Controller
         $disabled       = 'disabled';
         $files_ambience = FilesAmbience::where('files_ambience_id_survey', $id_survey)->get();
         //RECEBENDO TODOS OS ARQUIVOS
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
         $list = FilesAmbience::where('files_ambience_id_survey', $id_survey)->distinct()->get(['files_ambience_id_ambience']);
         $list->sortByDesc('files_ambience_id');
         if (count($list) > 0) {
@@ -808,9 +808,10 @@ class SurveyController extends Controller
         } else {
             $name_order_actual = [];
         }
-
-
-        return view('survey.download', compact('title_survey', 'id_survey', 'ambience', 'files_ambience', 'name_ambience', 'disabled', 'name_order_actual'));
+        //OBTENDO O STATUS DA VISTORIA
+        $status = Survey::where('survey_id', $id_survey)->first()->survey_status;
+        return view('survey.download', 
+            compact('status','title_survey', 'id_survey', 'ambience', 'files_ambience', 'name_ambience', 'disabled', 'name_order_actual'));
     }
 
     public function reply_survey($id_survey)

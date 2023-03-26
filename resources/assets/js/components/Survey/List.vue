@@ -60,12 +60,14 @@
             </el-button>
             <el-button 
                 type="default" size="small"
+                @click="repli(scope.row)"
                 icon="el-icon-document-copy" title="Clonar Vistoria"
                 circle>
             </el-button>
             <el-button 
                 type="default" size="small"
-                icon="el-icon-picture-outline" title="Visualizar Imagens" 
+                :disabled="scope.row.survey_status === 'Finalizada'"
+                icon="el-icon-picture-outline" title="Visualizar Imagens"
                 @click="imagensSurvey(scope.row)" circle>
             </el-button>
             <el-button 
@@ -83,8 +85,8 @@
     </el-table>
     </div>
   </template>
-<script>
-
+<script >
+  import  urlBase  from "../../../../../public/js/helpers.js";
 export default {
     data() {
       return {
@@ -94,10 +96,12 @@ export default {
       }
     },
     created() {
-        this.getListSurvey();       
+        this.getListSurvey();
+        console.log( process.env.MIX_SENTRY_DSN_PUBLIC)
     },
     mounted() {
       this.$eventBus.$on('search-survey', this.searchSurvey);
+      
     },
     beforeDestroy() {
         this.$eventBus.$off('search-survey');
@@ -167,6 +171,31 @@ export default {
         console.log({dataTable});
         console.log({query})
         return dataTable.filter(data => !this.search || `data.${query}.toLowerCase().includes(search.toLowerCase())`)
+      },
+      repli(row) {
+
+        this.$alert('Deseja realmente replicar essa vistoria '+row.survey_id+' ?', 'Replicar Vistoria', {
+          confirmButtonText: 'Sim, replicar',
+          showCancelButton: true,
+          cancelButtonText: 'Não',
+          cancelButtonClass: 'pull-left',
+          type: 'warning',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = 'Replicando vistoria ...';
+              setTimeout(() => {
+                done();
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false;
+                  window.location.replace(process.env.MIX_SENTRY_DSN_PUBLIC + '/vistoria/replicar/'+btoa(row.survey_id) );
+                }, 300);
+              }, 3000);
+            } else {
+              done();
+            }
+          }
+        });
       }
     }
 }

@@ -196,7 +196,7 @@
     </div>
 </template>
 <script>
-import  {Admin}  from "../../../../../public/js/helpers.js";
+import  urlBase  from "../../../../../public/js/helpers.js";
 export default {    
     props: {
         idSurvey: String,
@@ -343,7 +343,7 @@ export default {
                     break;
             }
             console.log({dataUp})
-            axios.put(Admin.baseUrl() + '/api/survey/alter-field', dataUp)
+            axios.put(urlBase + '/api/survey/alter-field', dataUp)
             .then( (res) => {
                 this.$message({
                     showClose: true,

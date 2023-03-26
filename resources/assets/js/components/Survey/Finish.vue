@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import  {Admin}  from "../../../../../public/js/helpers.js";
+import  {urlBase}  from "../../../../../public/js/helpers.js";
 
 export default {
     props: {
@@ -43,7 +43,7 @@ export default {
         survey: String
     },
      created() {
-       
+      console.log( process.env.MIX_SENTRY_DSN_PUBLIC)
     },
     methods: {
       open() {
@@ -67,7 +67,7 @@ export default {
           }
         }).then(() => {
             var dataUp = {survey_id: this.idSurvey, survey_status: 'Finalizada' }
-            axios.put( Admin.baseUrl() + '/api/survey/alter-field', dataUp)
+            axios.put(process.env.MIX_SENTRY_DSN_PUBLIC+ '/api/survey/alter-field', dataUp)
             .then( (res) => {
                  this.$message({
                     showClose: true,
@@ -76,7 +76,7 @@ export default {
                     duration: 1000
                 });
                 setTimeout(() => {               
-                    window.location.href= Admin.baseUrl() + "/vistoria"
+                    window.location.href= process.env.MIX_SENTRY_DSN_PUBLIC + "/vistoria"
                 }, 2000);
             })
             .catch( (erro) =>{
@@ -88,7 +88,7 @@ export default {
         })
       },
       closedSurvey() {
-        window.location.href="http://localhost:5050/vistoria"
+        window.location.href=process.env.MIX_SENTRY_DSN_PUBLIC + "/vistoria"
       }
     }
   
