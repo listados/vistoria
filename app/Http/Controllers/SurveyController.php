@@ -808,9 +808,10 @@ class SurveyController extends Controller
         } else {
             $name_order_actual = [];
         }
-
-
-        return view('survey.download', compact('title_survey', 'id_survey', 'ambience', 'files_ambience', 'name_ambience', 'disabled', 'name_order_actual'));
+        //OBTENDO O STATUS DA VISTORIA
+        $status = Survey::where('survey_id', $id_survey)->first()->survey_status;
+        return view('survey.download', 
+            compact('status','title_survey', 'id_survey', 'ambience', 'files_ambience', 'name_ambience', 'disabled', 'name_order_actual'));
     }
 
     public function reply_survey($id_survey)
