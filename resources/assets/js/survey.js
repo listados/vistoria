@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-  console.log(Admin.baseUrl());
+
   $("#send_file_upload").hide();
   PNotify.prototype.options.styling = "bootstrap3";
   PNotify.prototype.options.styling = "fontawesome";
@@ -260,3 +260,47 @@ $("#deleteAmbience").click(function (event) {
     stack: { 'dir1': 'down', 'dir2': 'right', 'modal': true }
   });
 });
+
+function repli(id_survey){
+  (new PNotify({
+    title: 'Replicar Vistoria',
+    text: 'Deseja realmente replicar a vistoria '+id_survey+' ?',
+    styling: 'fontawesome',       
+    type: 'info',       
+    icon: 'fa fa-question-circle',
+    hide: false,
+    
+    confirm: {
+        confirm: true,
+        buttons: [{
+            text: 'Replicar',
+            addClass: 'btn-default pull-left',
+            click: function(notice) {
+            	//MOSTRANDO LOAD
+            	$("#load-modal").modal({show:true});
+            	//REDIRECIONANDO APOS 2 SEGUNDOS
+            	setTimeout(function(){ 
+            		window.location.replace(domain_complet + '/vistoria/replicar/'+btoa(id_survey) );
+            	}, 2000);
+            }
+           
+        }, {
+            text: 'Cancelar',
+            click: function(notice) {
+                notice.remove();
+            }
+        }]
+    },
+    buttons: {
+        closer: false,
+        sticker: false
+    },
+    history: {
+        history: false
+    }
+	})).get().on('pnotify.confirm', function() {
+	    alert('Ok, cool.');
+	}).on('pnotify.cancel', function() {
+	    alert('Oh ok. Chicken, I see.');
+	});
+}

@@ -3,12 +3,12 @@
     "/js/vendor.js": "/js/vendor.js",
     "/js/survey.js": "/js/survey.js",
     "/js/proposal_pf.js": "/js/proposal_pf.js",
-    "/js/helpers.js": "/js/helpers.js",
     "/js/files.js": "/js/files.js",
     "/js/all.js": "/js/all.js",
     "/js/manifest.js": "/js/manifest.js",
     "/css/survey.css": "/css/survey.css",
     "/css/all.min.css": "/css/all.min.css",
     "/js/teamSite.js": "/js/teamSite.js",
-    "/js/plugins.js": "/js/plugins.js"
+    "/js/plugins.js": "/js/plugins.js",
+    "/css/pnotify.buttons.css": "/css/pnotify.buttons.css"
 }

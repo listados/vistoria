@@ -1,14 +1,14 @@
 webpackJsonp([2],{
 
-/***/ 278:
+/***/ 280:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(279);
+module.exports = __webpack_require__(281);
 
 
 /***/ }),
 
-/***/ 279:
+/***/ 281:
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -16,7 +16,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 $(document).ready(function () {
   var _language;
 
-  console.log(Admin.baseUrl());
   $("#send_file_upload").hide();
   PNotify.prototype.options.styling = "bootstrap3";
   PNotify.prototype.options.styling = "fontawesome";
@@ -241,6 +240,50 @@ $("#deleteAmbience").click(function (event) {
   });
 });
 
+function repli(id_survey) {
+  new PNotify({
+    title: 'Replicar Vistoria',
+    text: 'Deseja realmente replicar a vistoria ' + id_survey + ' ?',
+    styling: 'fontawesome',
+    type: 'info',
+    icon: 'fa fa-question-circle',
+    hide: false,
+
+    confirm: {
+      confirm: true,
+      buttons: [{
+        text: 'Replicar',
+        addClass: 'btn-default pull-left',
+        click: function click(notice) {
+          //MOSTRANDO LOAD
+          $("#load-modal").modal({ show: true });
+          //REDIRECIONANDO APOS 2 SEGUNDOS
+          setTimeout(function () {
+            window.location.replace(domain_complet + '/vistoria/replicar/' + btoa(id_survey));
+          }, 2000);
+        }
+
+      }, {
+        text: 'Cancelar',
+        click: function click(notice) {
+          notice.remove();
+        }
+      }]
+    },
+    buttons: {
+      closer: false,
+      sticker: false
+    },
+    history: {
+      history: false
+    }
+  }).get().on('pnotify.confirm', function () {
+    alert('Ok, cool.');
+  }).on('pnotify.cancel', function () {
+    alert('Oh ok. Chicken, I see.');
+  });
+}
+
 /***/ })
 
-},[278]);
+},[280]);
