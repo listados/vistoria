@@ -70,11 +70,11 @@
                 icon="el-icon-picture-outline" title="Visualizar Imagens"
                 @click="imagensSurvey(scope.row)" circle>
             </el-button>
-            <el-button 
+            <!-- <el-button 
                 type="default" size="small"
                 icon="el-icon-time" title="Histórico" 
                 @click="historySurvey(scope.row)" circle>
-            </el-button>
+            </el-button> -->
             <el-button 
                 type="danger" size="small"
                 icon="el-icon-delete-solid" title="Excluir Vistoria"

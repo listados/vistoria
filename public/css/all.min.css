@@ -1,1 +1,24 @@
-.dataTables_paginate .paginate_button{padding:3px!important}.el-select--large{width:100%}.el-dialog__body{text-align:center}.el-dropdown-link{cursor:pointer;color:#409eff}.el-icon-arrow-down{font-size:12px}.margin-5{margin:5px!important}.display-grid{display:grid!important;width:100%}
+/* STILIZANDO PAGINAÇÃO */
+.dataTables_paginate .paginate_button{
+	padding: 3px !important;
+}
+.el-select--large  {
+	width: 100%
+}
+.el-dialog__body {
+	text-align: center;
+}
+.el-dropdown-link {
+	cursor: pointer;
+	color: #409EFF;
+}
+.el-icon-arrow-down {
+	font-size: 12px;
+}
+.margin-5 {
+	margin: 5px !important;
+}
+.display-grid {
+	display: grid !important;
+	width: 100%
+}
