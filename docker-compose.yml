@@ -9,7 +9,7 @@ services:
     mysql:
         image: 'mysql:5.7'
         working_dir: /application
-        container_name: 'dbvistoria'
+        container_name: 'dbvistoria-vue'
         volumes:
             - './phpdocker/mysql/data:/var/lib/mysql'
         environment:
@@ -22,7 +22,7 @@ services:
 
     webserver:
         image: 'nginx:alpine'
-        container_name: 'webvistoria'
+        container_name: 'webvistoria-vue'
         working_dir: /application
         volumes:
             - '.:/application'
@@ -33,7 +33,7 @@ services:
     php-fpm:
         build: phpdocker/php-fpm
         working_dir: /application
-        container_name: phpvistoria
+        container_name: phpvistoria-vue
         volumes:
             - '.:/application'
             - '.env:/application/.env'
