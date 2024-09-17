@@ -947,6 +947,13 @@ class SurveyController extends Controller
         }
     }
 
+    /**
+     * order_ambience_survey_list_order - lista do id dos ambientes, Ex: 2,142,
+     * order_ambience_survey_id_survey - id da Vistoria 1455
+     *
+     * @param Request $request
+     * @return void
+     */
     public function alter_order_ambience_survey(Request $request)
     {
         $request['order_ambience_survey_order'] = 1;

@@ -102,7 +102,6 @@
                         
                         <div class="panel panel-primary">
                             <div class="panel-heading">Ordem do upload de ambiente</div>
-                           
                                 <ul class="list-group"  id="list-group">
                                     @php $ordinal = 0; @endphp
                                     @foreach($name_ambience as $key => $name_ambience_item)
@@ -113,9 +112,8 @@
                                     @endforeach
                                     {{-- <li class="list-group-item" value="{{$files_ambience_item->files_ambience_id}}"> {{$files_ambience_item->files_ambience_id_ambience}} </li> --}}
                                 </ul>
-                            <div class="panel-footer">
-                              
-                                {{Form::button('Alterar Ordem', ['id'=>'btn_alter_order_ambience','class' => 'btn btn-primary '.$disabled, 'title' => "Altera a ordem para ser mostrado no laudo de vistoria"])}}
+                            <div class="panel-footer">         
+                                <btn-ordem-ambience></btn-ordem-ambience>
                             </div>
                         </div>
                     </div>

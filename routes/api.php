@@ -48,6 +48,7 @@ Route::prefix('survey')->group(function(){
     Route::get('content/id/{id}/field/{content}' , 'SurveyController@content');
     Route::put('content', 'SurveyController@alterContent');
     Route::put('alter-field', 'SurveyController@alterSurveyor');
+    Route::post('alter-order', 'SurveyController@alter_order_ambience_survey');
 });
 
 
