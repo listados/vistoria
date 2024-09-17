@@ -1,28 +1,22 @@
-# README #
+# Projeto
+Projeto de uma vistoria imobiliária da empresa listados
+![enter image description here](https://drive.google.com/file/d/12c4rN_iFNQDjPPBSRJqwY7NgmsIPNvl3/view?usp=sharing)
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Instalação do npm
 
-### Insalação ###
-* docker-compose exec php-fpm composer install
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+ - git clone
+ - git fetch --all
+ - git switch develop
+ - docker compose up -d
+ - rm -rf node_modules
+ - rm package-lock.json yarn.lock
+ - npm cache clear --force
+ - npm install cross-env
+ - npm instal
+ - docker exec phpvistoria-vue composer update
+ - chgrp -R www-data storage bootstrap/cache
+ - chmod -R ug+rwx storage bootstrap/cache
+ - docker exec phpvistoria-vue php artisan migrate
 
 ### Erro index: name PackageManifest.php  ###
 
