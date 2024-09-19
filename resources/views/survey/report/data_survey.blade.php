@@ -1,10 +1,13 @@
  @foreach($users as $user)
+{{-- @php
+    dump($user)
+@endphp --}}
             @if($user->relation_survey_user_type == 'Locador')
             <tr style="margin: 5px;">
                 <td colspan="3" class="participantes" >
                     <strong> Locador(a): </strong>{{$user->name }}
-                    @if(!empty($user->relation_survey_user_cpf))
-                    , inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}
+                    @if(!empty($user->cpf))
+                    , inscrito(a) no CPF/CNPJ sob o nº. {{$user->cpf }}
                     @endif
                 </td>
             </tr>
@@ -16,8 +19,8 @@
             <tr>
                 <td colspan="3" class="participantes" >
                     <strong> Locatário(a): </strong>{{$user->name }}
-                    @if ($user->relation_survey_user_cpf)
-                        , inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}
+                    @if ($user->cpf)
+                        , inscrito(a) no CPF/CNPJ sob o nº. {{$user->cpf }}
                     @endif
                 </td>
             </tr>
@@ -29,8 +32,8 @@
             <tr>
                 <td colspan="3" class="participantes" >
                     <strong> Fiador(a): </strong>{{$user->name }},
-                    @if ($user->relation_survey_user_cpf)
-                        , inscrito(a) no CPF/CNPJ sob o nº. {{$user->relation_survey_user_cpf }}
+                    @if ($user->cpf)
+                        , inscrito(a) no CPF/CNPJ sob o nº. {{$user->cpf }}
                     @endif                      
                 </td>
             </tr>
