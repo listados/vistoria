@@ -56,7 +56,7 @@
         </footer>
         <table>
             <tr>
-                <td style="width:30%;"><img src="{{ public_path('dist/img/logo_grande.jpg') }}" alt="" height="64"></td>
+                <td style="width:30%;"><img src="{{ public_path('dist/img/nomadesite2_md.png') }}" alt="" height="64"></td>
                 <td>
                     <h3>Termo de Vistoria
                         @if($survey[0]->survey_status == "Rascunho")
