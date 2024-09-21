@@ -928,7 +928,7 @@ class SurveyController extends Controller
 
     public function alter_ambience(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         //PARA EXCLUSÃO - VERIFICA SE TEM O ARRAY DE EXCLUIR
         if (isset($request['surveyDelete'])) {
             try {

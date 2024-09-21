@@ -142,8 +142,8 @@ $(function () {
       /*optional stuff to do after success */
       $.each(data, function (index, val) {
         /* iterate through array or object */
-        console.log('index = ' + index + ' val = ' + val.files_ambience_description_file);
-        $('#table-ambience-survey').append('<tbody>' +
+        // console.log('index = ' + index + ' val = ' + val.files_ambience_description_file);
+        $('#table-ambience-surveys').append('<tbody>' +
           '<tr>' +
           '<td>' + val.ambience_name + '</td>' +
           '<td style="width: 50%;"><a href="#" class="thumbnail">' +

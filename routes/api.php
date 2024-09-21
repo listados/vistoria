@@ -52,6 +52,7 @@ Route::prefix('survey')->group(function(){
 });
 
 Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
+Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
 
 Route::get('contact' , 'ContactController@getContacts');
 Route::post('contact/create' , 'ContactController@store');

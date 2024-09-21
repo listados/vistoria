@@ -50,6 +50,7 @@ Vue.component('survey-content', require('./components/Survey/Content.vue'));
 Vue.component('survey-surveyor', require('./components/Survey/Surveyor.vue'));
 Vue.component('survey-finish', require('./components/Survey/Finish.vue'));
 Vue.component('btn-ordem-ambience', require('./components/Survey/BtnOrdemAmbience.vue'));
+Vue.component('ambience-image', require('./components/Survey/Ambience/AmbienceImage.vue'));
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 Vue.prototype.$eventBus = new Vue(); // Global event bus

@@ -48,47 +48,7 @@
                         </div>
                         <div class="col-md-8">
                             <ambience-image :id-survey="{{$id_survey}}"></ambience-image>
-                            {{ Form::open(['url' => 'vistoria/alter-delete-ambience', 
-                            'id' => 'form_alter_delete_ambience']) }}
-                            <div class="table-responsive box">
-                                <table class="table table-bordered" id="table-ambience-survey">
-                                    <thead>
-                                        <tr>
-                                            <th>Ambiente</th>
-                                            <th>Arquivo</th>
-                                            <th>Alterar Ambiente</th>
-                                            <th>Excluir</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered box-footer">
-                                    <tr>
-                                        <th>Ambiente</th>
-                                        <th>Arquivo</th>
-                                        <th>
-                                            <a href="#" 
-                                                data-toggle="modal"
-                                                data-target="#alter-ambience"
-                                                id="alter-ambience-btn" 
-                                                class="btn btn-info pull-right">
-                                                Alterar
-                                            </a>
-                                        </th>
-                                        <th>
-                                            <a href="#" 
-                                                id="deleteAmbience"
-                                                class="btn btn-danger pull-right"
-                                            >Excluir
-                                            </a>
-                                        </th>
-                                    </tr>
-                                </table>
-                            </div>
-                            {{--  @include('modal.survey_ambience_upload') --}}
-                            @include('modal.modal_alter_ambience')
-                            {{ Form::close() }}
+                            
                         </div>
                         <div class="col-md-4">
                             <div class="box box-primary">
