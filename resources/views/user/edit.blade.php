@@ -14,10 +14,13 @@
 @section('content')
 
 <div class="row">
-  <div class="col-md-12">
-    <example-component></example-component>
+ <div class="col-md-12">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    @include('message.message_general')
   </div>
-  @include('message.message_general')
+  <div class="col-md-4"></div>
+ </div>
 	<div class="col-md-3">
     <!-- Profile Image -->
     <div class="box box-primary">
