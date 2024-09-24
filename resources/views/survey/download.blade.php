@@ -48,7 +48,10 @@
                         </div>
                         <div class="col-md-8">
                             <ambience-image :id-survey="{{$id_survey}}"></ambience-image>
-                            
+                           
+                            {{--  @include('modal.survey_ambience_upload') --}}
+                            @include('modal.modal_alter_ambience')
+                           
                         </div>
                         <div class="col-md-4">
                             <div class="box box-primary">

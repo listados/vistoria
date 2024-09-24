@@ -928,12 +928,12 @@ class SurveyController extends Controller
 
     public function alter_ambience(Request $request)
     {
-        dd($request->all());
+      
         //PARA EXCLUSÃO - VERIFICA SE TEM O ARRAY DE EXCLUIR
         if (isset($request['surveyDelete'])) {
             try {
                 FilesAmbience::whereIn('files_ambience_id', $request['surveyDelete'])->delete();
-                return back()->with('success', 'Imagens excluida com sucesso');
+                return response()->json(['message' => 'Imagens excluida com sucesso'], 200);
             } catch (Exception $e) {
                 return back()->with('error_message', 'Não foi possível fazer a exclusão. Erro: ' . $e->getMessage());
             }
