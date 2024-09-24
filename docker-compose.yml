@@ -33,7 +33,7 @@ services:
     php-fpm:
         build: phpdocker/php-fpm
         working_dir: /application
-        container_name: phpvistoria-vue
+        container_name: phpvistoria
         volumes:
             - '.:/application'
             - '.env:/application/.env'

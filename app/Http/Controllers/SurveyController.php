@@ -495,7 +495,7 @@ class SurveyController extends Controller
                 //Helpers::reg_not_all(null, Auth::user()->nick. $content_not .$id);
 
                 DB::table('history_survey')->insert(['history_survey_id_user' => Auth::user()->id, 'history_survey_action' => $content_not, 'history_survey_id_survey' => $id, 
-                'history_survey_date' => Carbon::now(), 'history_survey_updated' => Carbon::now(), 'history_survey_created' => Carbon::now()]);
+                'history_survey_date' => Carbon::now(), 'history_survey_updated' => Carbon::now()]);
 
                 return response()->json(['mensagem' => 'success']);
             } catch (Exception $e) {
@@ -886,8 +886,7 @@ class SurveyController extends Controller
         $history    = DB::table('history_survey')->insert(
             [
                 'history_survey_id_user' => Auth::user()->id, 'history_survey_action' => 'Replicou a vistoria ' . $id,
-                'history_survey_created' => Carbon::now(), 'history_survey_id_survey' =>  $survey_reply->survey_id,
-                'history_survey_updated' => Carbon::now(), 'history_survey_date' => Carbon::now()
+                'history_survey_id_survey' =>  $survey_reply->survey_id, 'history_survey_date' => Carbon::now()
             ]
         );
 
