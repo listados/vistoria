@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'EspindolaAdmin',
+    'title' => 'Listados - Vistoria',
 
     'title_prefix' => '',
 
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Espindola</b>Admin',
+    'logo' => '<b>Listados</b>Vistoria',
 
     'logo_mini' => '<b>A</b>dm',
 
