@@ -33,6 +33,7 @@ Route::prefix('escolha-azul')->group(function(){
     Route::get('download/{id}/type/{type}', 'ProposalPFController@getFiles');
 });
 
+// Route::group(['middleware' => 'auth:api'], function() {
 /**
  * Rota para informar os tipos de imóveis
  */
@@ -53,6 +54,8 @@ Route::prefix('survey')->group(function(){
 
 Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
 Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
+// });
+
 
 Route::get('contact' , 'ContactController@getContacts');
 Route::post('contact/create' , 'ContactController@store');
