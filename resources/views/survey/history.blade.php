@@ -20,7 +20,13 @@
           <div class="box box-primary direct-chat direct-chat-info">
             <div class="box-header with-border">
               <h3 class="box-title">Histórico</h3>
-
+              <div class="box-tools pull-right">
+                <a href="{{url('vistoria')}}" class="btn btn-default" title="Voltar para lista de vistoria">
+                    <i class="fa  fa-arrow-circle-left"></i>
+                    Voltar
+                </a>
+               
+                </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -39,7 +45,7 @@
                 @foreach($history as $historys)
                 <div class="direct-chat-msg">
                   <div class="direct-chat-info clearfix">
-                    <span class="direct-chat-name pull-left">{{$historys->nick}}</span>
+                    <span class="direct-chat-name pull-left">{{$historys->username}}</span>
                     <span class="direct-chat-timestamp pull-right">
                         @if($historys->history_survey_date == '0000-00-00 00:00:00' || $historys->history_survey_date == NULL)
                         @else
@@ -48,7 +54,12 @@
                     </span>
                 </div>
                 <!-- /.direct-chat-info -->
+                @if (is_null($historys->avatar))
+                <img class="direct-chat-img" src="{{url('dist/img/user.png')}}" alt="message user image" style="width: 32px;height: 32px;">
+                @else
                 <img class="direct-chat-img" src="{{url('dist/img/upload/profile/'.$historys->avatar)}}" alt="message user image">
+                @endif
+                
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                     {{$historys->history_survey_action}}
@@ -87,23 +98,17 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1-1">
-                       The European languages are members of the same family. Their separate existence is a myth.
-                       For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                       in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                       new common language would be desirable: one could refuse to pay expensive translators. To
-                       achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                       words. If several languages coalesce, the grammar of the resulting language is more simple
-                       and regular than that of the individual languages.
-
+                        <h3>Em Desenvolvimento</h3>
                    </div>
                    <!-- /.tab-pane -->
                    <div class="tab-pane" id="tab_2-2">
                     <div class="input-group">
-                        <textarea name="" id="" cols="65" rows="10" form="form-control" placeholder="Descreva o que você não concorda com a vistoria"></textarea>
+                        {{-- <textarea name="" id="" cols="65" rows="10" form="form-control" placeholder="Descreva o que você não concorda com a vistoria"></textarea> --}}
+                        <h3>Contestar em Desenvolvimento</h3>
                     </div>
-                    <span class="input-group-btn">
+                    {{-- <span class="input-group-btn">
                         <button type="button" class="btn btn-danger btn-flat">Salvar Contestação</button>
-                    </span>
+                    </span> --}}
                 </div>
                 <!-- /.tab-pane -->
             </div>
