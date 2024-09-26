@@ -2,8 +2,9 @@
 
 namespace EspindolaAdm\Http\Controllers;
 
-use Illuminate\Http\Request;
 use EspindolaAdm\Ambience;
+use Illuminate\Http\Request;
+use EspindolaAdm\Repository\RepositoryAmbience;
 
 class AmbienceController extends Controller
 {
@@ -37,5 +38,10 @@ class AmbienceController extends Controller
        {
         return response()->json(['type' => 'error', 'message' =>'erro '.$e->getMessage()],400); 
        }
+    }
+
+    public function all()
+    {
+        return RepositoryAmbience::all();
     }
 }

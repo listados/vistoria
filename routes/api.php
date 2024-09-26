@@ -52,6 +52,7 @@ Route::prefix('survey')->group(function(){
     Route::post('alter-order', 'SurveyController@alter_order_ambience_survey');
 });
 
+Route::get('ambience-all' , 'AmbienceController@all');
 Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
 Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
 // });

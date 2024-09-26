@@ -48,10 +48,6 @@
                         </div>
                         <div class="col-md-8">
                             <ambience-image :id-survey="{{$id_survey}}"></ambience-image>
-                           
-                            {{--  @include('modal.survey_ambience_upload') --}}
-                            @include('modal.modal_alter_ambience')
-                           
                         </div>
                         <div class="col-md-4">
                             <div class="box box-primary">
@@ -59,17 +55,14 @@
                                     <h3 class="box-title">Ordem Atual no Laudo</h3>
 
                                 </div>
-                                <!-- /.box-header -->
+                             
                                 <div class="box-body">
                                     @foreach ($name_order_actual as $itens_name_order_actual)
                                         <label for=""
                                             class="label label-primary">{{ $itens_name_order_actual->ambience_name }}</label>
                                     @endforeach
                                 </div>
-                                <!-- /.box-body -->
-
                             </div>
-
                             <div class="panel panel-primary">
                                 <div class="panel-heading">Ordem do upload de ambiente</div>
                                 <ul class="list-group" id="list-group">

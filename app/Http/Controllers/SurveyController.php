@@ -934,7 +934,6 @@ class SurveyController extends Controller
 
     public function alter_ambience(Request $request)
     {
-      
         //PARA EXCLUSÃO - VERIFICA SE TEM O ARRAY DE EXCLUIR
         if (isset($request['surveyDelete'])) {
             try {
@@ -949,7 +948,7 @@ class SurveyController extends Controller
             //SE TIVER ARRAY DE ALTERAR, FAZ A ALTERAÇÃO
         } else {
             FilesAmbience::whereIn('files_ambience_id', $request['surveyAlter'])->update(['files_ambience_id_ambience' => $request['files_ambience_id_ambience']]);
-            return back()->with('success', 'Ambiente alterado com sucesso');
+            return response()->json(['message'=>'Ambiente alterado com sucesso'], 200);
         }
     }
 

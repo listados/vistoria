@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('replicar/{id}' , 'SurveyController@reply_survey');
         Route::put('arquivar/{id}' , 'SurveyController@filed');
         Route::get('historico/{id}' , 'SurveyController@history');
-        Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
+       
         Route::post('orderBy', 'SurveyController@alter_order_ambience_survey');
         //ROTA VIA VUEJS
         Route::get('nova-vistoria', 'SurveyController@newSurvey');
