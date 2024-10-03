@@ -513,6 +513,7 @@ class SurveyController extends Controller
     public function destroy($id)
     {
         try {
+            DB::table('history_survey')->where('history_survey_id_survey', $id)->delete();
             $survey = Survey::where('survey_id' , $id);
             $survey->delete();
             return response()->json(['message' => 'Vistoria Excluída com sucesso'], 200);    

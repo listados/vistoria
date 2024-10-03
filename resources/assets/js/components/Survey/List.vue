@@ -77,6 +77,7 @@
             </el-button>
             <el-button 
                 type="danger" size="small"
+                :disabled="scope.row.survey_status === 'Finalizada'"
                 icon="el-icon-delete-solid" title="Excluir Vistoria"
                 @click="openDeleteSurvey(scope.row)" circle>
             </el-button>
@@ -86,7 +87,7 @@
     </div>
   </template>
 <script >
-  import  urlBase  from "../../../../../public/js/helpers.js";
+
 export default {
     data() {
       return {
