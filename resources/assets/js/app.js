@@ -12,8 +12,9 @@ import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
-import CKEditor from 'ckeditor4-vue';
+// import CKEditor from 'ckeditor4-vue';
 import DatePicker from 'vue2-datepicker';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
 // import vue2Dropzone from 'vue2-dropzone'
 
 // IMPORT DE FOLHA DE ESTILO
@@ -29,6 +30,7 @@ Vue.use(ElementUI);
 Vue.use( CKEditor );
 Vue.use( DatePicker );
 Vue.use(require('vue-moment'));
+
 // Vue.use(AgGridVue);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -51,6 +53,7 @@ Vue.component('survey-surveyor', require('./components/Survey/Surveyor.vue'));
 Vue.component('survey-finish', require('./components/Survey/Finish.vue'));
 Vue.component('btn-ordem-ambience', require('./components/Survey/BtnOrdemAmbience.vue'));
 Vue.component('ambience-image', require('./components/Survey/Ambience/AmbienceImage.vue'));
+Vue.component('aspect-general', require('./components/Survey/Config/AspectGeneral.vue'));
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 Vue.prototype.$eventBus = new Vue(); // Global event bus

@@ -18,7 +18,7 @@
                     <div id="collapseOne" class="panel-collapse collapse">
                        <div class="box-body">
                           <div class="">
-                             <a href="#" class="list-group-item">Aspectos Gerais</a>
+                             <a href="{{url('admin/configuracao/aspect')}}" class="list-group-item">Aspectos Gerais</a>
                              <a href="#" class="list-group-item">Ressalvas por Ambientes </a>
                              <a href="#" class="list-group-item">Chaves </a>
                              <a href="#" class="list-group-item">Disposições Gerais</a>

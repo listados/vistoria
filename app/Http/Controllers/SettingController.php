@@ -93,6 +93,13 @@ class SettingController extends Controller
     {
         return view('setting.ambience');
     }
+
+    public function aspect()
+    {
+        return view('setting.aspect');
+    }
+
+
     public function getAmbience()
     {
         //$ambience = Ambience::where('ambience_code_user', Auth::user()->id)->select(['ambience_id', 'ambience_name']);;
