@@ -1,32 +1,50 @@
 <template>
     <div>
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+
+  <!-- Or manually control the data synchronization -->
+  <quill-editor
+    :content="content"
+    :options="editorOption"
+    @change="onEditorChange($event)"
+  />
     </div>
 </template>
 
 <script>
-import { ClassicEditor } from 'ckeditor5';
 
 
 export default {
     name: 'app',
     data() {
         return {
-            editor: ClassicEditor,
-            editorData: '<p>Hello from CKEditor 5 in Vue 2!</p>',
-            editorConfig: {
-                toolbar: {
-                    items: [ 'undo', 'redo', '|', 'bold', 'italic' ],
-                 },
-                plugins: [
-                    Bold, Essentials, Italic, Mention, Paragraph, SlashCommand, Undo
-                ],
-                licenseKey: '<YOUR_LICENSE_KEY>',
-                mention: { 
-                    // Mention configuration
-                }
+            content: '<h2>I am Example</h2>',
+            editorOption: {
+            // Some Quill options...
             }
         };
+    },
+    methods: {
+      onEditorBlur(quill) {
+        console.log('editor blur!', quill)
+      },
+      onEditorFocus(quill) {
+        console.log('editor focus!', quill)
+      },
+      onEditorReady(quill) {
+        console.log('editor ready!', quill)
+      },
+      onEditorChange({ quill, html, text }) {
+        console.log('editor change!', quill, html, text)
+        this.content = html
+      }
+    },
+    computed: {
+      editor() {
+        // return this.$refs.myQuillEditor.quill
+      }
+    },
+    mounted() {
+      console.log('this is current quill instance object', this.editor)
     }
 };
 </script>

@@ -6,8 +6,8 @@
 @section('content')
 <section class="content">
     <div class="row">
-        @include('setting.sidebar-menu')
-        <div class="col-md-9">
+        {{-- @include('setting.sidebar-menu') --}}
+        <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Ambiente</h3>

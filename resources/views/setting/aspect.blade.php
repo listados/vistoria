@@ -18,7 +18,7 @@
                 <div class="box-body">
                     <div class="col-md-12">
                         <label for="">Cadastrar um ambiente</label>
-                        <aspect-general></aspect-general>
+                        
                     </div>
                 </div>
             </div>
