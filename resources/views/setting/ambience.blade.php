@@ -12,6 +12,9 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Ambiente</h3>
                     <div class="box-tools pull-right">
+                        <button type="button" class="btn" >
+                            <i class="fa fa-arrow-circle-left"></i> Voltar
+                        </button>
                     </div>
                     <!-- /.box-tools -->
                 </div>
@@ -65,7 +68,5 @@
 {{ Html::script('/js/vendor.js') }}
 {{ Html::script('js/all.js') }}
 {{ Html::script('js/ambience.js') }}
-<script>
-   
-</script>
+
 @stop

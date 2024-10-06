@@ -12,7 +12,6 @@ import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
-import CKEditor from 'ckeditor4-vue';
 import DatePicker from 'vue2-datepicker';
 // import CKEditor from '@ckeditor/ckeditor5-vue2';
 // import vue2Dropzone from 'vue2-dropzone'
@@ -31,7 +30,6 @@ Vue.use(VueSweetalert2);
 Vue.use(VModal);
 Vue.use(VueMask);
 Vue.use(ElementUI);
-Vue.use( CKEditor );
 Vue.use( DatePicker );
 Vue.use( VueQuillEditor );
 Vue.use(require('vue-moment'));
