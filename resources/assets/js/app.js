@@ -12,15 +12,19 @@ import VModal from 'vue-js-modal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
-// import CKEditor from 'ckeditor4-vue';
+import CKEditor from 'ckeditor4-vue';
 import DatePicker from 'vue2-datepicker';
-import CKEditor from '@ckeditor/ckeditor5-vue2';
+// import CKEditor from '@ckeditor/ckeditor5-vue2';
 // import vue2Dropzone from 'vue2-dropzone'
+import VueQuillEditor from 'vue-quill-editor'
 
 // IMPORT DE FOLHA DE ESTILO
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'vue2-datepicker/index.css';
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
 
 Vue.use(VueSweetalert2);
 // Vue.use(vue2Dropzone);
@@ -29,6 +33,7 @@ Vue.use(VueMask);
 Vue.use(ElementUI);
 Vue.use( CKEditor );
 Vue.use( DatePicker );
+Vue.use( VueQuillEditor );
 Vue.use(require('vue-moment'));
 
 // Vue.use(AgGridVue);
