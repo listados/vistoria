@@ -106,4 +106,9 @@ class SettingController extends Controller
             ->make();
     }
 
+    public function aspect()
+    {
+        return view('setting.aspect');
+    }
+
 }
