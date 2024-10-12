@@ -9,15 +9,15 @@
 
   </div>
   <div class="box-footer text-center" >
-    <span class="mailbox-read-time">Seus dados são salvo automaticamente</span>
+    <span class="mailbox-read-time">Seus dados são salvo automaticamente.</span> <br>
+    <span class="mailbox-read-time">Deve conter no mínimo 5 caracteres.</span>
   </div>
 </div>
 </template>
 
 <script>
 
-import { getSetting } from '../../../helpers/helper';
-import {setTimeout} from "../../../../../../public/js/vendor";
+import { getSetting, alterSetting } from '../../../helpers/helper';
 export default {
   data () {
     return {
@@ -38,17 +38,31 @@ export default {
   },
   methods: {
     onEditorBlur(quill) {
-      console.log('editor change!', quill.root.innerHTML)
+      const length = quill.getLength();
+      // if(length == 1){
+      //   this.$message({
+      //     showClose: true,
+      //     type: 'error',
+      //     message: 'O Campo é obrigatório'
+      //   });
+      //   return false;
+      // }else{
+      //   alterSetting(quill.root.innerHTML);
+      // }
+      const res = alterSetting(quill.root.innerHTML);
+      res.then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log({err})
+      })
       this.$message({
         showClose: true,
         type: 'success',
         message: 'Dados salvo com sucesso!'
       });
 
-    },
-    getSetting(){
-      this.saveAspectGeneral = false;
     }
+
   },
   computed: {
     editor() {

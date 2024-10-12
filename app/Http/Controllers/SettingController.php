@@ -2,6 +2,7 @@
 
 namespace EspindolaAdm\Http\Controllers;
 
+use EspindolaAdm\Http\Requests\SettingRequest;
 use Illuminate\Http\Request;
 use EspindolaAdm\Ambience;
 use Illuminate\Support\Facades\DB;
@@ -58,12 +59,13 @@ class SettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  SettingRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SettingRequest $request)
     {
-        //
+        $validated = $request->validated();
+        dd($validated);
     }
 
     /**

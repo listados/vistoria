@@ -58,6 +58,7 @@ Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
 // });
 // Configuração
 Route::get('setting', 'SettingController@getSetting');
+Route::put('setting', 'SettingController@edit');
 
 
 Route::get('contact' , 'ContactController@getContacts');
