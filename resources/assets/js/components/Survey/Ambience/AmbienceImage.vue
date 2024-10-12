@@ -82,6 +82,7 @@
 </template>
 
 <script>
+
 export default {
     props: {
         idSurvey: Number

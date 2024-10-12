@@ -56,6 +56,8 @@ Route::get('ambience-all' , 'AmbienceController@all');
 Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
 Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
 // });
+// Configuração
+Route::get('setting', 'SettingController@getSetting');
 
 
 Route::get('contact' , 'ContactController@getContacts');
