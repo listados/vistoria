@@ -42,8 +42,9 @@ export default {
         case 'reservation':
           this.content = res.data.settings_reservation;
           break;
-        case y:
-          // code block
+        case 'provisions':
+          this.content = res.data.settings_provisions;
+          break;
           break;
         default:
           // code block

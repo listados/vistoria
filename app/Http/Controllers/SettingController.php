@@ -107,7 +107,6 @@ class SettingController extends Controller
     }
     public function getAmbience()
     {
-        //$ambience = Ambience::where('ambience_code_user', Auth::user()->id)->select(['ambience_id', 'ambience_name']);;
         $ambience = Ambience::select(['ambience_id', 'ambience_name']);
         
         return Datatables::of($ambience)
@@ -117,7 +116,7 @@ class SettingController extends Controller
             })
             ->make();
     }
-
+    // Configura os aspectos gerais da vistoria
     public function aspect()
     {
         return view('setting.aspect');
@@ -128,10 +127,15 @@ class SettingController extends Controller
         $settings = DB::table('settings')->first();
         return response()->json($settings);
     }
-
+    // Configura a ressalva da vistoria
     public function reservation()
     {
         return view('setting.reservation');
+    }
+    // Configurar as disposições gerais da vistoria
+    public function provision()
+    {
+        return view('setting.provisions');
     }
 
 }

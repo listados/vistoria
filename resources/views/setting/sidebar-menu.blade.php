@@ -23,10 +23,16 @@
                           <i class="fa fa-inbox"></i> Ressalva por ambiente
                        </a>
                     </li>
-                    <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
-                    <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
+                    <li>
+                       <a href="{{url('admin/configuracao/disposicao-geral')}}">
+                          <i class="fa fa-inbox"></i> Disposição Geral
+                       </a>
                     </li>
-                    <li><a href="{{url('admin/configuracao/ambiente')}}" class="list-group-item">Ambiente</a></li>
+                    <li>
+                       <a href="{{url('admin/configuracao/ambiente')}}" class="list-group-item">
+                          <i class="fa fa-inbox"></i>Ambiente
+                       </a>
+                    </li>
                  </ul>
               </div>
 
