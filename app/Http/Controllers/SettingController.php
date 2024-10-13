@@ -3,6 +3,7 @@
 namespace EspindolaAdm\Http\Controllers;
 
 use EspindolaAdm\Http\Requests\SettingRequest;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use EspindolaAdm\Ambience;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +66,16 @@ class SettingController extends Controller
     public function edit(SettingRequest $request)
     {
         $validated = $request->validated();
-        dd($validated);
+        if($validated) {
+            try {
+                $idSetting = DB::table('settings')->first();
+                DB::table('settings')
+                    ->where(['settings' => $idSetting->settings])->update(['settings_aspect_general' => $validated['settings_aspect_general']]);
+                return response()->json(['message' => 'Dados salvo com sucesso!'], 200);
+            }catch (\Exception $e) {
+                return response()->json(['message' => 'Ocorreu um erro inexperado'], 400);
+            }
+        }
     }
 
     /**

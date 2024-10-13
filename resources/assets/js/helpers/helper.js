@@ -18,7 +18,7 @@ export const alterSetting = async (data) => {
             settings_aspect_general : data
         }
         const response = await api.put('setting', sendData);
-
+        return response;
     } catch (error) {
         console.error('Erro ao buscar usuários:', error);
         return error;
