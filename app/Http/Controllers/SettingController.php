@@ -2,10 +2,15 @@
 
 namespace EspindolaAdm\Http\Controllers;
 
+use EspindolaAdm\Http\Requests\SettingRequest;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use EspindolaAdm\Ambience;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use Auth;
+use function response;
+use function view;
 
 class SettingController extends Controller
 {
@@ -16,11 +21,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->adm == 1){
-            return view('setting.index');
-        }else{
-            return redirect('home')->with('error_message', 'Você não tem permissão para Configuração');
-        }
+        return view('setting.index');
         
     }
 
@@ -59,12 +60,22 @@ class SettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  SettingRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SettingRequest $request)
     {
-        //
+        $validated = $request->validated();
+        if($validated) {
+            try {
+                $idSetting = DB::table('settings')->first();
+                DB::table('settings')
+                    ->where(['settings' => $idSetting->settings])->update(['settings_aspect_general' => $validated['settings_aspect_general']]);
+                return response()->json(['message' => 'Dados salvo com sucesso!'], 200);
+            }catch (\Exception $e) {
+                return response()->json(['message' => 'Ocorreu um erro inexperado'], 400);
+            }
+        }
     }
 
     /**
@@ -104,6 +115,17 @@ class SettingController extends Controller
                 class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
             })
             ->make();
+    }
+
+    public function aspect()
+    {
+        return view('setting.aspect');
+    }
+
+    public function getSetting()
+    {
+        $settings = DB::table('settings')->first();
+        return response()->json($settings);
     }
 
 }

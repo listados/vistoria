@@ -14,12 +14,16 @@ import VueMask from 'v-mask';
 import ElementUI from 'element-ui';
 import CKEditor from 'ckeditor4-vue';
 import DatePicker from 'vue2-datepicker';
-// import vue2Dropzone from 'vue2-dropzone'
+import VueQuillEditor from 'vue-quill-editor';
 
 // IMPORT DE FOLHA DE ESTILO
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'vue2-datepicker/index.css';
+// Vue Editor
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
 Vue.use(VueSweetalert2);
 // Vue.use(vue2Dropzone);
@@ -28,7 +32,10 @@ Vue.use(VueMask);
 Vue.use(ElementUI);
 Vue.use( CKEditor );
 Vue.use( DatePicker );
+Vue.use( VueQuillEditor );
 Vue.use(require('vue-moment'));
+
+
 // Vue.use(AgGridVue);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -49,6 +56,7 @@ Vue.component('create-user', require('./components/Survey/CreateUser.vue'));
 Vue.component('survey-content', require('./components/Survey/Content.vue'));
 Vue.component('survey-surveyor', require('./components/Survey/Surveyor.vue'));
 Vue.component('survey-finish', require('./components/Survey/Finish.vue'));
+Vue.component('aspect-general', require('./components/Survey/Setting/AspectGeneral.vue'));
 Vue.component('btn-ordem-ambience', require('./components/Survey/BtnOrdemAmbience.vue'));
 Vue.component('ambience-image', require('./components/Survey/Ambience/AmbienceImage.vue'));
 
