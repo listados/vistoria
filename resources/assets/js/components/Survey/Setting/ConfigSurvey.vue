@@ -19,6 +19,9 @@
 
 import { getSetting, alterSetting } from '../../../helpers/helper';
 export default {
+  props: {
+    type: String
+  },
   data () {
     return {
       contentHtml : '',
@@ -32,7 +35,20 @@ export default {
     try {
       // Buscando da api os dados de configuração
       const res = await getSetting();
-      this.content = res.data.settings_aspect_general;
+      switch(this.type) {
+        case 'aspect_general':
+          this.content = res.data.settings_aspect_general;
+          break;
+        case 'reservation':
+          this.content = res.data.settings_reservation;
+          break;
+        case y:
+          // code block
+          break;
+        default:
+          // code block
+      }
+
     } catch (error) {
       console.error('Erro ao carregar os usuários:', error);
     }
@@ -55,7 +71,7 @@ export default {
     },
     // Realizando alteração dos dados enviados
     settingChange(quill){
-      const res = alterSetting(quill);
+      const res = alterSetting(quill, this.type);
       res.then(resposta => {
         if(resposta.status == 422) {
           this.$message({

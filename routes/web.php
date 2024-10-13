@@ -117,6 +117,7 @@ Route::group(['middleware' => 'auth'], function() {
         //CONFIGURAÇÃO 
         Route::get('configuracao/ambiente', 'SettingController@ambience');
         Route::get('configuracao/aspect', 'SettingController@aspect');
+        Route::get('configuracao/ressalva', 'SettingController@reservation');
         Route::get('configuracao/get-ambiente', 'SettingController@getAmbience');
         Route::resource('configuracao', 'SettingController');     
         Route::put('alter-ambience', 'AmbienceController@update');  

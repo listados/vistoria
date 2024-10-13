@@ -18,7 +18,11 @@
                           <i class="fa fa-inbox"></i> Aspectos Gerais
                        </a>
                     </li>
-                    <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
+                    <li>
+                       <a href="{{url('admin/configuracao/ressalva')}}">
+                          <i class="fa fa-inbox"></i> Ressalva por ambiente
+                       </a>
+                    </li>
                     <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
                     <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
                     </li>

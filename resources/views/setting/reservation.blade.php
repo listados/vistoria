@@ -10,14 +10,14 @@
             <div class="col-md-9">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Aspeecto Geral</h3>
+                        <h3 class="box-title">Ressalvas por Ambientes / Cômodos</h3>
                         <div class="box-tools pull-right">
                         </div>
                         <!-- /.box-tools -->
                     </div>
                     <div class="box-body">
                         <div class="col-md-12">
-                            <config-survey type="aspect_general"></config-survey>
+                            <config-survey type="reservation"></config-survey>
                         </div>
                     </div>
                 </div>

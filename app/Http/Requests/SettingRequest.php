@@ -24,14 +24,9 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'settings_aspect_general' => 'required|min:12',
+            'value' => 'required|min:12',
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'settings_aspect_general.required' => 'O campo é obrigatório'
-        ];
-    }
+
 }
