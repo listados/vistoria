@@ -71,9 +71,13 @@
 						<small>Descreva os detalhes de todos os ambientes do imóvel</small>
 					</h3>
 				</div>
-				<div class="box-body pad">
-					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_general_aspects') }}"></survey-content>
-				</div>	
+				<div class="box-body">
+					<editor-survey
+						content-survey="{{$survey->survey_general_aspects}}"
+						:id-survey="{{ json_encode($id_survey) }}"
+						:context="{{ json_encode('survey_general_aspects') }}"
+					></editor-survey>
+				</div>
 			</div>			
 			
 			<div class="box box-primary">
@@ -81,7 +85,11 @@
 					<h3 class="box-title">Ressalvas por Ambientes / Cômodos</h3>
 				</div>
 				<div class="box-body pad">
-					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_provisions') }}"></survey-content>
+					<editor-survey
+							content-survey="{{$survey->survey_provisions}}"
+							:id-survey="{{ json_encode($id_survey) }}"
+							:context="{{ json_encode('survey_provisions') }}"
+					></editor-survey>
 				</div>	
 			</div>
 
@@ -90,7 +98,7 @@
 					<h3 class="box-title">Disposições Gerais</h3>
 				</div>
 				<div class="box-body pad">
-					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_reservation') }}"></survey-content>
+{{--					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_reservation') }}"></survey-content>--}}
 				</div>	
 			</div>
 
@@ -101,7 +109,7 @@
 					</h3>
 				</div>
 				<div class="box-body pad">
-					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_keys') }}"></survey-content>
+{{--					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_keys') }}"></survey-content>--}}
 				</div>	
 			</div>
 
