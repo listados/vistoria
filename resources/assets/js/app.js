@@ -56,6 +56,7 @@ Vue.component('create-user', require('./components/Survey/CreateUser.vue'));
 Vue.component('survey-content', require('./components/Survey/Content.vue'));
 Vue.component('survey-surveyor', require('./components/Survey/Surveyor.vue'));
 Vue.component('survey-finish', require('./components/Survey/Finish.vue'));
+Vue.component('editor-survey', require('./components/Survey/EditorSurvey.vue'));
 Vue.component('config-survey', require('./components/Survey/Setting/ConfigSurvey.vue'));
 Vue.component('btn-ordem-ambience', require('./components/Survey/BtnOrdemAmbience.vue'));
 Vue.component('ambience-image', require('./components/Survey/Ambience/AmbienceImage.vue'));
