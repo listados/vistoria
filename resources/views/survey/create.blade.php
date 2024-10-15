@@ -98,7 +98,11 @@
 					<h3 class="box-title">Disposições Gerais</h3>
 				</div>
 				<div class="box-body pad">
-{{--					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_reservation') }}"></survey-content>--}}
+					<editor-survey
+							content-survey="{{$survey->survey_provisions}}"
+							:id-survey="{{ json_encode($id_survey) }}"
+							:context="{{ json_encode('survey_reservation') }}"
+					></editor-survey>
 				</div>	
 			</div>
 
@@ -109,7 +113,11 @@
 					</h3>
 				</div>
 				<div class="box-body pad">
-{{--					<survey-content :id-survey="{{ json_encode($id_survey) }}" :context="{{ json_encode('survey_keys') }}"></survey-content>--}}
+					<editor-survey
+							content-survey="{{$survey->survey_provisions}}"
+							:id-survey="{{ json_encode($id_survey) }}"
+							:context="{{ json_encode('survey_keys') }}"
+					></editor-survey>
 				</div>	
 			</div>
 
