@@ -10,13 +10,66 @@
     <section class="content">
         @include('message.message_general')
         <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-home"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total de Vistorias</span>
+                        <span class="info-box-number">90</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa fa-hourglass-end"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Vistoria Finalizada</span>
+                        <span class="info-box-number">41,410</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="clearfix visible-sm-block"></div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-file-text-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Vistoria em Rascunho</span>
+                        <span class="info-box-number">760</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-calendar"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Vistoria nesse mẽs</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
             <div class="col-md-3">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Atalhos Imóveis</h3>
 
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
                             </button>
                             <button type="button" class="btn btn-box-tool" data-widget="remove"><i
                                     class="fa fa-times"></i></button>
@@ -113,17 +166,17 @@
                             <!-- /.item -->
                         </ul>
                         <ul class="products-list product-list-in-box">
-                          <div class="col-md-4">
-                            <li class="item">
-                                <div class="product-info">
-                                    <a href="{{ url('site/contato') }}" class="product-title">Contato
-                                    </a>
-                                    <span class="product-description">
-                                        MENU - Imóvel
-                                    </span>
-                                </div>
-                            </li>
-                        </div>
+                            <div class="col-md-4">
+                                <li class="item">
+                                    <div class="product-info">
+                                        <a href="{{ url('site/contato') }}" class="product-title">Contato
+                                        </a>
+                                        <span class="product-description">
+                                            MENU - Imóvel
+                                        </span>
+                                    </div>
+                                </li>
+                            </div>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -136,13 +189,32 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="box">
-                    <canvas id="myChart" width="400" height="200"></canvas>
+                <div class="box  box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Gráfico Anual</h3>
+                      
+                    </div>
+                    <div class="box-body">
+                    <canvas id="myChart" style="height:230px"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="box">
-                    <canvas id="chartjs-1" width="400" height="200"></canvas>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Gráfico de Vistorias</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="barChart" style="height:230px"></canvas>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -161,82 +233,42 @@
 @section('js')
     {{ Html::script('/js/all.js') }}
     {{ Html::script('/js/immobile.js') }}
-
-    <script type="text/javascript">
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro",
-                    "Outubro"
-                ],
-                datasets: [{
-                    label: '# Vistorias',
-                    data: ['{{ $array_month[1] }}', '{{ $array_month[2] }}', '{{ $array_month[3] }}',
-                        '{{ $array_month[4] }}',
-                        '{{ $array_month[5] }}', '{{ $array_month[6] }}', '{{ $array_month[7] }}',
-                        '{{ $array_month[8] }}',
-                        '{{ $array_month[9] }}', '{{ $array_month[10] }}'
-                    ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
-        new Chart(document.getElementById("chartjs-1"), {
-            "type": "bar",
-            "data": {
-                "labels": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
-                "datasets": [{
-                    "label": "Propostas recebidas",
-                    "data": [65, 59, 80, 81, 0, 0, 0],
-                    "fill": false,
-                    "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
-                        "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
-                        "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
-                    ],
-                    "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
-                        "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)",
-                        "rgb(201, 203, 207)"
-                    ],
-                    "borderWidth": 1
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Projeção Anual",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
                 }]
             },
-            "options": {
-                "scales": {
-                    "yAxes": [{
-                        "ticks": {
-                            "beginAtZero": true
-                        }
-                    }]
-                }
-            }
+
+            // Configuration options go here
+            options: {}
         });
+
+        var barChartCanvas                   = document.getElementById('barChart').getContext('2d');
+        var myBarChart = new Chart(barChartCanvas, {
+            type: 'bar',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Mensalmente",
+                    backgroundColor: '#3c8dbc',
+                    borderColor: '#3c8dbc',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            },
+            options: {}
+        });
+
     </script>
 @stop
