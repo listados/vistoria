@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: junioroliveira:vistoria3
+    container_name: laravel_app
+    restart: always
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:oQdpqmCS4oY0BHLDkJRyh7eOvDQeRhy7H/2t6l9qDE4=
+    networks:
+      - laravel_network
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginx_web
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - laravel_network
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=livre
+      - MYSQL_DATABASE=vistoria
+      - MYSQL_USER=vistoria
+      - MYSQL_PASSWORD=livre
+    ports:
+      - '50001:3306'
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+    driver: bridge

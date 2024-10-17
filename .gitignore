@@ -18,3 +18,4 @@ public/img/upload/*
 public/imagens/*
 public/images/team/*
 .env
+/mysql_data
