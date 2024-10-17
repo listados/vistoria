@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-
+  $("#survey_inspetor_name").focus();
   $("#send_file_upload").hide();
   PNotify.prototype.options.styling = "bootstrap3";
   PNotify.prototype.options.styling = "fontawesome";

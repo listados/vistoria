@@ -27,7 +27,7 @@ class SurveyFields extends FormRequest
             'survey_inspetor_name' => 'min:3|max:50|nullable',
             'survey_inspetor_cpf' => 'max:30',
             'survey_date' => 'max:30',
-            'survey_address_immobile' => 'string|nullable|max:100',
+            'survey_address_immobile' => 'string|nullable',
             'survey_type_immobile' => 'max:30|nullable',
             'survey_energy_meter' => 'string|nullable|max:30',
             'survey_energy_load' => 'string|nullable|max:30',
