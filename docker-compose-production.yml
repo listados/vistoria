@@ -2,12 +2,10 @@ version: '3.8'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: junioroliveira:vistoria3
+    image: junioroliveira:vistoria
     container_name: laravel_app
     restart: always
+    working_dir: /var/www
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
@@ -22,7 +20,9 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/error.log:/var/log/nginx/error.log
     depends_on:
       - app
     networks:
@@ -40,7 +40,7 @@ services:
     ports:
       - '50001:3306'
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - ./docker/mysql_data:/var/lib/mysql
     networks:
       - laravel_network
 

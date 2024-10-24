@@ -21,6 +21,9 @@ RUN apt-get update && apt-get install -y \
 # Instala o Composer
 COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www ww
+
 # Define o diretório de trabalho
 WORKDIR /var/www
 

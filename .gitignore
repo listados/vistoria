@@ -18,4 +18,4 @@ public/img/upload/*
 public/imagens/*
 public/images/team/*
 .env
-/mysql_data
+/docker/mysql_data
