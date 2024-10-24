@@ -16,6 +16,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 $(document).ready(function () {
   var _language;
 
+  $("#survey_inspetor_name").focus();
   $("#send_file_upload").hide();
   PNotify.prototype.options.styling = "bootstrap3";
   PNotify.prototype.options.styling = "fontawesome";

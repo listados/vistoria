@@ -137,79 +137,79 @@ return [
             ]
            
         ],
-        [
-            'text' => 'Cliente',
-            'url'  => 'cliente',
-            'icon' => 'user',
-            'submenu' => [
-                [
-                    'text' => 'Interessado',
-                    'url'  => '#'                   
-                ],
-                [
-                    'text' => 'Proprietário',
-                    'url'  => '#'                   
-                ]
-            ]
-        ],
-        [
-            'text' => 'Delivery',
-            'url'  => 'delivery',
-            'icon' => 'user'
-        ],
-        [
-            'text' => 'Escolha Azul',
-            'icon' => 'edit',
-            'submenu' => [
-                [
-                    'text' => 'Pessoa Física',
-                    'url'  => 'escolha-azul/proposta-pessoa-fisica'                   
-                ],
-                [
-                    'text' => 'Cadastro Pessoa Física',
-                    'url'  => 'escolha-azul/cadastro-pessoa-fisica'                   
-                ]
-            ]
-        ],
-        [
-            'text' => 'Site',
-            'icon' => 'internet-explorer',
-            'submenu' => [
-                [
-                    'text' => 'Equipe',
-                    'url'  => 'site/equipe'
-                ],
-                [
-                    'text' => 'Contato',
-                    'url'  => 'site/contato'
-                ],
-                [
-                    'text' => 'Cadastro Pessoa Física',
-                    'url'  => 'escolha-azul/proposta-pessoa-jurídica'                   
-                ]
-            ]
-        ],
-        'CONFIGURAÇÃO DA CONTA',
-        [
-            'text' => 'Profile',
-            'url'  => 'admin/settings',
-            'icon' => 'user',
-        ],
-        [
-            'text' => 'Change Password',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
-        ],
+        // [
+        //     'text' => 'Cliente',
+        //     'url'  => 'cliente',
+        //     'icon' => 'user',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Interessado',
+        //             'url'  => '#'                   
+        //         ],
+        //         [
+        //             'text' => 'Proprietário',
+        //             'url'  => '#'                   
+        //         ]
+        //     ]
+        // ],
+        // [
+        //     'text' => 'Delivery',
+        //     'url'  => 'delivery',
+        //     'icon' => 'user'
+        // ],
+        // [
+        //     'text' => 'Escolha Azul',
+        //     'icon' => 'edit',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Pessoa Física',
+        //             'url'  => 'escolha-azul/proposta-pessoa-fisica'                   
+        //         ],
+        //         [
+        //             'text' => 'Cadastro Pessoa Física',
+        //             'url'  => 'escolha-azul/cadastro-pessoa-fisica'                   
+        //         ]
+        //     ]
+        // ],
+        // [
+        //     'text' => 'Site',
+        //     'icon' => 'internet-explorer',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Equipe',
+        //             'url'  => 'site/equipe'
+        //         ],
+        //         [
+        //             'text' => 'Contato',
+        //             'url'  => 'site/contato'
+        //         ],
+        //         [
+        //             'text' => 'Cadastro Pessoa Física',
+        //             'url'  => 'escolha-azul/proposta-pessoa-jurídica'                   
+        //         ]
+        //     ]
+        // ],
+        // 'CONFIGURAÇÃO DA CONTA',
+        // [
+        //     'text' => 'Profile',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'user',
+        // ],
+        // [
+        //     'text' => 'Change Password',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'lock',
+        // ],
         [
             'text'    => 'Multilevel',
             'icon'    => 'share',
             'submenu' => [
                 [
-                    'text' => 'Level One',
+                    'text' => 'Em Breve',
                     'url'  => '#',
                 ],
                 [
-                    'text'    => 'Level One',
+                    'text'    => 'Em Breve',
                     'url'     => '#',
                     'submenu' => [
                         [
@@ -233,7 +233,7 @@ return [
                     ],
                 ],
                 [
-                    'text' => 'Level One',
+                    'text' => 'Em Breve',
                     'url'  => '#',
                 ],
             ],

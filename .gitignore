@@ -18,3 +18,4 @@ public/img/upload/*
 public/imagens/*
 public/images/team/*
 .env
+docker/mysql_data/

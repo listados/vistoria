@@ -65,14 +65,13 @@
             <div class="col-md-3">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Atalhos Imóveis</h3>
+                        <h3 class="box-title">Atalhos</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                     class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                    class="fa fa-times"></i></button>
+
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -81,11 +80,11 @@
                             <li class="item">
 
                                 <div class="product-info">
-                                    <a href="{{ url('imovel/sincronizar') }}" id="sincronizar_imovel_home"
-                                        class="product-title">Sincronizar Imóveis
+                                    <a href="{{ url('vistoria') }}" id="sincronizar_imovel_home"
+                                        class="product-title">Vistoria
                                         <span class="label label-warning pull-right">Imóveis</span></a>
                                     <span class="product-description">
-                                        MENU - Configuração
+                                        Acessa a página de vistoria
                                     </span>
                                 </div>
 
@@ -95,10 +94,11 @@
 
                             <li class="item">
                                 <div class="product-info">
-                                    <a href="{{ 'imoveis' }}" class="product-title">Todos os Imóveis
-                                        <span class="label label-warning pull-right">Imóveis</span></a>
+                                    <a href="{{ 'imovel' }}" class="product-title">Todos os Imóveis
+                                        <span class="label label-warning pull-right">Imóveis</span>
+                                    </a>
                                     <span class="product-description">
-                                        MENU - Imóvel
+                                        Acessa a página de todos os imóveis
                                     </span>
                                 </div>
                             </li>
@@ -110,6 +110,64 @@
 
                     </div>
                     <!-- /.box-footer -->
+                </div>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Navegador usado</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="chart-responsive">
+                                    <canvas id="pieChart" height="160" width="230"
+                                        style="width: 230px; height: 160px;"></canvas>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <ul class="chart-legend clearfix">
+                                    <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
+                                    <li><i class="fa fa-circle-o text-green"></i> IE</li>
+                                    <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
+                                    <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
+                                    <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
+                                    <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">United States of America
+                                    <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                            <li><a href="#">Brasil <span class="pull-right text-green"><i class="fa fa-angle-up"></i>
+                                        4%</span></a>
+                            </li>
+                            <li>
+                                <a href="#">China
+                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">China
+                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
 
@@ -128,56 +186,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                            <div class="col-md-4">
-                                <li class="item">
-                                    <div class="product-info">
-                                        <a href="{{ url('chaves') }}" class="product-title">Chaves
-                                            <span class="label label-success pull-right">Controle de chaves</span></a>
-                                        <span class="product-description">
-                                            MENU - Imóvel
-                                        </span>
-                                    </div>
-                                </li>
-                            </div>
-                            <!-- /.item -->
-                            <div class="col-md-4">
-                                <li class="item">
-                                    <div class="product-info">
-                                        <a href="{{ 'vistoria' }}" class="product-title">Vistorias
-                                            <span class="label label-success pull-right">Vistoria</span></a>
-                                        <span class="product-description">
-                                            MENU - Imóvel
-                                        </span>
-                                    </div>
-                                </li>
-                            </div>
-                            <div class="col-md-4">
-                                <li class="item">
-                                    <div class="product-info">
-                                        <a href="#" class="product-title">Clientes Interessados
-                                            <span class="label label-success pull-right">Interessado</span></a>
-                                        <span class="product-description">
-                                            MENU - Cliente
-                                        </span>
-                                    </div>
-                                </li>
-                            </div>
-                            <!-- /.item -->
-                        </ul>
-                        <ul class="products-list product-list-in-box">
-                            <div class="col-md-4">
-                                <li class="item">
-                                    <div class="product-info">
-                                        <a href="{{ url('site/contato') }}" class="product-title">Contato
-                                        </a>
-                                        <span class="product-description">
-                                            MENU - Imóvel
-                                        </span>
-                                    </div>
-                                </li>
-                            </div>
-                        </ul>
+                        <canvas id="barChart" style="height:230px"></canvas>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer text-center">
@@ -191,11 +200,11 @@
             <div class="col-md-6">
                 <div class="box  box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Gráfico Anual</h3>
-                      
+                        <h3 class="box-title">Upload de imagens anualmente</h3>
+
                     </div>
                     <div class="box-body">
-                    <canvas id="myChart" style="height:230px"></canvas>
+                        <canvas id="myChart" style="height:230px"></canvas>
                     </div>
                 </div>
             </div>
@@ -212,7 +221,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <canvas id="barChart" style="height:230px"></canvas>
+
                     </div>
 
                 </div>
@@ -242,12 +251,12 @@
 
             // The data for our dataset
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
                 datasets: [{
                     label: "Projeção Anual",
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45],
+                    data: [0, 10, 5, 2, 20, 30, 45, 21, 55, 17, 0, 0],
                 }]
             },
 
@@ -255,20 +264,50 @@
             options: {}
         });
 
-        var barChartCanvas                   = document.getElementById('barChart').getContext('2d');
+        var barChartCanvas = document.getElementById('barChart').getContext('2d');
         var myBarChart = new Chart(barChartCanvas, {
             type: 'bar',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
                 datasets: [{
                     label: "Mensalmente",
                     backgroundColor: '#3c8dbc',
                     borderColor: '#3c8dbc',
-                    data: [0, 10, 5, 2, 20, 30, 45],
+                    data: [0, 10, 5, 2, 20, 30, 45, 21, 55, 17, 0, 0],
                 }]
             },
             options: {}
         });
+        // -------------
+        // - PIE CHART -
+        // -------------
+        const data = {
 
+            datasets: [{
+                label: 'My First Dataset',
+                data: [300, 50, 100],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+        var pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // -----------------
+        // - END PIE CHART -
+        // -----------------
     </script>
 @stop
