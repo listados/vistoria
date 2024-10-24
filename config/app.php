@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' =>'http://espindolaimobiliaria.com.br/admin',
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------

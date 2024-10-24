@@ -98,7 +98,6 @@ export default {
     },
     created() {
         this.getListSurvey();
-        console.log( process.env.MIX_SENTRY_DSN_PUBLIC)
     },
     mounted() {
       this.$eventBus.$on('search-survey', this.searchSurvey);
