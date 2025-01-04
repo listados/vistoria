@@ -142,7 +142,7 @@ export default {
             this.survey_inspetor_email = ''
         },
         addUser() {
-            var createUser = {
+            const createUser = {
                 relation_survey_user_id_survey: this.idSurvey,
                 relation_survey_user_type: this.typeSurvey,
                 survey_inspetor_name: this.survey_inspetor_name,

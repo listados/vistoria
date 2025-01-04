@@ -831,14 +831,13 @@ class SurveyController extends Controller
         //BUSCANDO A VISTORIA REPLICADA
         Survey::where('survey_id', $survey_reply->survey_id)->get();
 
-        DB::table('ambience')->get();
-
         //MESMA ROTINA PARA UPDATE - RELACIONA AS TABELAS VISTORIA, USUARIO NA TABELA RELAÇAO
         // DB::enableQueryLog();
         $survey = DB::table('relation_survey_user')
             ->join('survey', 'survey.survey_id', '=', 'relation_survey_user.relation_survey_user_id_survey')
             ->join('users', 'users.id', '=', 'relation_survey_user.relation_survey_user_id_user')
             ->where('relation_survey_user.relation_survey_user_id_survey', $id)->get();
+
         //return DB::getQueryLog();
         $photo = DB::table('files_ambience')->where('files_ambience_id_survey', '=', $id)->get();
         Survey::addOrderAmbienceSurvey($id);
@@ -846,9 +845,7 @@ class SurveyController extends Controller
         global $new_photo;
         $new_photo = [];
         foreach ($photo as $value) {
-            // echo $value->files_ambience_description_file."<br>";
-            //echo $survey_reply->survey_id;
-            $new_files = DB::table('files_ambience')->insert(
+            DB::table('files_ambience')->insert(
                 [
                     'files_ambience_description_file' => $value->files_ambience_description_file,
                     'files_ambience_id_survey' => $survey_reply->survey_id,
@@ -861,22 +858,23 @@ class SurveyController extends Controller
         }
         # code / DUPLICANDO REGISTRO RELATION_SURVEY_USER COM O ID DA VISTORIA DUPLICADA
         $new_rel = [];
+
         foreach ($survey as $id_rel) {
             //METODO REPLICATE SÓ FUNCIONOU COM O MODEL E METODO FIND
             $new_rel = RelSurveyUser::find($id_rel->relation_survey_user_id)->replicate();
 
-            //ALTERANDO O ID DA VISTORIA PARA O ID DA NOVA VISTORIA REPLICADA
+            // //ALTERANDO O ID DA VISTORIA PARA O ID DA NOVA VISTORIA REPLICADA
             $new_rel->relation_survey_user_id_survey = $survey_reply->survey_id;
             $new_rel->save();
 
-            //VERFICANDO CADA USUARIO REPLICADO SE ELE É LOCATARIO OU FIADOR
-            //SENDO, OS MESMOS SERA EXCLUIDO E VISTORIA GERADA SOMENTE COM LOCADOR
+            // //VERFICANDO CADA USUARIO REPLICADO SE ELE É LOCATARIO OU FIADOR
+            // //SENDO, OS MESMOS SERA EXCLUIDO E VISTORIA GERADA SOMENTE COM LOCADOR
             if ($new_rel->relation_survey_user_type == 'Locatário' || $new_rel->relation_survey_user_type == 'Fiador') {
                 RelSurveyUser::find($new_rel->relation_survey_user_id)->delete();
             }
         }
         $id_survey =  $survey_reply->survey_id;
-
+        // dd($id_survey);
         DB::table('survey')
             ->where('survey_id', $id_survey)
             ->update(['survey_code' => $id_survey . '/' . date('y')]);
