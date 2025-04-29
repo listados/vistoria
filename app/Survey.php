@@ -22,7 +22,7 @@ class Survey extends Model
         'survey_gas_load', 'survey_keys', 'survey_code', 
         'survey_link_tour', 'survey_provisions', 'survey_date_register' , 
         'survey_inspetor_cpf' , 'survey_inspetor_name', 'survey_reservation',
-        'survey_general_aspects', 'survey_keys', 'survey_status'
+        'survey_general_aspects', 'survey_keys', 'survey_status', 'survey_finalized_date'
     ];
 
 
@@ -295,6 +295,4 @@ class Survey extends Model
 
         return $inspector;
     }
-
-
 }

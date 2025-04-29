@@ -732,7 +732,7 @@ class SurveyController extends Controller
         date_default_timezone_set('America/Sao_Paulo');
         //DATA POR EXTENSO
         if ($survey[0]->survey_status == "Rascunho") {
-            $dtSurvey = Carbon::parse($survey[0]->survey_date_register);
+            $dtSurvey = Carbon::parse($survey[0]->survey_finalized_date);
             $data_extenso = FunctionAll::data_extenso($dtSurvey->day, $dtSurvey->month, $dtSurvey->year);
         } else { // SE FINALIZADO
             $dtSurvey = Carbon::parse($survey[0]->survey_finalized_date);
@@ -1081,11 +1081,16 @@ class SurveyController extends Controller
 
     public function alterSurveyor(SurveyFields $request)
     {
-        $dtSurvey = "";
+        $dtSurvey = null;
         //ADD DATA STRING PARA DATE
         if (array_key_exists("survey_date", $request->all())) {
             $dtSurvey = Carbon::parse($request->survey_date);
             $request['survey_date'] = $dtSurvey;
+        }
+
+        if (array_key_exists("survey_finalized_date", $request->all())) {
+            $dtSurvey = Carbon::parse($request->survey_finalized_date);
+            $request['survey_finalized_date'] = $dtSurvey;
         }
 
         try {

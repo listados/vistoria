@@ -2,7 +2,20 @@
     <div>
         <div>
         <div>
-        <div class="col-md-3">
+            <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Data da vistoria</label>
+                <date-picker
+                    v-model="dtSurvey"
+                    format="DD/MM/YYYY"
+                    type="date"
+                    placeholder="Selecione uma data"
+                    input-class="form-control"
+                    @change="alterValueField('datepicker', 'survey_date')"
+                ></date-picker>
+            </div>
+        </div>
+            <div class="col-md-3">
             <div class="form-group">
                 <label for="">Nome do Vistoriador</label>
                 <input
@@ -28,20 +41,8 @@
                 >
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="">Data da vistoria</label>
-                <date-picker
-                    v-model="dtSurvey"
-                    format="DD/MM/YYYY"
-                    type="date"
-                    placeholder="Selecione uma data"
-                    input-class="form-control"
-                    @change="alterValueField('datepicker', 'survey_date')"
-                ></date-picker>
-            </div>
-        </div>
-        <div class="col-md-3">
+        
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="">Tipo</label>
                 <el-select 
@@ -58,6 +59,20 @@
                     :value="item.value">
                     </el-option>
                 </el-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Data final do Laudo </label>
+                <date-picker
+                    v-model="dtFinalized"
+                    format="DD/MM/YYYY"
+                    value-format="YYYY-MM-DD"
+                    type="date"
+                    placeholder="Selecione uma data"
+                    input-class="form-control"
+                    @change="alterValueField('datepicker', 'survey_finalized_date')"
+                ></date-picker>
             </div>
         </div>
         <div class="col-md-12">
@@ -205,6 +220,7 @@ export default {
     data() {
         return {
             dtSurvey: Vue.moment( this.survey.survey_date).format('DD/MM/YYYY'),
+            dtFinalized: null,
             typeImmobile: this.survey.survey_type_immobile,
             typeSurvey: this.survey.survey_type,
             cpf_inspector: '',
@@ -325,8 +341,8 @@ export default {
         }
     },
     created() {
-        console.log(Vue.moment(this.dtSurvey).format('YYYY-MM-DD')) //es
-        console.log(this.tour)
+        // console.log(Vue.moment(this.dtSurvey).format('YYYY-MM-DD')) //es
+        this.dtFinalized = Vue.moment( this.survey.survey_finalized_date).format('YYYY-MM-DD')
     },
     methods: {
         alterValueField(type, name = null) {
@@ -337,6 +353,7 @@ export default {
                     break;
                 case "datepicker":
                     dataUp[name] = this.dtSurvey;
+                    dataUp[name] = this.dtFinalized;
                     break;
                 case "select":
                     dataUp[name] = event.target.innerText;
@@ -353,6 +370,7 @@ export default {
                 });
             })
             .catch( (erro) =>{
+                console.log({erro})
                 this.$message({
                     type: 'error',
                     message: res.data.message
