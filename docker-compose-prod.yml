@@ -15,7 +15,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=livre
       - MYSQL_DATABASE=vistoria
-      # - MYSQL_USER=root
+      - MYSQL_USER=root
       - MYSQL_PASSWORD=livre
     ports:
       - '50001:3306'
@@ -32,8 +32,8 @@ services:
     ports:
       - '5050:80'
     environment:
-      - VIRTUAL_HOST=listadosvistoria.sytes.net
-      - LETSENCRYPT_HOST=listadosvistoria.sytes.net
+      - VIRTUAL_HOST=vistorianomades.listados.com.br
+      - LETSENCRYPT_HOST=vistorianomades.listados.com.br
       - LETSENCRYPT_EMAIL=franciscoanto@gmail.com
     networks:
       - nginx-proxy_default

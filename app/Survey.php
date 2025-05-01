@@ -29,7 +29,7 @@ class Survey extends Model
     //OBRIGATORIAMENTE O PRIMEIRO CAMPO DO ARRAY TEM QUE SER O NOME DO USUARIO E O SEGUNDO O EMAIL
     public static function cadastra_usuario($request)
     {
-        // dd($request);
+       
         //criando array com valores de criação
         $user = [
             'name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : 'user', 
@@ -42,7 +42,7 @@ class Survey extends Model
             'password' => bcrypt(Carbon::now()),
             'cpf' => isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : null
         ];
-        
+       
         //verifica o parametro para add o valor 
         if(isset($request['params']))
         {
@@ -58,31 +58,31 @@ class Survey extends Model
                     break;
             }
         }
+      
+        
           try {
             //CADASTRANDO USUARIO
             $idLocator = null;
             // Verificando se existe registro no banco de dados
-            $userExist = User::where('email', $request['survey_inspetor_email'])->get();
-           // verificando se o retorno é nulo
+            $userExist = User::where('email', $request['survey_inspetor_email'])->first();
+            // verificando se o retorno é nulo
             if(is_null($userExist)) {
                 // Realiza o cadastro do usuario
                 $user_locator = User::create($user);
                 $idLocator = $user_locator->id;
             }else{
-                $idLocator = $userExist[0]->attributes['id'];
+                $idLocator = $userExist->attributes['id'];
             }
-            
             //GRAVANDO DADOS NA TABELA DE RELACIONAMENTO
             DB::table('relation_survey_user')->insert(
                 ['relation_survey_user_id_survey' => $request['relation_survey_user_id_survey'], 
                 'relation_survey_user_id_user' => $idLocator , 
                 'relation_survey_user_type' => $request['relation_survey_user_type'] , 
                 'created_at' => Carbon::now(), 
-                'updated_at' => Carbon::now() ]
-            );
+                'updated_at' => Carbon::now() 
+                ]);
                 return response()->json(['message' => 'Usuário cadastrado'],200);
           } catch (\Throwable $th) {
-            dd($th->getMessage());
                 return response()->json(['message' => FunctionAll::error($th)],400);
           }
 
