@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        
+        // Desativa a verificação CSRF para todas as rotas que começam com 'api/'
+        // Isso é comum em APIs, já que normalmente elas usam tokens (como JWT ou session cookie) em vez de CSRF tokens.
+        'api/*',
     ];
 }

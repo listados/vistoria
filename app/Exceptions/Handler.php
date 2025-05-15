@@ -4,6 +4,7 @@ namespace EspindolaAdm\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
 {
@@ -52,4 +53,22 @@ class Handler extends ExceptionHandler
 
         return parent::render($request, $exception);
     }
+
+    /**
+     * Lida com exceções de autenticação em requisições não autenticadas.
+     * 
+     * Este método é sobrescrito para garantir que requisições que esperam JSON,
+     * como chamadas de API, recebam uma resposta adequada (HTTP 401 com JSON),
+     * ao invés de serem redirecionadas para uma página de login, o que é o padrão
+     * em aplicações web.
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Não autenticado.'], 401);
+        }
+
+        return redirect()->guest(route('login'));
+    }
+
 }

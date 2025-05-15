@@ -41,8 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        // Mudamos o driver de 'token' para 'session' na guard 'api' para permitir autenticação baseada em sessão,
+        // possibilitando o uso de cookies e CSRF tokens no fluxo da API. Isso é necessário quando usamos rotas
+        // protegidas com middleware 'auth' que dependem da sessão, como 'auth:web' ou 'auth:api' com 'session'.
         'api' => [
-            'driver' => 'token',
+            'driver' => 'session',
             'provider' => 'users',
         ],
     ],

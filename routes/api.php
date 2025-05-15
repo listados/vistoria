@@ -7,61 +7,94 @@ use Illuminate\Http\Request;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Aqui ficam todas as rotas da API. As rotas são divididas entre públicas 
+| (sem autenticação) e privadas (com middleware 'auth').
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// =========================
+// ROTAS PÚBLICAS
+// =========================
+
+Route::prefix('survey')->group(function () {
+    Route::get('all', 'SurveyController@allSurvey');
 });
 
-Route::get('teamEquipe/{id}' , 'TeamController@show');
-Route::put('team/{id}' , 'TeamController@update');
-Route::post('team/avatar/{id}' , 'TeamController@uploadAvatar');
-Route::get('team' , 'TeamController@getTeamApi');
-/**
- * Rota para escolha azul
- */
-Route::prefix('escolha-azul')->group(function(){ 
-    Route::get('getProposalPF'  , 'ProposalPFController@getProposalPF');
-    Route::patch('update/{id}', 'ProposalPFController@update');
-    Route::get('getCadastrePF' , 'GuarantorController@getGuarantorDataTable');
-    Route::post('alter-agent', 'ProposalPFController@alterAtendent');
-    Route::delete('delete-proposal-pf/{id}' , 'ProposalPFController@destroy');
-    Route::get('download/{id}/type/{type}', 'ProposalPFController@getFiles');
+Route::prefix('team')->group(function () {
+    Route::get('/', 'TeamController@getTeamApi');
+    Route::get('equipe/{id}', 'TeamController@show');
 });
 
-// Route::group(['middleware' => 'auth:api'], function() {
-/**
- * Rota para informar os tipos de imóveis
- */
-Route::prefix('survey')->group(function(){ 
-    Route::get('type-immobile'  , 'SurveyController@getTypeImmobile');
-    Route::get('all' , 'SurveyController@allSurvey');
-    Route::delete('destroy/{id}', 'SurveyController@destroy');
-    Route::post('search', 'SurveyController@search');
-    Route::get('user-survey/{id}/{type}', 'SurveyController@getUser');
-    Route::delete('delete-user/{id}' , 'SurveyController@delete_user_survey');
-    Route::post('up-user' , 'SurveyController@addUserSurvey');
-    Route::post('add-user' , 'SurveyController@addUser') ;
-    Route::get('content/id/{id}/field/{content}' , 'SurveyController@content');
-    Route::put('content', 'SurveyController@alterContent');
-    Route::put('alter-field', 'SurveyController@alterSurveyor');
-    Route::post('alter-order', 'SurveyController@alter_order_ambience_survey');
+Route::prefix('ambience')->group(function () {
+    Route::get('all', 'AmbienceController@all');
 });
 
-Route::get('ambience-all' , 'AmbienceController@all');
-Route::get('files_ambience/show/{id}' , 'FilesAmbienceController@show');
-Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
-// });
-// Configuração
-Route::get('setting', 'SettingController@getSetting');
-Route::put('setting', 'SettingController@edit');
+Route::prefix('files_ambience')->group(function () {
+    Route::get('show/{id}', 'FilesAmbienceController@show');
+});
 
+Route::prefix('setting')->group(function () {
+    Route::get('/', 'SettingController@getSetting');
+});
 
-Route::get('contact' , 'ContactController@getContacts');
-Route::post('contact/create' , 'ContactController@store');
-Route::delete('contact/delete/{id}' , 'ContactController@destroy');
-Route::patch('contact/{id}' , 'ContactController@update');
+Route::prefix('contact')->group(function () {
+    Route::get('/', 'ContactController@getContacts');
+});
+
+// =========================
+// ROTAS PRIVADAS (AUTENTICADAS)
+// =========================
+
+Route::middleware(['web', 'auth'])->group(function () {
+
+    // Usuário autenticado
+    Route::get('/user', function (Request $request) {
+        return response()->json([
+            'user' => $request->user(),
+            'message' => 'Usuário autenticado com sucesso.'
+        ]);
+    });
+
+    // Team
+    Route::put('team/{id}', 'TeamController@update');
+    Route::post('team/avatar/{id}', 'TeamController@uploadAvatar');
+
+    // Escolha Azul (Propostas PF)
+    Route::prefix('escolha-azul')->group(function () {
+        Route::get('getProposalPF', 'ProposalPFController@getProposalPF');
+        Route::patch('update/{id}', 'ProposalPFController@update');
+        Route::get('getCadastrePF', 'GuarantorController@getGuarantorDataTable');
+        Route::post('alter-agent', 'ProposalPFController@alterAtendent');
+        Route::delete('delete-proposal-pf/{id}', 'ProposalPFController@destroy');
+        Route::get('download/{id}/type/{type}', 'ProposalPFController@getFiles');
+    });
+
+    // Survey
+    Route::prefix('survey')->group(function () {
+        Route::get('type-immobile', 'SurveyController@getTypeImmobile');
+        Route::delete('destroy/{id}', 'SurveyController@destroy');
+        Route::post('search', 'SurveyController@search');
+        Route::get('user-survey/{id}/{type}', 'SurveyController@getUser');
+        Route::delete('delete-user/{id}', 'SurveyController@delete_user_survey');
+        Route::post('up-user', 'SurveyController@addUserSurvey');
+        Route::post('add-user', 'SurveyController@addUser');
+        Route::get('content/id/{id}/field/{content}', 'SurveyController@content');
+        Route::put('content', 'SurveyController@alterContent');
+        Route::put('alter-field', 'SurveyController@alterSurveyor');
+        Route::post('alter-order', 'SurveyController@alter_order_ambience_survey');
+    });
+
+    Route::post('alter-delete-ambience', 'SurveyController@alter_ambience');
+
+    // Setting
+    Route::prefix('setting')->group(function () {
+        Route::put('/', 'SettingController@edit');
+    });
+
+    // Contact
+    Route::prefix('contact')->group(function () {
+        Route::post('create', 'ContactController@store');
+        Route::delete('delete/{id}', 'ContactController@destroy');
+        Route::patch('{id}', 'ContactController@update');
+    });
+});
