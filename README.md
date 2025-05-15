@@ -18,6 +18,7 @@ Projeto de uma vistoria imobiliária da empresa listados
  - chgrp -R www-data storage bootstrap/cache
  - chmod -R ug+rwx storage bootstrap/cache
  - docker exec phpvistoria-vue php artisan migrate
+ - docker exec phpvistoria php artisan db:seed
 
 ### Erro index: name PackageManifest.php  ###
 
