@@ -5,6 +5,8 @@ namespace EspindolaAdm\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Blade;
+use EspindolaAdm\Observers\SurveyObserver;
+use EspindolaAdm\Survey;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         if($this->app->environment() == 'production') {
             \URL::forceScheme('https');
         }
+        Survey::observe(SurveyObserver::class);
     }
 
     /**
@@ -29,6 +32,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       
     }
 }
