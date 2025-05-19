@@ -33,7 +33,7 @@ class SurveyObserver
             }
 
             // Valor antigo do campo (antes da atualização)
-            $oldValue = $original[$field] ?? null;
+            $oldValue = $original[$field] ?? 'Nenhum valor anterior';
 
             // Cria um registro na tabela survey_histories
             SurveyHistory::create([
