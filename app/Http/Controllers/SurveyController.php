@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Validator;
 use EspindolaAdm\Http\Requests\SurveyFields;
 use EspindolaAdm\Http\Requests\SurveyRequest;
 use EspindolaAdm\Repository\SurveyRepository;
+use EspindolaAdm\SurveyHistory;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class SurveyController extends Controller
@@ -912,22 +913,12 @@ class SurveyController extends Controller
     public function history($id)
     {
         if (isset($id)) {
-            $history = DB::table('history_survey')
-                ->join('users', 'users.id', '=', 'history_survey.history_survey_id_user')
-                ->where('history_survey.history_survey_id_survey', $id)
-                ->select('users.name as username', 'users.avatar',
-                    'history_survey.history_survey_id_survey',
-                    'history_survey.history_survey_action', 
-                    'history_survey.history_survey_date')
-                ->orderBy('history_survey_date', 'desc')->get();
-            //Se não tiver registro
-            if (count($history) == 0) {
-                return redirect('vistoria')->with('error_message', 'Não há histórico para essa vistoria');
-            } else {
-                return view('survey.history', compact('history'));
-            }
+            $histories = SurveyHistory::with('user')
+            ->where('survey_id', $id)
+            ->orderBy('changed_at', 'desc')
+            ->get();
 
-            return response()->json($history);
+            return view('survey.history', compact('histories'));
         }
     }
 

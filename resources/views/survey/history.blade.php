@@ -3,11 +3,17 @@
 @section('title', 'Histórico de Vistoria')
 
 @section('content_header')
-<h1>Histórico</h1><small>Histórico da vistoria <label class="label  label-success"> <b>{{ $history[0]->history_survey_id_survey }}</b> </label> </small>
+<h1>Histórico</h1>
+<small>
+    Histórico da vistoria 
+    <label class="label label-success">
+        <b>{{ $histories->first()->survey_id ?? 'N/A' }}</b>
+    </label>
+</small>
 
 <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-    <li class="active"> <a href="{{ url('vistoria') }}"> Vistoria </a> </li>
+    <li class="active"><a href="{{ url('vistoria') }}"> Vistoria </a></li>
 </ol>
 @stop
 
@@ -21,107 +27,67 @@
             <div class="box-header with-border">
               <h3 class="box-title">Histórico</h3>
               <div class="box-tools pull-right">
-                <a href="{{url('vistoria')}}" class="btn btn-default" title="Voltar para lista de vistoria">
-                    <i class="fa  fa-arrow-circle-left"></i>
+                <a href="{{ url('vistoria') }}" class="btn btn-default" title="Voltar para lista de vistoria">
+                    <i class="fa fa-arrow-circle-left"></i>
                     Voltar
                 </a>
-               
-                </div>
+              </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
               <!-- Conversations are loaded here -->
               <div class="direct-chat-messages">
-                <!-- Message. Default to the left -->
-                @if(count($history) == 0)
+
+                @if($histories->isEmpty())
                 <div class="direct-chat-msg">
                     <div class="direct-chat-info clearfix">
                         <div class="direct-chat-text">
-                            Não consta nenhum vistoria.
+                            Não consta nenhum histórico.
                         </div>
                     </div>
                 </div>
                 @endif
-                @foreach($history as $historys)
+
+                @foreach($histories as $history)
                 <div class="direct-chat-msg">
                   <div class="direct-chat-info clearfix">
-                    <span class="direct-chat-name pull-left">{{$historys->username}}</span>
+                    <span class="direct-chat-name pull-left">{{ $history->user->name ?? 'Usuário desconhecido' }}</span>
                     <span class="direct-chat-timestamp pull-right">
-                        @if($historys->history_survey_date == '0000-00-00 00:00:00' || $historys->history_survey_date == NULL)
-                        @else
-                        {{date("d/m/Y H:i:s" , strtotime($historys->history_survey_date)) }}
+                        @if($history->changed_at)
+                            {{ $history->changed_at->format('d/m/Y H:i:s') }}
                         @endif
                     </span>
-                </div>
-                <!-- /.direct-chat-info -->
-                @if (is_null($historys->avatar))
-                <img class="direct-chat-img" src="{{url('dist/img/user.png')}}" alt="message user image" style="width: 32px;height: 32px;">
-                @else
-                <img class="direct-chat-img" src="{{url('dist/img/upload/profile/'.$historys->avatar)}}" alt="message user image">
-                @endif
-                
-                <!-- /.direct-chat-img -->
-                <div class="direct-chat-text">
-                    {{$historys->history_survey_action}}
-                </div>
-                <!-- /.direct-chat-text -->
-            </div>
-            <!-- /.direct-chat-msg -->
-            @endforeach
-        </div>
-        <!--/.direct-chat-messages-->
+                  </div>
+                  <!-- /.direct-chat-info -->
 
-    </div>
-    <!-- /.box-body -->
-    <div class="box-footer">
+                  @if(empty($history->user) || empty($history->user->avatar))
+                  <img class="direct-chat-img" src="{{ url('dist/img/user.png') }}" alt="Usuário sem foto" style="width: 32px; height: 32px;">
+                  @else
+                  <img class="direct-chat-img" src="{{ url('dist/img/upload/profile/'.$history->user->avatar) }}" alt="Imagem do usuário">
+                  @endif
 
-    </div>
-    <!-- /.box-footer-->
-</div>
-<!--/.direct-chat -->
-</div>
-<!-- /.col -->		
-<div class="col-md-6">
- <div class="box box-danger">
-    <div class="box-header with-border">
-        <h3 class="box-title">Histórico de Contestação</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body no-padding">
-        <div class="col-md-12">
-            <!-- Custom Tabs (Pulled to the right) -->
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs pull-right">
-                    <li class="active"><a href="#tab_1-1" data-toggle="tab">Histórico</a></li>
-                    <li><a href="#tab_2-2" data-toggle="tab">Contestar</a></li>
-                    <li class="pull-left header"><i class="fa fa-th"></i></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1-1">
-                        <h3>Em Desenvolvimento</h3>
-                   </div>
-                   <!-- /.tab-pane -->
-                   <div class="tab-pane" id="tab_2-2">
-                    <div class="input-group">
-                        {{-- <textarea name="" id="" cols="65" rows="10" form="form-control" placeholder="Descreva o que você não concorda com a vistoria"></textarea> --}}
-                        <h3>Contestar em Desenvolvimento</h3>
-                    </div>
-                    {{-- <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger btn-flat">Salvar Contestação</button>
-                    </span> --}}
+                  <!-- /.direct-chat-img -->
+                  <div class="direct-chat-text">
+                        <b>{!! $history->field !!}</b>: {!! $history->old_value !!} &rarr; {!! $history->new_value !!}
+                  </div>
+
+                  <!-- /.direct-chat-text -->
                 </div>
-                <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
+                <!-- /.direct-chat-msg -->
+                @endforeach
+              </div>
+              <!--/.direct-chat-messages-->
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+              <!-- Se quiser colocar algo no footer -->
+          </div>
+          <!-- /.box-footer-->
         </div>
-        <!-- nav-tabs-custom -->
+        <!--/.direct-chat -->
+      </div>
+      <!-- /.col -->     
     </div>
-    <!-- /.col -->
-</div>
-<!-- /.box-body -->
-</div>
-<!--/.box -->
-</div>
-</div>
 </section>
 @stop
