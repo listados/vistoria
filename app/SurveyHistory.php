@@ -20,5 +20,11 @@ class SurveyHistory extends Model
     public $timestamps = true; 
 
     protected $dates = ['changed_at'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }
  
