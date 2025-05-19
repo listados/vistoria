@@ -21,7 +21,7 @@
 
 <section class="content">
    <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
           <!-- DIRECT CHAT -->
           <div class="box box-primary direct-chat direct-chat-info">
             <div class="box-header with-border">
