@@ -19,21 +19,31 @@ echo "📥 Instalando dependências Node..."
 npm install
 npm install cross-env
 
-# 3. Composer
-echo "🎼 Executando composer..."
-composer install || composer update
+# 3. Executa composer install IGNORANDO erro inicial
+echo "🎼 Primeira tentativa de composer (pode falhar)..."
+composer install || true
 
-# 4. Corrige permissões para o Laravel
-echo "🔐 Ajustando permissões..."
-chgrp -R www-data storage bootstrap/cache
-chmod -R ug+rwx storage bootstrap/cache
-
-# 5. Corrige bug no PackageManifest
+# 4. Corrige bug no PackageManifest (se existir)
 MANIFEST_FILE="vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php"
-if grep -q '$packages = json_decode' "$MANIFEST_FILE"; then
+if [ -f "$MANIFEST_FILE" ] && grep -q '$packages = json_decode' "$MANIFEST_FILE"; then
   echo "⚙️ Corrigindo PackageManifest.php..."
   sed -i '116s/.*/    $installed = json_decode($this->files->get($path), true);\n    $packages = $installed["packages"] ?? $installed;/' "$MANIFEST_FILE"
 fi
 
-echo "✅ Ambiente Laravel pronto. Iniciando php-fpm..."
-exec php-fpm
+# 5. Composer novamente (agora deve funcionar)
+echo "🎼 Segunda tentativa de composer (após fix)..."
+composer install
+
+# 6. Ajusta permissões
+echo "🔐 Ajustando permissões..."
+chgrp -R www-data storage bootstrap/cache
+chmod -R ug+rwx storage bootstrap/cache
+
+# 7. Gera APP_KEY se necessário
+if ! grep -q '^APP_KEY=base64:' .env; then
+  echo "🔑 Gerando chave da aplicação..."
+  php artisan key:generate
+fi
+
+echo "✅ Ambiente Laravel pronto."
+exec "$@"
