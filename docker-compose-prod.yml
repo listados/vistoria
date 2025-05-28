@@ -15,7 +15,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=livre
       - MYSQL_DATABASE=vistoria
-      - MYSQL_USER=root
+      # MYSQL_USER=root
       - MYSQL_PASSWORD=livre
     ports:
       - '50001:3306'
@@ -39,12 +39,11 @@ services:
       - nginx-proxy_default
 
   php-fpm:
-    build: phpdocker/php-fpm
+    image: desenvolvedorlistados/php-fpm-vistoria:latest
     working_dir: /application
     container_name: phpvistoria
     volumes:
       - '.:/application'
-      - '.env:/application/.env'
       - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
     networks:
       - nginx-proxy_default

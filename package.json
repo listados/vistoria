@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "ckeditor4-vue": "^2.4.0",
+        "cross-env": "^7.0.3",
         "element-ui": "^2.15.14",
         "pnotify": "^3.2.1",
         "v-mask": "^2.3.0",
