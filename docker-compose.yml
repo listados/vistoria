@@ -14,7 +14,7 @@ services:
             - './phpdocker/mysql/data:/var/lib/mysql'
         environment:
             - MYSQL_ROOT_PASSWORD=livre
-            - MYSQL_DATABASE=vistoria
+            - MYSQL_DATABASE=admin
             # - MYSQL_USER=root
             - MYSQL_PASSWORD=livre
         ports:
@@ -31,7 +31,9 @@ services:
             - '5050:80'
 
     php-fpm:
-        build: phpdocker/php-fpm
+        build:
+            context: .
+            dockerfile: phpdocker/php-fpm/Dockerfile
         working_dir: /application
         container_name: phpvistoria
         volumes:

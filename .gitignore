@@ -19,3 +19,5 @@ public/imagens/*
 public/images/team/*
 .env
 docker/mysql_data/
+composer.lock
+package-lock.json

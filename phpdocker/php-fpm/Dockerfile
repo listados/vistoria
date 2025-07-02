@@ -1,33 +1,49 @@
-FROM phpdockerio/php74-fpm:latest
+FROM php:7.4-fpm
 
 WORKDIR /application
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Instala dependências essenciais, extensões PHP e ferramentas de build para node-gyp (node-sass)
+# Atualiza os pacotes do sistema e instala dependências necessárias
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     unzip \
     curl \
-    php7.4-mysql \
-    php7.4-gd \
-    php7.4-intl \
-    php7.4-xsl \
+    libjpeg-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libxslt1-dev \
+    libicu-dev \
     build-essential \
     python3 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Instala Node.js 12.x e NPM 8
+# Instala extensões PHP usando docker-php-ext-install
+RUN docker-php-ext-install \
+    mysqli \
+    gd \
+    intl \
+    xsl \
+    zip \
+    pdo \
+    pdo_mysql
+
+    # Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Instala Node.js 12 e NPM 8
 RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g npm@8 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copia e define o entrypoint do container
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY phpdocker/php-fpm/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
-CMD ["/usr/sbin/php-fpm7.4", "-F"]
+CMD ["php-fpm"]
