@@ -14,7 +14,7 @@ services:
       - './phpdocker/mysql/data:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=livre
-      - MYSQL_DATABASE=vistoria
+      - MYSQL_DATABASE=admin
       # MYSQL_USER=root
       - MYSQL_PASSWORD=livre
     ports:
@@ -32,14 +32,16 @@ services:
     ports:
       - '5050:80'
     environment:
-      - VIRTUAL_HOST=vistorianomades.listados.com.br
-      - LETSENCRYPT_HOST=vistorianomades.listados.com.br
-      - LETSENCRYPT_EMAIL=franciscoanto@gmail.com
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     networks:
       - nginx-proxy_default
 
   php-fpm:
-    image: desenvolvedorlistados/php-fpm-vistoria:latest
+    build:
+      context: .
+      dockerfile: phpdocker/php-fpm/Dockerfile
     working_dir: /application
     container_name: phpvistoria
     volumes:
