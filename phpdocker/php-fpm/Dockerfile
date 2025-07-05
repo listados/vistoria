@@ -44,6 +44,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
 # Copia e define o entrypoint do container
 COPY phpdocker/php-fpm/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
+EXPOSE 5050
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm"]
