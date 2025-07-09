@@ -27,10 +27,20 @@ mix.js('resources/assets/js/survey.js',	'public/js');
 	'resources/assets/js/all.js'],
 	'public/js/all.js').extract(['vue']);
 
+	// AMBIENCE
+mix.js([
+    'resources/assets/js/surveyMessage.js',
+	'resources/assets/js/ambience.js'
+], 'public/js/ambience.js');
+
+
+
 //TEAM
 mix.scripts([
     'resources/assets/js/teamSite.js'
 ], 'public/js/teamSite.js');
+
+
 
 //DELIVERY
 //  mix.js([

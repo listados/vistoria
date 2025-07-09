@@ -18,6 +18,7 @@ npm cache clear --force
 echo "📥 Instalando dependências Node..."
 npm install
 npm install cross-env
+npm run prod
 
 # 3. Executa composer install IGNORANDO erro inicial
 echo "🎼 Primeira tentativa de composer (pode falhar)..."

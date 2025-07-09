@@ -61,11 +61,8 @@
 @section('css')
 @stop
 @section('js')
-{{ Html::script('/js/manifest.js') }}
-{{ Html::script('/js/vendor.js') }}
-{{ Html::script('js/all.js') }}
-{{ Html::script('js/ambience.js') }}
-<script>
-   
-</script>
+
+
+<script src="{{ mix('/js/ambience.js') }}"></script>
+
 @stop
