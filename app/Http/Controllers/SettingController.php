@@ -70,11 +70,11 @@ class SettingController extends Controller
             try {
                 $idSetting = DB::table('settings')->first();
                 DB::table('settings')
-                    ->where(['settings' => $idSetting->settings])
+                    ->where(['settings_id' => $idSetting->settings_id])
                     ->update([$request['field'] => $validated['value']]);
                 return response()->json(['message' => 'Dados salvo com sucesso!'], 200);
             }catch (\Exception $e) {
-                return response()->json(['message' => 'Ocorreu um erro inexperado'], 400);
+                return response()->json(['message' => 'Ocorreu um erro inexperado: '.$e->getMessage()], 400);
             }
         }
     }

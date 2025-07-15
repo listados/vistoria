@@ -13,6 +13,7 @@ export const getSetting = async () => {
 };
 
 export const alterSetting = async (data, type) => {
+   
     try {
         const sendData = { }
         sendData['field'] = 'settings_' + type
@@ -20,13 +21,18 @@ export const alterSetting = async (data, type) => {
         return editAspectGeranal(sendData);
 
     } catch (error) {
-        console.error('Erro ao buscar usuários:', error);
+        console.error('Erro ao buscar ao alterar a configuração:', error);
         return error;
     }
 };
 
 const editAspectGeranal = async (data) =>
 {
-    const response = await api.put('setting', data);
-    return response;
+    try {
+        const response = await api.put('setting', data);
+        return response;
+    } catch (error) {
+        console.error('Erro em editAspectGeranal :', error);
+        return error;
+    }
 }
