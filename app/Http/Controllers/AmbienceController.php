@@ -29,15 +29,15 @@ class AmbienceController extends Controller
 
     public function update(Request $request)
     {
-       try{
-        $ambience = Ambience::where('ambience_id', $request['ambience_id'])
-                    ->update(['ambience_name' => $request['ambience_name']]);
-        return response()->json(['type' => 'success', 'message' =>'Ambience Altarado com sucesso'],200);            
+        try{
+            Ambience::where('ambience_id', $request['ambience_id'])
+                        ->update(['ambience_name' => $request['ambience_name']]);
+            return response()->json(['type' => 'success', 'message' =>'Ambience Altarado com sucesso'],200);            
 
-       }catch(Exception $e)
-       {
-        return response()->json(['type' => 'error', 'message' =>'erro '.$e->getMessage()],400); 
-       }
+        }catch(Exception $e)
+        {
+            return response()->json(['type' => 'error', 'message' =>'erro '.$e->getMessage()],400); 
+        }
     }
 
     public function all()

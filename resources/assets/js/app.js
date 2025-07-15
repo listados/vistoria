@@ -60,6 +60,7 @@ Vue.component('editor-survey', require('./components/Survey/EditorSurvey.vue'));
 Vue.component('config-survey', require('./components/Survey/Setting/ConfigSurvey.vue'));
 Vue.component('btn-ordem-ambience', require('./components/Survey/BtnOrdemAmbience.vue'));
 Vue.component('ambience-image', require('./components/Survey/Ambience/AmbienceImage.vue'));
+Vue.component('ambience', require('./components/Settings/Ambience.vue'));
 
 // Vue.component('edit-team', require('./components/EditTeamComponent.vue'));
 Vue.prototype.$eventBus = new Vue(); // Global event bus

@@ -107,7 +107,7 @@ class SettingController extends Controller
     }
     public function getAmbience()
     {
-        $ambience = Ambience::select(['ambience_id', 'ambience_name']);
+        $ambience = Ambience::select(['ambience_id', 'ambience_name'])->orderBy('ambience_name', 'ASC');
         
         return Datatables::of($ambience)
             ->addColumn('action', function ($ambience) {
