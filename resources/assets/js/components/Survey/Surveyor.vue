@@ -65,14 +65,16 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="">Data final do Laudo </label>
-                <el-input placeholder="Adicione a data"
-                    v-mask="'##/##/####'"
+                <date-picker
                     v-model="dtFinalized"
-                    suffix-icon="el-icon-date"
-                    data-name="survey_finalized_date"
-                    @blur="alterValueField('date', $event)"
-                    ref="dateInput"
-                    ></el-input>
+                    format="DD/MM/YYYY"
+                    value-format="YYYY-MM-DD"
+                    type="date"
+                    placeholder="Selecione uma data"
+                    input-class="form-control"
+                    @change="alterValueField('datepicker', 'survey_finalized_date')"
+                ></date-picker>
+                
             </div>
         </div>
         <div class="col-md-12">
@@ -341,8 +343,13 @@ export default {
         }
     },
     created() {
-        this.dtFinalized = Vue.moment(this.survey.survey_finalized_date).format('DD/MM/YYYY')
-        this.dtSurvey    = Vue.moment(this.survey.survey_date).format('DD/MM/YYYY');
+       
+        console.log(this.survey.survey_date)
+        console.log(Vue.moment(this.survey.survey_date).format('DD/MM/YYYY')) //es
+        this.dtFinalized = Vue.moment(this.survey.survey_finalized_date).format('YYYY-MM-DD')
+        this.dtSurvey  = Vue.moment(this.survey.survey_date).format('DD/MM/YYYY');
+        //  console.log(this.dtFinalized);
+        //  console.log(this.dtSurvey);
     },
     methods: {
         alterValueField(type, name = null) {
@@ -357,6 +364,12 @@ export default {
                     break;
                 case "select":
                     dataUp[name] = event.target.innerText;
+                    break;
+                case "date":
+                    // const inputElement = this.$refs.dateInput.$el.querySelector('input');
+                    console.log(event.target)
+                    dataUp[event.target.dataset["name"]] = event.target.value;
+                    console.log(type)
                     break;
             }
             

@@ -1080,12 +1080,15 @@ class SurveyController extends Controller
         
         //ADD DATA STRING PARA DATE
         if (array_key_exists("survey_date", $request->all())) {
+
             // Obter a data no formato YYYY-MM-DD
-            $request['survey_date'] = self::converterData($request->survey_date);        
+            $request['survey_date'] = self::converterData($request->survey_date); // Ex.: "2025-07-01"
+        
         }
 
         if (array_key_exists("survey_finalized_date", $request->all())) {
-            $request['survey_finalized_date'] = self::converterData($request->survey_finalized_date);
+            $dtSurvey = Carbon::parse($request->survey_finalized_date);
+            $request['survey_finalized_date'] = $dtSurvey;
         }
 
         try {
