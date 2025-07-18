@@ -95,26 +95,18 @@ class Survey extends Model
     */
     public static function atualiza_usuario_vistoria($request, $relation)
     {
-    //$type_relation, $id_survey, $campo = array()
-        //BUSCANDO ID DO USUÁRIO
-        // $usuario = DB::table('relation_survey_user')
-        // ->where($relation->relation_survey_user_id)
-        // ->first();
-        // dd($relation);
-        // dd($relation->relation_survey_user_id_user);
         try {
-        DB::table('users')
-        ->where('id', $relation->relation_survey_user_id_user)
-        ->update(['name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : $relation->name, 
-                'email' =>  isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : $relation->email, 
-                'cpf' =>  isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : $relation->cpf, 
-                'updated_at' => Carbon::now()
-        ]);
-        return response()->json(['message' => 'Usuario criado'],200);
+            DB::table('users')
+            ->where('id', $relation->relation_survey_user_id_user)
+            ->update(['name' => isset($request['survey_inspetor_name']) ? $request['survey_inspetor_name'] : $relation->name, 
+                    'email' =>  isset($request['survey_inspetor_email']) ? $request['survey_inspetor_email'] : $relation->email, 
+                    'cpf' =>  isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : $relation->cpf, 
+                    'updated_at' => Carbon::now()
+            ]);
+            return response()->json(['message' => 'Usuario criado'],200);
         } catch (\Throwable $th) {
             return response()->json(['message' => FunctionAll::error($th)],400);
         }
-        
     }
 
 

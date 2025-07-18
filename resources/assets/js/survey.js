@@ -41,11 +41,7 @@ $(document).ready(function () {
 
   });
 
-  //EDITOR DE CONTEÚDO
-  CKEDITOR.replace('survey_general_aspects');
-  CKEDITOR.replace('survey_reservation');
-  CKEDITOR.replace('survey_provisions');
-  CKEDITOR.replace('survey_keys');
+
   /*
 Link exemplo : http://makitweb.com/dynamically-add-and-remove-element-with-jquery/
 @autor: Excellence Soft - Junior Oliveira

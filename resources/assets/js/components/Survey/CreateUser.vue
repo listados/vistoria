@@ -111,8 +111,7 @@ export default {
             survey_inspetor_name: '',
             survey_inspetor_cpf: '',
             survey_inspetor_email: '',
-            showBorder : true,
-            typeSurvey: ''
+            showBorder : true
         }
     },
     created() {

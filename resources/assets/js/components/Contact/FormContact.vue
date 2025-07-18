@@ -48,8 +48,9 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Telefone Fixo</label>
-                            <input type="text" required v-model="form.phoneFixed" v-mask="'(##) ####-####'" 
-                                class="form-control" id="" placeholder="Telefone Fixo">
+                            <input type="text" required v-model="form.phoneFixed" 
+                            v-mask="'(##) ####-####'" 
+                            class="form-control" id="" placeholder="Telefone Fixo">
                         </div>
                     </div>
                     <div class="col-md-3">

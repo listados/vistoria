@@ -40,7 +40,7 @@ import  {urlBase}  from "../../../../../public/js/helpers.js";
 export default {
     props: {
         idSurvey: String,
-        survey: String
+        survey: Object
     },
      created() {
       // console.log( process.env.MIX_SENTRY_DSN_PUBLIC)

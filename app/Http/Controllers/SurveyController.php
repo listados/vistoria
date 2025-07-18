@@ -1029,16 +1029,20 @@ class SurveyController extends Controller
      */
     public function addUserSurvey(Request $request)
     {
-        // dump($request->all());
+        try {
             $verify = Survey::consulta_relacao_usuario(
-                $request->relation_survey_user_id_survey, 
-                $request->relation_survey_user_id_user);
+            $request->relation_survey_user_id_survey, 
+            $request->relation_survey_user_id_user);
+                
 
             if(count($verify) == 0){
                 Survey::cadastra_usuario($request->all());
             }else{
-               Survey::atualiza_usuario_vistoria($request->all(), $verify->first());
+                Survey::atualiza_usuario_vistoria($request->all(), $verify->first());
             }    
+        } catch (\Exception $th) {
+            return response()->json(['message' => FunctionAll::error($th)],400);
+        }
         // Survey::cadastra_usuario($campo_user, $id_survey, $type_relation);
     }
 
@@ -1073,10 +1077,13 @@ class SurveyController extends Controller
     public function alterSurveyor(SurveyFields $request)
     {
         $dtSurvey = null;
+        
         //ADD DATA STRING PARA DATE
         if (array_key_exists("survey_date", $request->all())) {
-            $dtSurvey = Carbon::parse($request->survey_date);
-            $request['survey_date'] = $dtSurvey;
+            $dataCarbon = Carbon::createFromFormat('d/m/Y', $request->survey_date);
+            // Obter a data no formato YYYY-MM-DD
+            $request['survey_date'] = $dataCarbon->format('Y-m-d'); // Ex.: "2025-07-01"
+        
         }
 
         if (array_key_exists("survey_finalized_date", $request->all())) {
@@ -1085,7 +1092,7 @@ class SurveyController extends Controller
         }
 
         try {
-            $survey = Survey::where('survey_id', $request->survey_id)->first();
+            $survey = Survey::where('survey_id', $request->survey_id)->first();            // dd($request->all());
             $survey->update($request->all());
             return response()->json(['message' => 'success']);
         } catch (\Throwable $th) {

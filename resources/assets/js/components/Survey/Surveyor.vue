@@ -2,19 +2,6 @@
     <div>
         <div>
         <div>
-            <div class="col-md-2">
-            <div class="form-group">
-                <label for="">Data da vistoria</label>
-                <date-picker
-                    v-model="dtSurvey"
-                    format="DD/MM/YYYY"
-                    type="date"
-                    placeholder="Selecione uma data"
-                    input-class="form-control"
-                    @change="alterValueField('datepicker', 'survey_date')"
-                ></date-picker>
-            </div>
-        </div>
             <div class="col-md-3">
             <div class="form-group">
                 <label for="">Nome do Vistoriador</label>
@@ -59,6 +46,20 @@
                     :value="item.value">
                     </el-option>
                 </el-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Data da vistoria</label>
+                    <el-input placeholder="Please input"
+                    v-mask="'##/##/####'"
+                    v-model="dtSurvey"
+                    suffix-icon="el-icon-date"
+                    data-name="survey_date"
+                    value="12/12/2025"
+                    @blur="alterValueField('date', $event)"
+                    ref="dateInput"
+                    ></el-input>
             </div>
         </div>
         <div class="col-md-2">
@@ -215,11 +216,11 @@ import  urlBase  from "../../../../../public/js/helpers.js";
 export default {    
     props: {
         idSurvey: String,
-        survey: Array
+        survey: Object
     },
     data() {
         return {
-            dtSurvey: Vue.moment( this.survey.survey_date).format('DD/MM/YYYY'),
+            dtSurvey: null,
             dtFinalized: null,
             typeImmobile: this.survey.survey_type_immobile,
             typeSurvey: this.survey.survey_type,
@@ -341,8 +342,13 @@ export default {
         }
     },
     created() {
-        // console.log(Vue.moment(this.dtSurvey).format('YYYY-MM-DD')) //es
-        this.dtFinalized = Vue.moment( this.survey.survey_finalized_date).format('YYYY-MM-DD')
+       
+        console.log(this.survey.survey_date)
+        console.log(Vue.moment(this.survey.survey_date).format('DD/MM/YYYY')) //es
+        // this.dtFinalized = Vue.moment(this.survey.survey_finalized_date).format('YYYY-MM-DD')
+        this.dtSurvey  = Vue.moment(this.survey.survey_date).format('DD/MM/YYYY');
+        //  console.log(this.dtFinalized);
+        //  console.log(this.dtSurvey);
     },
     methods: {
         alterValueField(type, name = null) {
@@ -358,8 +364,14 @@ export default {
                 case "select":
                     dataUp[name] = event.target.innerText;
                     break;
+                case "date":
+                    // const inputElement = this.$refs.dateInput.$el.querySelector('input');
+                    console.log(event.target)
+                    dataUp[event.target.dataset["name"]] = event.target.value;
+                    console.log(type)
+                    break;
             }
-            console.log({dataUp})
+            
             axios.put(urlBase + '/api/survey/alter-field', dataUp)
             .then( (res) => {
                 this.$message({
