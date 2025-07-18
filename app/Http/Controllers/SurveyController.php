@@ -1080,15 +1080,12 @@ class SurveyController extends Controller
         
         //ADD DATA STRING PARA DATE
         if (array_key_exists("survey_date", $request->all())) {
-            $dataCarbon = Carbon::createFromFormat('d/m/Y', $request->survey_date);
             // Obter a data no formato YYYY-MM-DD
-            $request['survey_date'] = $dataCarbon->format('Y-m-d'); // Ex.: "2025-07-01"
-        
+            $request['survey_date'] = self::converterData($request->survey_date);        
         }
 
         if (array_key_exists("survey_finalized_date", $request->all())) {
-            $dtSurvey = Carbon::parse($request->survey_finalized_date);
-            $request['survey_finalized_date'] = $dtSurvey;
+            $request['survey_finalized_date'] = self::converterData($request->survey_finalized_date);
         }
 
         try {
@@ -1098,6 +1095,13 @@ class SurveyController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function converterData($value)
+    {
+        $dataCarbon = Carbon::createFromFormat('d/m/Y', $value);
+            // Obter a data no formato YYYY-MM-DD
+        return $dataCarbon->format('Y-m-d'); // Ex.: "2025-07-01"
     }
 
     public function newSurvey(){
