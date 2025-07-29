@@ -111,7 +111,7 @@ export default {
             })
         },
         allAmbience() {            
-            axios.get(process.env.MIX_SENTRY_DSN_PUBLIC + '/api/ambience-all/')
+            axios.get(process.env.MIX_SENTRY_DSN_PUBLIC + '/api/ambience/all')
             .then(res => {
                 console.log({res})
                 this.optionsSelect = res.data

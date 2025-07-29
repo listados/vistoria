@@ -1,4 +1,5 @@
 
+  // todo o código de Dropzone aqui dentro
   //VARIÁVEL PARA CONFIRMAR SE DEU CERTO O UPLOAD
   confirm_complet = false;
   Dropzone.autoDiscover = false;
@@ -7,16 +8,16 @@
   	dictDefaultMessage: "Arraste seus arquivos para essa área ou click para localizar",
   	paramName: "img_photo",
   	autoProcessQueue: false,
-	maxFilesize: 6,// MB
+	maxFilesize: 12,// MB
 	clickable: true,
 	parallelUploads: 10,
 	uploadMultiple: true,
-	acceptedFiles: "image/*,.xlsx,.xls,.pdf,.doc,.docx",
+	acceptedFiles: "image/*,.pdf",
 	maxFiles: 10,
 	addRemoveLinks: true,
 	createImageThumbnails: true,
 	dictRemoveFile: 'Excluir',
-	dictFileTooBig: "O tamanho máximo é de 6mb",//mensagem de qndo o arquivo é maior q definido em maxFilesize
+	dictFileTooBig: "O tamanho máximo é de 12 MB",//mensagem de qndo o arquivo é maior q definido em maxFilesize
 	dictMaxFilesExceeded: 'Máximo de arquivos são 10',//mensagem qndo excede o total de arquivos para enviar
 	dictResponseError: "Ocorreu um erro, atualize a página e tente novamente.",
 	resizeWidth: 500,
@@ -34,7 +35,7 @@
 		});
 	}
 
-}).on("complete", function(file) {
+}).on("success", function(file) {
 	myDropzone.removeFile(file);
 	new PNotify({
 		title: 'Sucesso',
@@ -46,5 +47,16 @@
 		delay: 5000,
 		animate_speed: "slow"
 	});
-});
+}).on("error", function(file, errorMessage) {
+  new PNotify({
+    title: 'Erro',
+    text: 'Falha no upload: ' + errorMessage,
+    styling: 'fontawesome',
+    type: 'error',
+    icon: 'true',
+    animation: 'fade',
+    delay: 5000,
+    animate_speed: "slow"
+  });
 
+});

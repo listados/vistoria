@@ -167,7 +167,7 @@ $(document).ready(function () {
     route_complet_survey = window.location.origin + project_survey;
     form_complete_survey = $("#form_survey").serialize();
     $.ajax({
-      url: route_complet_survey + "/vistoria/update",
+      url: route_complet_survey + "vistoria/update",
       type: "POST",
       dataType: "JSON",
       data: form_complete_survey,
