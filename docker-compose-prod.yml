@@ -20,7 +20,7 @@ services:
     ports:
       - '50001:3306'
     networks:
-      - nginx-proxy_default
+      - nginx-proxy
 
   webserver:
     image: 'nginx:alpine'
@@ -36,7 +36,7 @@ services:
       - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     networks:
-      - nginx-proxy_default
+      - nginx-proxy
 
   php-fpm:
     build:
@@ -48,8 +48,9 @@ services:
       - '.:/application'
       - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
     networks:
-      - nginx-proxy_default
+      - nginx-proxy
 
 networks:
-  nginx-proxy_default:
+  nginx-proxy:
     external: true
+    name: nginx-proxy_default
