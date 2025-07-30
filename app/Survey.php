@@ -42,7 +42,7 @@ class Survey extends Model
             'password' => bcrypt(Carbon::now()),
             'cpf' => isset($request['survey_inspetor_cpf']) ? $request['survey_inspetor_cpf'] : null
         ];
-       
+      
         //verifica o parametro para add o valor 
         if(isset($request['params']))
         {
@@ -58,13 +58,15 @@ class Survey extends Model
                     break;
             }
         }
+        // Verifica se tem email, caso não, gera um email temporário
+        $email = self::verifyEmail($user['email'], $user['name']);
       
-        
           try {
             //CADASTRANDO USUARIO
             $idLocator = null;
             // Verificando se existe registro no banco de dados
-            $userExist = User::where('email', $request['survey_inspetor_email'])->first();
+            $userExist = User::where('email', $email)->first();
+          
             // verificando se o retorno é nulo
             if(is_null($userExist)) {
                 // Realiza o cadastro do usuario
@@ -73,6 +75,7 @@ class Survey extends Model
             }else{
                 $idLocator = $userExist->attributes['id'];
             }
+          
             //GRAVANDO DADOS NA TABELA DE RELACIONAMENTO
             DB::table('relation_survey_user')->insert(
                 ['relation_survey_user_id_survey' => $request['relation_survey_user_id_survey'], 
@@ -88,6 +91,18 @@ class Survey extends Model
 
     }
 
+    public static function verifyEmail($email, $name): string
+    {
+        $emailFormat = '';
+        if (is_null($email) || $email == '') {
+            // Substitui espaços por underline no nome
+            $emailFormat = str_replace(' ', '_', $name);
+            
+            // Concatena com @mail.com
+            $email = $emailFormat . '@mail.com';
+        }
+        return $email;
+    }
 
     /* FUNCAO PARA A PÁGINA UPDATE DA VISTORIA, CASO SEJA PARA ALTERAR O CAMPO VEM PREENCHIDO, SE FOR UMA NOVA VISTORIA O CAMPO VAZIO
         Created in 2016-07-28 10:11 by Junior Oliveira
