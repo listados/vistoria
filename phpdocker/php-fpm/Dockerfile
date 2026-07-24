@@ -34,12 +34,18 @@ RUN docker-php-ext-install \
     # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Instala Node.js 12 e NPM 8
-RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs \
+# Instala Node.js 12 e NPM 8 (via repositório do Debian, pois o script do
+# NodeSource para o 12.x está descontinuado e falha na verificação da chave GPG)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nodejs \
+    npm \
     && npm install -g npm@8 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Evita que o npm rode como root e "abaixe" privilégio para o dono do
+# diretório bind-mounted (UID do host), o que causa EACCES em /root/.npm
+RUN npm config set unsafe-perm true
 
 # Copia e define o entrypoint do container
 COPY phpdocker/php-fpm/entrypoint.sh /usr/local/bin/entrypoint.sh

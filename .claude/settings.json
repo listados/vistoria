@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"vendor exists: $?\")",
+      "Bash(composer --version)",
+      "Bash(composer install *)"
+    ]
+  }
+}
